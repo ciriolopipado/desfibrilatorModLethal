@@ -1,0 +1,39 @@
+DESFIBRILATOR 0.1.0 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
+
+No necesitas compilar ni descomprimir el ZIP para importarlo.
+
+1. Abre Lethal Company en Thunderstore Mod Manager o r2modman.
+2. Selecciona una copia del perfil Lloreria LETHAL 2 para las pruebas.
+3. Entra en Settings / Configuracion > Profile / Perfil > Import local mod.
+   Si no aparece, utiliza el buscador de ajustes para localizar Import local mod.
+4. Selecciona ciriolopipado-Desfibrilator-0.1.0.zip sin descomprimirlo.
+5. Comprueba los datos del formulario y confirma la importacion:
+   Nombre: Desfibrilator
+   Autor: ciriolopipado
+   Version: 0.1.0 (campos 0, 1, 0)
+6. Comprueba que el mod este activado y que tambien lo esten:
+   BepInEx-BepInExPack 5.4.2305
+   Evaisa-LethalLib 1.2.0 y sus dependencias
+   Estos paquetes ya constan en el perfil exportado por el usuario.
+7. Inicia mediante Start modded / Iniciar con mods.
+
+Si instalaste antes las DLL manualmente, retira esa copia de Desfibrilator
+antes de importarlo para evitar cargarlo dos veces. Conserva los demas mods.
+Todos los participantes deben instalar este mismo paquete y sus dependencias.
+
+PRUEBA RAPIDA
+Compra Desfibrilator por 100 creditos en el terminal. Con el objeto equipado,
+apunta a un cadaver recuperable cercano y manten E durante 5 segundos.
+El jugador debe volver con 30 de vida y sin inventario. Comienza una espera
+global de 90 segundos, compartida entre todas las unidades y jugadores.
+
+ESTADO
+El paquete contiene DLL compiladas y no requiere publicar el mod en Thunderstore.
+La compilacion utiliza referencias publicas de la epoca de v80. El objetivo es
+v81, pero no se ha ejecutado el juego aqui ni confirmado compatibilidad con v81
+o con el perfil completo. La animacion propia de manos sigue pendiente;
+actualmente hay una pose basica y movimiento de palas.
+
+SI FALLA
+Comparte el mensaje exacto del error y BepInEx/LogOutput.log del perfil.
+Para problemas multijugador, adjunta los registros del anfitrion y del cliente.

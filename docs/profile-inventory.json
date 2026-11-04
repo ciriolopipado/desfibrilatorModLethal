@@ -1,0 +1,1472 @@
+[
+  {
+    "package": "Zehs-LCBetterSavesFix",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "Zaggy1024-DunGenReferenceFixer",
+    "version": "0.0.1",
+    "enabled": true
+  },
+  {
+    "package": "Yorimor-CustomStoryLogs",
+    "version": "1.6.0",
+    "enabled": true
+  },
+  {
+    "package": "willis81808-LethalSettings",
+    "version": "1.4.1",
+    "enabled": true
+  },
+  {
+    "package": "WhiteSpike-Moon_Day_Speed_Multiplier_Patcher",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "VirusTLNR-MaskedInvisFix",
+    "version": "0.0.3",
+    "enabled": true
+  },
+  {
+    "package": "Sniper1_1-MaterialAssetRestorerCore",
+    "version": "2.0.0",
+    "enabled": true
+  },
+  {
+    "package": "Sniper1_1-WaterAssetRestorer",
+    "version": "2.0.0",
+    "enabled": true
+  },
+  {
+    "package": "qwbarch-OpusDotNet",
+    "version": "1.0.30",
+    "enabled": true
+  },
+  {
+    "package": "qwbarch-Concentus",
+    "version": "2.3.0",
+    "enabled": true
+  },
+  {
+    "package": "qwbarch-MirageCore",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "IntegrityChaos-GraphicsAPI",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "fumiko-CullFactory",
+    "version": "2.0.11",
+    "enabled": true
+  },
+  {
+    "package": "Flowprojects-Mirage_v81",
+    "version": "1.29.1",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-WeedKillerFixes",
+    "version": "1.2.1",
+    "enabled": true
+  },
+  {
+    "package": "Bobbie-NAudio",
+    "version": "2.2.2",
+    "enabled": true
+  },
+  {
+    "package": "sfDesat-ViewExtension",
+    "version": "1.3.0",
+    "enabled": true
+  },
+  {
+    "package": "DarthLilo-LevelMusicLib",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "IntegrityChaos-LCCutscene",
+    "version": "2.0.1",
+    "enabled": true
+  },
+  {
+    "package": "Alice-DungeonGenerationPlus",
+    "version": "1.5.1",
+    "enabled": true
+  },
+  {
+    "package": "pacoito-LethalLevelLoaderUpdated",
+    "version": "1.6.0",
+    "enabled": true
+  },
+  {
+    "package": "rectorado-KenjiLib",
+    "version": "0.7.1",
+    "enabled": true
+  },
+  {
+    "package": "Generic_GMD-ManuLib",
+    "version": "1.1.3",
+    "enabled": true
+  },
+  {
+    "package": "Generic_GMD-Generic_Doorscript",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "Beaniebe-Beanie_Lib",
+    "version": "1.0.9",
+    "enabled": true
+  },
+  {
+    "package": "AudioKnight-StarlancerAIFix",
+    "version": "3.13.2",
+    "enabled": true
+  },
+  {
+    "package": "Magic_Wesley-WesleysInteriors",
+    "version": "5.0.12",
+    "enabled": true
+  },
+  {
+    "package": "luakite-Vacuity_Moon",
+    "version": "1.0.6",
+    "enabled": true
+  },
+  {
+    "package": "luakite-Synthesis_Moon",
+    "version": "1.1.5",
+    "enabled": true
+  },
+  {
+    "package": "luakite-Selen_Moon",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "LethalMatt-PlayZone",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-31Arcadia_UPDATED",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "KayNetsua-E_Gypt_Moon",
+    "version": "2.0.27",
+    "enabled": true
+  },
+  {
+    "package": "Generic_GMD-Generic_Moons",
+    "version": "9.4.1",
+    "enabled": true
+  },
+  {
+    "package": "Generic_GMD-Generic_Interiors",
+    "version": "5.2.0",
+    "enabled": true
+  },
+  {
+    "package": "DistinctBlaze-DistinctMoonVariety",
+    "version": "3.0.5",
+    "enabled": true
+  },
+  {
+    "package": "COREsEND-Castellum_Carnis",
+    "version": "1.1.3",
+    "enabled": true
+  },
+  {
+    "package": "Beaniebe-74_Veld",
+    "version": "1.3.0",
+    "enabled": true
+  },
+  {
+    "package": "Beaniebe-61_Ingression",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "Beaniebe-32_Viscera",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "Beaniebe-23_Symbiosis",
+    "version": "1.3.3",
+    "enabled": true
+  },
+  {
+    "package": "Autumnis-HarvestMoons",
+    "version": "1.5.7",
+    "enabled": true
+  },
+  {
+    "package": "AudioKnight-Triskelion",
+    "version": "4.0.1",
+    "enabled": true
+  },
+  {
+    "package": "AudioKnight-StarlancerZero",
+    "version": "4.0.1",
+    "enabled": true
+  },
+  {
+    "package": "AudioKnight-Solace",
+    "version": "4.0.2",
+    "enabled": true
+  },
+  {
+    "package": "AudioKnight-Auralis",
+    "version": "4.0.1",
+    "enabled": true
+  },
+  {
+    "package": "x753-More_Suits",
+    "version": "1.5.4",
+    "enabled": true
+  },
+  {
+    "package": "Verity-TooManySuits",
+    "version": "2.0.4",
+    "enabled": true
+  },
+  {
+    "package": "Smxrez-SimpleCompany",
+    "version": "2.0.4",
+    "enabled": true
+  },
+  {
+    "package": "Smxrez-FashionableCompany",
+    "version": "1.2.1",
+    "enabled": true
+  },
+  {
+    "package": "Dwarggo-Fashion_Company",
+    "version": "1.3.1",
+    "enabled": true
+  },
+  {
+    "package": "BatTeam-LethalFashion",
+    "version": "1.0.8",
+    "enabled": true
+  },
+  {
+    "package": "AtomicStudio-Atomics_Cosmetics",
+    "version": "1.3.4",
+    "enabled": true
+  },
+  {
+    "package": "XuXiaolan-ReXuvination",
+    "version": "1.1.0",
+    "enabled": true
+  },
+  {
+    "package": "EliteMasterEric-Coroner",
+    "version": "2.4.1",
+    "enabled": true
+  },
+  {
+    "package": "pacoito-itolib",
+    "version": "0.9.3",
+    "enabled": true
+  },
+  {
+    "package": "SolidStone-SolidLib",
+    "version": "1.3.1",
+    "enabled": true
+  },
+  {
+    "package": "Snowlance-SnowyLib",
+    "version": "1.16.3",
+    "enabled": true
+  },
+  {
+    "package": "rectorado-JKConfig",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "v0xx-TerraMesh",
+    "version": "1.2.0",
+    "enabled": true
+  },
+  {
+    "package": "Hamunii-TypeLoadExceptionFixer",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "AinaVT-LethalConfig",
+    "version": "1.4.6",
+    "enabled": true
+  },
+  {
+    "package": "Mellowdy-CruiserTunes",
+    "version": "1.3.8",
+    "enabled": true
+  },
+  {
+    "package": "lolieg-CruiserVolumeControl",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "xilophor-StaticNetcodeLib",
+    "version": "1.2.0",
+    "enabled": true
+  },
+  {
+    "package": "NiceHairs-NuclearLibrary",
+    "version": "1.0.7",
+    "enabled": true
+  },
+  {
+    "package": "mrov-TerminalUtils",
+    "version": "0.0.16",
+    "enabled": true
+  },
+  {
+    "package": "TestAccount666-TestAccountCore",
+    "version": "1.18.0",
+    "enabled": true
+  },
+  {
+    "package": "LethalCompanyModding-VertexLibrary",
+    "version": "1.1.0",
+    "enabled": true
+  },
+  {
+    "package": "Lordfirespeed-OdinSerializer",
+    "version": "2024.2.2700",
+    "enabled": true
+  },
+  {
+    "package": "xilophor-LethalNetworkAPI",
+    "version": "3.4.2",
+    "enabled": true
+  },
+  {
+    "package": "loaforc-loaforcsSoundAPI_LethalCompany",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "Hardy-LCMaxSoundsFix",
+    "version": "1.2.0",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-EnemySoundFixes",
+    "version": "1.9.16",
+    "enabled": true
+  },
+  {
+    "package": "Kittenji-NavMeshInCompany",
+    "version": "1.0.3",
+    "enabled": true
+  },
+  {
+    "package": "mrov-MrovLib",
+    "version": "0.4.15",
+    "enabled": true
+  },
+  {
+    "package": "mrov-WeatherRegistry",
+    "version": "0.8.8",
+    "enabled": true
+  },
+  {
+    "package": "mrov-AutoScroll",
+    "version": "0.0.1",
+    "enabled": true
+  },
+  {
+    "package": "DiFFoZ-HarmonyXTranspilerFix",
+    "version": "1.4.0",
+    "enabled": true
+  },
+  {
+    "package": "loaforc-loaforcsSoundAPI",
+    "version": "2.0.13",
+    "enabled": true
+  },
+  {
+    "package": "darmuh-OpenLib",
+    "version": "0.4.3",
+    "enabled": true
+  },
+  {
+    "package": "Hamunii-DetourContext_Dispose_Fix",
+    "version": "1.0.9",
+    "enabled": true
+  },
+  {
+    "package": "Zaggy1024-PathfindingLib",
+    "version": "2.4.1",
+    "enabled": true
+  },
+  {
+    "package": "Hamunii-AutoHookGenPatcher",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "TeamXiaolan-DawnLib",
+    "version": "0.9.25",
+    "enabled": true
+  },
+  {
+    "package": "Sigurd-CSync",
+    "version": "5.0.1",
+    "enabled": true
+  },
+  {
+    "package": "Rune580-LethalCompany_InputUtils",
+    "version": "0.7.13",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-SpawnCycleFixes",
+    "version": "1.2.3",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-MaskFixes",
+    "version": "1.6.2",
+    "enabled": true
+  },
+  {
+    "package": "MaxWasUnavailable-LethalModDataLib",
+    "version": "1.2.2",
+    "enabled": true
+  },
+  {
+    "package": "Evaisa-FixPluginTypesSerialization",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "JacobG5-JLL",
+    "version": "1.10.1",
+    "enabled": true
+  },
+  {
+    "package": "IAmBatby-LethalLevelLoader",
+    "version": "1.7.13",
+    "enabled": true
+  },
+  {
+    "package": "Zingar-Atlas_Abyss",
+    "version": "1.2.6",
+    "enabled": true
+  },
+  {
+    "package": "WaterGun-57_Harbringer",
+    "version": "2.6.1",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Zenit",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-PsychSanctum",
+    "version": "1.1.0",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Nimbus",
+    "version": "0.5.0",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Maritopia",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Harloth",
+    "version": "0.6.1",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-EchoReach",
+    "version": "1.0.8",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Crystallum",
+    "version": "0.8.6",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Celestria",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-CaltPrime",
+    "version": "1.0.9",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Azure",
+    "version": "0.6.8",
+    "enabled": true
+  },
+  {
+    "package": "Tolian-Argent",
+    "version": "0.4.8",
+    "enabled": true
+  },
+  {
+    "package": "TheWildSkelaah-SkelaahsWildMoons",
+    "version": "3.1.5",
+    "enabled": true
+  },
+  {
+    "package": "skidz-PoolRooms",
+    "version": "0.1.23",
+    "enabled": true
+  },
+  {
+    "package": "sfDesat-Orion",
+    "version": "2.1.7",
+    "enabled": true
+  },
+  {
+    "package": "sfDesat-Celest",
+    "version": "1.1.8",
+    "enabled": true
+  },
+  {
+    "package": "sfDesat-Aquatis",
+    "version": "2.2.8",
+    "enabled": true
+  },
+  {
+    "package": "ScienceBird-Wither",
+    "version": "2.0.3",
+    "enabled": true
+  },
+  {
+    "package": "rectorado-Kenjis_Moons",
+    "version": "1.6.7",
+    "enabled": true
+  },
+  {
+    "package": "Nikki-NikkisMysteriousMoons",
+    "version": "1.1.3",
+    "enabled": true
+  },
+  {
+    "package": "MrSaltedBeef-33Granductor",
+    "version": "1.8.1",
+    "enabled": true
+  },
+  {
+    "package": "Evaisa-HookGenPatcher",
+    "version": "0.0.5",
+    "enabled": true
+  },
+  {
+    "package": "BepInEx-BepInExPack",
+    "version": "5.4.2305",
+    "enabled": true
+  },
+  {
+    "package": "Magic_Wesley-Wesleys_Moons",
+    "version": "7.0.11",
+    "enabled": true
+  },
+  {
+    "package": "MonoDetour-MonoDetour",
+    "version": "0.7.16",
+    "enabled": true
+  },
+  {
+    "package": "MonoDetour-MonoDetour_BepInEx_5",
+    "version": "0.7.16",
+    "enabled": true
+  },
+  {
+    "package": "Evaisa-LethalLib",
+    "version": "1.2.0",
+    "enabled": true
+  },
+  {
+    "package": "Zigzag-LegendWeathers",
+    "version": "2.2.2",
+    "enabled": true
+  },
+  {
+    "package": "Zigzag-Combined_Weathers_Toolkit",
+    "version": "1.1.3",
+    "enabled": true
+  },
+  {
+    "package": "ZetaArcade-WeatherInjector",
+    "version": "1.3.0",
+    "enabled": true
+  },
+  {
+    "package": "Zeldahu-LethalAnomalies",
+    "version": "0.3.1",
+    "enabled": true
+  },
+  {
+    "package": "Zehs-ImmersiveEntrance",
+    "version": "1.1.3",
+    "enabled": true
+  },
+  {
+    "package": "zealsprince-Malfunctions",
+    "version": "1.10.3",
+    "enabled": true
+  },
+  {
+    "package": "zealsprince-Locker",
+    "version": "1.6.3",
+    "enabled": true
+  },
+  {
+    "package": "Zaggy1024-TwoRadarMaps",
+    "version": "1.6.5",
+    "enabled": true
+  },
+  {
+    "package": "Zaggy1024-SmartEnemyPathfinding",
+    "version": "0.0.4",
+    "enabled": true
+  },
+  {
+    "package": "Zaggy1024-PathfindingLagFix",
+    "version": "2.4.2",
+    "enabled": true
+  },
+  {
+    "package": "ZaboomafooW-CancelJoiningLobby",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "ZaboomafooW-BetterServerScrolling",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "ZaboomafooW-BetterLoadingScreen",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "ZaboomafooW-BetterDisconnectReasons",
+    "version": "1.0.3",
+    "enabled": true
+  },
+  {
+    "package": "YaBoiDucki-men_stalker",
+    "version": "3.1.2",
+    "enabled": true
+  },
+  {
+    "package": "XuXiaolan-SoftMaskKiller",
+    "version": "0.0.1",
+    "enabled": true
+  },
+  {
+    "package": "XuXiaolan-CodeRebirth",
+    "version": "1.6.9",
+    "enabled": true
+  },
+  {
+    "package": "x753-Peepers",
+    "version": "1.0.5",
+    "enabled": true
+  },
+  {
+    "package": "x753-Mimics",
+    "version": "2.7.4",
+    "enabled": true
+  },
+  {
+    "package": "windblownleaves-ProblematicPilotry",
+    "version": "1.3.7",
+    "enabled": true
+  },
+  {
+    "package": "WhiteSpike-Lategame_Company_Cruiser_Upgrades",
+    "version": "1.1.5",
+    "enabled": true
+  },
+  {
+    "package": "WhiteSpike-Interactive_Terminal_API",
+    "version": "1.3.3",
+    "enabled": true
+  },
+  {
+    "package": "Wexop-TheThing",
+    "version": "1.0.8",
+    "enabled": true
+  },
+  {
+    "package": "Wexop-CountryRoadCreature",
+    "version": "1.0.9",
+    "enabled": true
+  },
+  {
+    "package": "Wexop-BigMouth",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "Wexop-BigEyes",
+    "version": "1.3.9",
+    "enabled": true
+  },
+  {
+    "package": "VirusTLNR-LethalIntelligenceExperimental",
+    "version": "0.4.9",
+    "enabled": true
+  },
+  {
+    "package": "VELD-Enhanced_Monsters",
+    "version": "1.4.0",
+    "enabled": true
+  },
+  {
+    "package": "Turkeysteaks-CoronerIntegrations",
+    "version": "0.7.0",
+    "enabled": true
+  },
+  {
+    "package": "Tubbbe-Mystery_Button",
+    "version": "1.2.2",
+    "enabled": true
+  },
+  {
+    "package": "ThistleNebulaArchive-Thistle_Nebula_Archive_Scrap",
+    "version": "3.0.0",
+    "enabled": true
+  },
+  {
+    "package": "TheWildSkelaah-SkelaahsInteriorsPlus",
+    "version": "0.0.5",
+    "enabled": true
+  },
+  {
+    "package": "theunknowncod3r-Scopophobia",
+    "version": "1.3.4",
+    "enabled": true
+  },
+  {
+    "package": "TestAccount666-ScannableTools",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "TestAccount666-GoodItemScan",
+    "version": "2.1.0",
+    "enabled": true
+  },
+  {
+    "package": "Terraformer9x-TerrasScrap",
+    "version": "81.4.2",
+    "enabled": true
+  },
+  {
+    "package": "taffyko-NiceChat",
+    "version": "1.2.7",
+    "enabled": true
+  },
+  {
+    "package": "taffyko-NameplateTweaks",
+    "version": "1.0.7",
+    "enabled": true
+  },
+  {
+    "package": "Swaggies-BetterEXP",
+    "version": "3.0.1",
+    "enabled": true
+  },
+  {
+    "package": "SurfacedTeam-Surfaced",
+    "version": "1.7.1",
+    "enabled": true
+  },
+  {
+    "package": "super_fucking_cool_and_badass_team-Biodiversity",
+    "version": "0.2.95",
+    "enabled": true
+  },
+  {
+    "package": "stretchy0-ShotgunRoulette",
+    "version": "0.2.1",
+    "enabled": false
+  },
+  {
+    "package": "SoftDiamond-RollingGiant",
+    "version": "2.6.3",
+    "enabled": true
+  },
+  {
+    "package": "Snowlance-Rats",
+    "version": "1.4.2",
+    "enabled": true
+  },
+  {
+    "package": "Smxrez-SimpleScrap",
+    "version": "0.8.1",
+    "enabled": true
+  },
+  {
+    "package": "slayer6409-LethalScrollFix",
+    "version": "0.0.1",
+    "enabled": true
+  },
+  {
+    "package": "slayer6409-Emergency_Dice_Updated",
+    "version": "1.14.2",
+    "enabled": true
+  },
+  {
+    "package": "SimonTendo-LCLocalFixes",
+    "version": "0.0.5",
+    "enabled": true
+  },
+  {
+    "package": "SimonTendo-LCLegDayMod",
+    "version": "2.3.0",
+    "enabled": true
+  },
+  {
+    "package": "SimonTendo-LCGoldScrapMod",
+    "version": "2.2.7",
+    "enabled": true
+  },
+  {
+    "package": "SillySquad-Arachnophilia",
+    "version": "1.8.1",
+    "enabled": true
+  },
+  {
+    "package": "ShaosilGaming-GeneralImprovements",
+    "version": "1.5.5",
+    "enabled": true
+  },
+  {
+    "package": "seechela-LethalElementsForky",
+    "version": "1.4.2",
+    "enabled": true
+  },
+  {
+    "package": "seechela-First_Person_View",
+    "version": "1.5.2",
+    "enabled": true
+  },
+  {
+    "package": "seechela-Camera_Overhaul",
+    "version": "1.3.0",
+    "enabled": true
+  },
+  {
+    "package": "Scoops-LethalSponge",
+    "version": "1.4.3",
+    "enabled": true
+  },
+  {
+    "package": "Scoops-LethalPhones",
+    "version": "1.3.23",
+    "enabled": true
+  },
+  {
+    "package": "ScienceBird-Universal_Radar",
+    "version": "1.2.4",
+    "enabled": true
+  },
+  {
+    "package": "ScienceBird-ScienceBird_Tweaks",
+    "version": "4.7.5",
+    "enabled": true
+  },
+  {
+    "package": "Scandal-Scandals_Tweaks",
+    "version": "1.4.8",
+    "enabled": true
+  },
+  {
+    "package": "Rminin-FinallyCorrectKeys",
+    "version": "1.6.1",
+    "enabled": true
+  },
+  {
+    "package": "RetrOxide-Cruiser_Radio_Classics",
+    "version": "0.1.2",
+    "enabled": true
+  },
+  {
+    "package": "reindogfan1372-ReindogAndFriends",
+    "version": "2.4.0",
+    "enabled": true
+  },
+  {
+    "package": "Reiko88-Observer",
+    "version": "2.0.1",
+    "enabled": true
+  },
+  {
+    "package": "Reiko88-BloodWitch",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "ProjectSCP-SCP1507",
+    "version": "1.1.5",
+    "enabled": true
+  },
+  {
+    "package": "Pooble-LCBetterSaves",
+    "version": "1.7.3",
+    "enabled": true
+  },
+  {
+    "package": "NutNutty-SellTracker",
+    "version": "1.2.1",
+    "enabled": true
+  },
+  {
+    "package": "notnotnotswipez-MoreCompany",
+    "version": "1.14.0",
+    "enabled": true
+  },
+  {
+    "package": "nihl-HungryCompany",
+    "version": "1.1.0",
+    "enabled": true
+  },
+  {
+    "package": "NiceHairs-Symbiosis",
+    "version": "1.0.8",
+    "enabled": true
+  },
+  {
+    "package": "mrov-WeatherTweaks",
+    "version": "1.1.11",
+    "enabled": true
+  },
+  {
+    "package": "mrov-TerminalFormatter",
+    "version": "0.3.7",
+    "enabled": true
+  },
+  {
+    "package": "mrov-MrovWeathers",
+    "version": "0.0.7",
+    "enabled": true
+  },
+  {
+    "package": "mrov-LethalRichPresenceExperimental",
+    "version": "0.2.0",
+    "enabled": true
+  },
+  {
+    "package": "mr_hat-NicheTweaks",
+    "version": "0.5.6",
+    "enabled": true
+  },
+  {
+    "package": "mrgrm7-LethalCasino",
+    "version": "1.1.3",
+    "enabled": true
+  },
+  {
+    "package": "MoonsweptTeam-Moonswept",
+    "version": "1.4.0",
+    "enabled": true
+  },
+  {
+    "package": "MINE9289-BetterSprayPaintForkColors",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "MikuOreo-Fairer_Fire_Exits",
+    "version": "2.0.2",
+    "enabled": true
+  },
+  {
+    "package": "MelanieMelicious-Save_Before_Landing_MelanieMelicious",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "mattymatty-MonkeyInjectionLibrary",
+    "version": "1.0.2",
+    "enabled": true
+  },
+  {
+    "package": "mattymatty-Matty_Fixes",
+    "version": "1.1.41",
+    "enabled": true
+  },
+  {
+    "package": "mattymatty-LobbyControl",
+    "version": "2.5.12",
+    "enabled": true
+  },
+  {
+    "package": "mattymatty-EntranceTeleportOptimizations",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "mattymatty-AsyncLoggers",
+    "version": "2.2.3",
+    "enabled": true
+  },
+  {
+    "package": "mattymatty-AdditionalNetworking",
+    "version": "2.4.1",
+    "enabled": true
+  },
+  {
+    "package": "malco-Lategame_Upgrades",
+    "version": "3.14.1",
+    "enabled": true
+  },
+  {
+    "package": "Magic_Wesley-Wesleys_Shenanigans",
+    "version": "1.0.14",
+    "enabled": true
+  },
+  {
+    "package": "Magic_Wesley-Wesleys_Ememy_Variants",
+    "version": "1.3.8",
+    "enabled": true
+  },
+  {
+    "package": "Magic_Wesley-Wesleys_Weathers",
+    "version": "1.3.2",
+    "enabled": true
+  },
+  {
+    "package": "Magic_Wesley-CustomStoryLogsFixed",
+    "version": "1.6.1",
+    "enabled": true
+  },
+  {
+    "package": "loaforc-FacilityMeltdown",
+    "version": "2.7.5",
+    "enabled": true
+  },
+  {
+    "package": "LethalResonance-LETHALRESONANCE",
+    "version": "4.7.8",
+    "enabled": true
+  },
+  {
+    "package": "LethalCompanyModding-LCUltrawide_Community",
+    "version": "1.4.0",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-PizzaProbabilityUpdated",
+    "version": "1.2.6",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Casino_v81_Patch",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Advance_Features",
+    "version": "1.3.0",
+    "enabled": true
+  },
+  {
+    "package": "Kittenji-Herobrine",
+    "version": "1.3.9",
+    "enabled": true
+  },
+  {
+    "package": "Kittenji-Football",
+    "version": "1.1.14",
+    "enabled": true
+  },
+  {
+    "package": "kerotein-YPlayBoombox",
+    "version": "2.7.0",
+    "enabled": true
+  },
+  {
+    "package": "Jordo-NeedyCats",
+    "version": "1.2.5",
+    "enabled": true
+  },
+  {
+    "package": "Jordo-BombCollar",
+    "version": "1.1.6",
+    "enabled": true
+  },
+  {
+    "package": "JacobG5-ReverbTriggerFix",
+    "version": "0.4.0",
+    "enabled": true
+  },
+  {
+    "package": "JacobG5-LostEnemyFix",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "JacobG5-DestroyItemInSlotFix",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "IntegrityChaos-Frailty",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "HQ_Team-ImprovedLethalThings",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "HQ_Team-abandonedcompanyassetsfork",
+    "version": "0.17.2",
+    "enabled": true
+  },
+  {
+    "package": "Generic_GMD-Blue",
+    "version": "1.1.0",
+    "enabled": true
+  },
+  {
+    "package": "FlipMods-TooManyEmotes",
+    "version": "2.3.17",
+    "enabled": true
+  },
+  {
+    "package": "FlipMods-MoreBlood",
+    "version": "1.0.3",
+    "enabled": true
+  },
+  {
+    "package": "FlipMods-HotbarPlus",
+    "version": "1.8.6",
+    "enabled": true
+  },
+  {
+    "package": "fiufki-Orbits",
+    "version": "1.0.6",
+    "enabled": true
+  },
+  {
+    "package": "Fandovec03-SpiderPositionFix",
+    "version": "1.6.5",
+    "enabled": true
+  },
+  {
+    "package": "Evaisa-LethalThings",
+    "version": "0.10.13",
+    "enabled": true
+  },
+  {
+    "package": "etherealemil-UsualScrap",
+    "version": "2.0.7",
+    "enabled": true
+  },
+  {
+    "package": "Entity378-Lethal_Doors_Fixed",
+    "version": "1.2.1",
+    "enabled": true
+  },
+  {
+    "package": "Entity378-HexiBetterShotgunFixed",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "Enova-LoadingTips",
+    "version": "1.2.0",
+    "enabled": true
+  },
+  {
+    "package": "enmaai0737-RollerEnemy",
+    "version": "1.0.6",
+    "enabled": true
+  },
+  {
+    "package": "Electric131-OuijaBoard",
+    "version": "1.5.5",
+    "enabled": true
+  },
+  {
+    "package": "EladNLG-EladsHUD",
+    "version": "1.3.0",
+    "enabled": true
+  },
+  {
+    "package": "dragonmcmx-AudibleHydraulics",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "dopadream-HexiShotgunTweaks",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "dopadream-ClaySurgeonOverhaul",
+    "version": "1.3.9",
+    "enabled": true
+  },
+  {
+    "package": "dopadream-Atlas",
+    "version": "1.0.7",
+    "enabled": true
+  },
+  {
+    "package": "DiggC-CruiserImproved",
+    "version": "1.6.4",
+    "enabled": true
+  },
+  {
+    "package": "DiFFoZ-LethalPerformance",
+    "version": "1.4.3",
+    "enabled": true
+  },
+  {
+    "package": "DiFFoZ-DiFFoZTweaks",
+    "version": "1.7.2",
+    "enabled": true
+  },
+  {
+    "package": "DiFFoZ-BepInEx_Faster_Load_AssetBundles_Patcher",
+    "version": "1.2.0",
+    "enabled": true
+  },
+  {
+    "package": "DeviousEquine-Company_Globes",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "DevEisia-PiggyVarietyModFixed",
+    "version": "1.5.1",
+    "enabled": true
+  },
+  {
+    "package": "Dev1A3-LobbyImprovements",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "Dev1A3-LethalFixes",
+    "version": "1.3.3",
+    "enabled": true
+  },
+  {
+    "package": "debit_card_debit-UniqueItemSounds",
+    "version": "0.2.3",
+    "enabled": true
+  },
+  {
+    "package": "DaXcess-NoMoreCompanyLogo",
+    "version": "1.1.0",
+    "enabled": true
+  },
+  {
+    "package": "DaXcess-NoJumpDelay",
+    "version": "1.1.1",
+    "enabled": true
+  },
+  {
+    "package": "darmuh-LethalConstellations",
+    "version": "0.3.3",
+    "enabled": true
+  },
+  {
+    "package": "darmuh-darmuhsTerminalStuff",
+    "version": "3.10.3",
+    "enabled": true
+  },
+  {
+    "package": "Darkbrewery-Emblem",
+    "version": "1.6.4",
+    "enabled": true
+  },
+  {
+    "package": "DaanSmoki-ReviveDesyncPatch",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "Crafty-LunarConfig",
+    "version": "0.4.3",
+    "enabled": true
+  },
+  {
+    "package": "CptDristyler-ScaledFallDamageV81",
+    "version": "1.0.6",
+    "enabled": true
+  },
+  {
+    "package": "cookiecaker-SigurdsScrap",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "confusingus-LethalCasinoTweaks",
+    "version": "2.0.1",
+    "enabled": true
+  },
+  {
+    "package": "coderCleric-Poltergeist",
+    "version": "1.2.12",
+    "enabled": true
+  },
+  {
+    "package": "chuxiaaaa-LoadingInfo",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "chuxiaaaa-LethalError",
+    "version": "1.0.6",
+    "enabled": true
+  },
+  {
+    "package": "chuxiaaaa-ChuxiaFixes",
+    "version": "1.0.7",
+    "enabled": true
+  },
+  {
+    "package": "Ccode_lang-The_Rolling_Chair",
+    "version": "1.0.4",
+    "enabled": true
+  },
+  {
+    "package": "Cabinet_crew-TheCabinet",
+    "version": "1.12.1",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-VentSpawnFix",
+    "version": "1.2.3",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-RevisitStingers",
+    "version": "1.3.1",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-MeleeFixes",
+    "version": "1.5.1",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-JetpackFixes",
+    "version": "1.6.3",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-Chameleon",
+    "version": "2.4.3",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-ButteryFixes",
+    "version": "1.17.22",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-BarberFixes",
+    "version": "1.3.1",
+    "enabled": true
+  },
+  {
+    "package": "ButteryStancakes-ButteRyBalance",
+    "version": "0.7.1",
+    "enabled": true
+  },
+  {
+    "package": "Bertogim-LoadingScreen",
+    "version": "1.1.4",
+    "enabled": true
+  },
+  {
+    "package": "Beaniebe-Beanies_Furniture",
+    "version": "1.0.6",
+    "enabled": true
+  },
+  {
+    "package": "Azx-LethalCasinoAtmFix",
+    "version": "1.0.1",
+    "enabled": true
+  },
+  {
+    "package": "AuroraBytes-The_Fiend",
+    "version": "1.1.6",
+    "enabled": true
+  },
+  {
+    "package": "AmesBoys-ImmortalSnail",
+    "version": "0.7.8",
+    "enabled": true
+  },
+  {
+    "package": "4902-No_Console_Spam",
+    "version": "1.8.1",
+    "enabled": true
+  },
+  {
+    "package": "347956-RoundManagerObjectReferenceFix",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Lethal_Enhanced_Party_Edition_EXTRA",
+    "version": "11.12.1",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Lethal_Enhanced_Party_Edition_COSMOS",
+    "version": "11.12.1",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Lethal_Enhanced_Party_Edition_COSMETICS",
+    "version": "11.12.1",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Lethal_Enhanced_Party_Edition_CORE",
+    "version": "11.12.1",
+    "enabled": true
+  },
+  {
+    "package": "lethal_coder-Lethal_Enhanced_Party_Edition",
+    "version": "11.12.1",
+    "enabled": true
+  },
+  {
+    "package": "HackerSaul-MirageVoces",
+    "version": "0.4.2",
+    "enabled": true
+  }
+]

@@ -1,0 +1,91 @@
+# Desfibrilator — versión experimental 0.1.0
+
+Mod de BepInEx para Lethal Company, con **v81 como versión objetivo**. Desfibrilador comprable por **100 créditos**, reutilizable y con espera global entre reanimaciones.
+
+**Estado:** código compilado y pruebas de la lógica de servidor superadas. No se ha ejecutado Lethal Company en este entorno. La compra, las referencias exactas de v81, la reanimación y la compatibilidad multijugador siguen pendientes de validación en el juego. No es una versión estable certificada para el perfil completo.
+
+## Descargar para Thunderstore Mod Manager
+
+[Descargar Desfibrilator 0.1.0 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-0.1.0.zip)
+
+Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-0.1.0.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
+
+## Funcionamiento
+
+- Equipa el objeto en la mano activa y apunta a un cadáver cercano y recuperable, a un máximo aproximado de 2,5 metros de la cámara.
+- Mantén **E durante 5 segundos**. Soltar, alejarse, perder el objetivo, cambiar de objeto, morir o terminar la ronda cancela el proceso sin consumir la espera.
+- El jugador vuelve junto al cuerpo con **30 puntos de vida** e inventario vacío. Los objetos soltados permanecen donde cayeron; el mod no crea ni elimina esos objetos.
+- Se inicia una **espera de 90 segundos para toda la partida**, compartida entre todas las unidades, jugadores y cadáveres. No se pueden completar reanimaciones simultáneas. Cambiar o soltar el desfibrilador no evita la espera.
+- La cuenta atrás aparece mientras se lleva equipado. Se sincroniza también con jugadores que se incorporan a la partida.
+- Sin este objeto en la mano activa, se conserva la interacción normal de recoger cadáveres.
+- Se rechazan cuerpos decapitados, desactivados, no recuperables, sujetos por otro jugador/enemigo, con partes físicas ausentes o asociados a jugadores desconectados. Si un mod conserva objetos en el inventario del muerto, la reanimación se bloquea para no destruirlos ni duplicarlos.
+- Se necesita un espacio libre con suelo junto al cadáver. Los cambios de escena y el fin de ronda invalidan la carga; no se recuperan cuerpos de expediciones anteriores.
+
+Incluye modelo original generado por código: carcasa naranja, pantalla, cruz, asa, cables y dos palas; sonidos originales sintetizados de carga y descarga. Utiliza una pose básica de sujeción del juego y mueve las palas al cargar. **Todavía no incluye una animación propia de las manos colocando ambas palas sobre el pecho**; requiere trabajo y pruebas adicionales dentro de Unity/juego. La escala y orientación del modelo también necesitan revisión visual en v81.
+
+## Instalación de prueba
+
+Todos los participantes necesitan las mismas versiones del mod y de sus dependencias:
+
+- `BepInEx-BepInExPack-5.4.2305`.
+- `Evaisa-LethalLib-1.2.0` y las dependencias que Thunderstore instale con él.
+
+Ambos paquetes ya están en el perfil **Lloreria LETHAL 2**. El mod utiliza Unity Input System directamente; no añade otra versión de InputUtils.
+
+1. Duplica el perfil en Thunderstore Mod Manager para las pruebas.
+2. Entra en **Settings / Configuración → Profile / Perfil → Import local mod**. También puedes buscar «Import local mod» en los ajustes.
+3. Selecciona **`ciriolopipado-Desfibrilator-0.1.0.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `0.1.0` (campos `0`, `1`, `0`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
+4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Desfibrilator 0.1.0 loaded`.
+5. Busca `Desfibrilator` en la tienda del terminal y realiza las pruebas de [docs/pruebas.md](docs/pruebas.md).
+
+No hace falta publicar el mod ni compilarlo en tu ordenador. Cada participante debe importar el mismo ZIP. El paquete incluye `LEEME_INSTALACION.txt` con estos pasos. Como alternativa manual, copia únicamente su contenido de `BepInEx/plugins/Desfibrilator/` a la ruta equivalente del perfil, sin mantener otra instalación del mismo mod.
+
+Tras iniciar una vez, la tecla se configura en `BepInEx/config/ciriolopipado.desfibrilator.cfg`, sección `Controls`, propiedad `Defibrillate`. Valor por defecto: `<Keyboard>/e`. Admite otras rutas de Unity Input System; reinicia tras cambiarlo. El texto de ayuda menciona E como tecla predeterminada, aunque se cambie la asignación.
+
+## Compilación
+
+Requisitos: .NET SDK 8 y Python 3. No hace falta un servidor web ni servicios de base de datos. Trabaja en este checkout; no crees otro worktree salvo que se solicite.
+
+### Con referencias de tu instalación de v81 — recomendado
+
+El perfil `.r2z` exporta versiones y configuración, **no los DLL del juego**. Para compilar contra tu instalación real:
+
+```sh
+python scripts/prepare-local-refs.py --managed "/ruta/Lethal Company/Lethal Company_Data/Managed" --profile "/ruta/perfil/Lloreria LETHAL 2"
+dotnet build src/Desfibrilator/Desfibrilator.csproj -c Release -p:LocalReferenceDirectory="/ruta/checkout/.local/v81-refs"
+dotnet run --project tests/Desfibrilator.Tests -c Release
+python scripts/package.py
+```
+
+Las rutas deben sustituirse por las de tu equipo; también funciona en Windows. Los DLL de referencia se guardan en `.local/`, se ignoran en Git y no se distribuyen en el paquete.
+
+### Referencias públicas para desarrollo en la nube
+
+```sh
+python scripts/prepare-reference-snapshot.py
+dotnet build src/Desfibrilator/Desfibrilator.csproj -c Release
+dotnet run --project tests/Desfibrilator.Tests -c Release
+python scripts/package.py
+```
+
+Este segundo flujo es el validado en el entorno actual. Usa las referencias públicas del repositorio LethalLib, commit `bc9d11fbc412aca87f9478eebaedb3c739b97c74`, de la época de v80, BepInEx API 5.4.21, Unity reference modules 2021.3.33 y LethalLib 1.2.0. **Compilar con ese conjunto no demuestra compatibilidad binaria con v81** ni valida BepInExPack 5.4.2305 en ejecución. El script conserva TLS y comprueba SHA-256 antes de usar los archivos.
+
+En esta máquina, el SDK está en `/workspace/.tools/dotnet`. Antes de usarlo:
+
+```sh
+export DOTNET_CLI_HOME=/workspace/.tools/dotnet-home
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export PATH=/workspace/.tools/dotnet:$PATH
+```
+
+## Validación y compatibilidad
+
+Las pruebas automáticas ejercitan la máquina de estados de servidor: duración, exclusión de cargas simultáneas, espera global, cancelación, pérdida de mensajes y reinicio de sesión. No sustituyen pruebas de físicas, inventario, cámara, voz o transporte de red dentro de Unity.
+
+El anfitrión valida distancia, obstáculos, equipo activo, estado del cuerpo y conexión del objetivo. El cliente envía señales periódicas de que mantiene la acción y el objetivo; el servidor exige cinco segundos de esas señales. Esto evita que un cliente complete la carga anticipadamente, pero no constituye una protección frente a clientes modificados que falsifiquen la pulsación o el apuntado.
+
+El inventario del perfil recibido está en [docs/profile-inventory.json](docs/profile-inventory.json): 294 paquetes, 293 activos. No se ha demostrado ningún conflicto. Las prioridades de prueba son **MoreCompany 1.14.0**, **Poltergeist 1.2.12**, **HotbarPlus 1.8.6**, **ReviveDesyncPatch 1.0.0**, los cambios de cámara/HUD y los efectos de Lategame Upgrades/Emergency Dice. No se desactiva ni modifica ninguno de estos mods. La limpieza del estado de fantasma de Poltergeist requiere validación específica.
+
+Se usa mensajería de Unity Netcode con identificadores de cliente y de objeto; no se fija un máximo de cuatro jugadores. No se llama a `ReviveDeadPlayers()`, que reanimaría a todos los muertos y alteraría el flujo de fin de ronda. No se modifica el contador `playersRevived`, reservado por el juego para ese flujo.
+
+El ZIP se genera en `dist/ciriolopipado-Desfibrilator-0.1.0.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Sigue siendo una compilación experimental y no se ha publicado en el catálogo de Thunderstore.
