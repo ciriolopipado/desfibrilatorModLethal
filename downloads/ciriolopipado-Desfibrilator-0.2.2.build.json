@@ -1,0 +1,91 @@
+{
+  "version": "0.2.2",
+  "source_commit": "d56266906c12bc96f336ef7a33b6869571563b43",
+  "archive_sha256": "69326693f745f7e4c3bbe74fe36728b5e421a4164dba207d3622fac255782b1d",
+  "game_reference_package": "LethalCompany.GameLibs.Steam 81.0.5-ngd.0",
+  "unity_reference_modules": "2021.3.33",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "verification": "Build passed with zero errors/warnings; 41 core tests passed; packaged DLL identity, archive integrity and previous release hashes verified. Game integration not executed.",
+  "purpose": "Candidate repair for reported host/client animation, footsteps, live voice and missing side effects.",
+  "repairs": [
+    "native owner animator and audio listener initialization",
+    "alive voice bindings/filters",
+    "corpse-independent authoritative revival messages with receipts/retries",
+    "isolated microphone subscriber faults",
+    "separate SFX sources for echoes/shocks",
+    "event timing and state diagnostics"
+  ],
+  "protocol": "revival v3; every participant must update to 0.2.2",
+  "runtime_validation_pending": [
+    "host and client legs/footsteps",
+    "live voice before and after deaths",
+    "recorded echo and enemy hearing",
+    "camera impulses",
+    "full profile including Poltergeist/Mirage"
+  ],
+  "visible_item_name": "Ciriolator",
+  "shop_price_credits": 0,
+  "members": [
+    {
+      "name": "manifest.json",
+      "size": 399,
+      "sha256": "89769ef6d1013e28449e041925561a9ee8a0b78c606e9ae75699c3063dd7db6f"
+    },
+    {
+      "name": "README.md",
+      "size": 13475,
+      "sha256": "9d895d9650ee3e47aab6a8c0846987d2f6b263d43e0a90b7f16e38df0a09a0af"
+    },
+    {
+      "name": "LICENSE",
+      "size": 1083,
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f"
+    },
+    {
+      "name": "SECURITY.md",
+      "size": 5476,
+      "sha256": "0c00b05a7671c1ac76317ae2cafc5913e87719f305f68a8d4a49dcca172f169e"
+    },
+    {
+      "name": "icon.png",
+      "size": 87909,
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "size": 64512,
+      "sha256": "553afb2a0975f8461fb383eeb75f0204a21e8ec08c3707849b15b525cbb87ff8"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "size": 11264,
+      "sha256": "c2a3d23c7ac1e8ba4e7fb7edda38bff61f8c9ef4219de684f2b78fdbb7d3e544"
+    },
+    {
+      "name": "PRUEBAS.md",
+      "size": 6574,
+      "sha256": "d4807a7cff5b44458862e8f56cf690d2f8b0233d780a37abff290023a1d03581"
+    },
+    {
+      "name": "docs/pruebas.md",
+      "size": 6574,
+      "sha256": "d4807a7cff5b44458862e8f56cf690d2f8b0233d780a37abff290023a1d03581"
+    },
+    {
+      "name": "docs/efectos-secundarios.md",
+      "size": 7166,
+      "sha256": "ca03ed5c852974c4d110081e6b2c35e4e444e9c35d2df7b87ffe2ff989371521"
+    },
+    {
+      "name": "docs/regresion-0.2.2.md",
+      "size": 3907,
+      "sha256": "2c142f885e78d06a438601e4cf1128817566083532d64d4ccf91d96e205937d0"
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "size": 4115,
+      "sha256": "a805cac1cb64d87c4d10663787e89623b831f3c5270d117bdb419dae8c1e5b8b"
+    }
+  ]
+}
