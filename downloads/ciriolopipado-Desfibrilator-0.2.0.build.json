@@ -1,0 +1,98 @@
+{
+  "version": "0.2.0",
+  "source_commit": "4ee53248e148534c6ac2f031680e14a6000569f5",
+  "archive_sha256": "fc837cdd77d4b63184425ccb8392598789da16b02b707a31ed8ee7526e3aa19a",
+  "game_reference_package": "LethalCompany.GameLibs.Steam 81.0.5-ngd.0",
+  "unity_reference_modules": "2021.3.33",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "verification": "Release build: zero errors/warnings. 35 core tests passed. Archive integrity, current DLL identity, icon and prior download checksums verified. Game not executed.",
+  "runtime_pending": [
+    "microphone and PTT gating in game",
+    "audio transfer and proximity playback",
+    "enemy response",
+    "persistent camera offset",
+    "orbit and disconnect lifecycle with the mod profile"
+  ],
+  "voice": {
+    "capture_default": false,
+    "toggle_default": "F8",
+    "max_seconds": 5,
+    "pcm_sample_rate": 8000,
+    "max_pcm_bytes": 80000,
+    "audio_chunk_bytes": 768,
+    "storage": "session memory only",
+    "external_services": false
+  },
+  "effects": {
+    "voice_interval_seconds": [
+      60,
+      120
+    ],
+    "shock_interval_seconds": [
+      45,
+      90
+    ],
+    "ends": "orbit or disconnect",
+    "camera_recenters": false
+  },
+  "visible_item_name": "Ciriolator",
+  "shop_price_credits": 0,
+  "members": [
+    {
+      "name": "manifest.json",
+      "size": 396,
+      "sha256": "40e2ee7b0fc6889af37514624c5f10146e009e0bcbca8c6f60747092d1d9db4a"
+    },
+    {
+      "name": "README.md",
+      "size": 11861,
+      "sha256": "a709f602286441a2830ac7f2763e67b6b4f09be35bd9af09b8f6fde8a94e29ed"
+    },
+    {
+      "name": "LICENSE",
+      "size": 1083,
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f"
+    },
+    {
+      "name": "SECURITY.md",
+      "size": 5198,
+      "sha256": "ab31b29e291af661115e777813b7aadca5cce7a5a84a07e191642442485df461"
+    },
+    {
+      "name": "icon.png",
+      "size": 87909,
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "size": 51712,
+      "sha256": "f7a6404943b0a6fb4b3d74e17717e3d5cee33378f6f843841565605b9112be09"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "size": 10752,
+      "sha256": "20fb98b383546f7e6aff465a8910a1e243fc08a3218c12627e1e4dbc0c9a7535"
+    },
+    {
+      "name": "PRUEBAS.md",
+      "size": 5895,
+      "sha256": "4652cf3d12d93a3414fe389437f94d07d91ae738915acec702ad79c971aaa548"
+    },
+    {
+      "name": "docs/pruebas.md",
+      "size": 5895,
+      "sha256": "4652cf3d12d93a3414fe389437f94d07d91ae738915acec702ad79c971aaa548"
+    },
+    {
+      "name": "docs/efectos-secundarios.md",
+      "size": 5775,
+      "sha256": "c6e7c6aefc6c4af3538f8383bf43319a991b274e147192cbb2b09d02ce927ca1"
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "size": 3255,
+      "sha256": "f95a162f58d5ce1cc441803a60e72cc41eccce74e6967e02da1d882f60537407"
+    }
+  ]
+}
