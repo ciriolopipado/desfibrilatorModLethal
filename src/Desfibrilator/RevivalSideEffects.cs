@@ -79,6 +79,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
     {
         BindManager();
         if (!registered || manager == null || !manager.IsListening) { capture.Update(false, false, false); return; }
+        if (!manager.IsServer && !manager.IsConnectedClient) { capture.Update(false, false, false); return; }
         var local = Local;
         if (local != null && !welcomed)
         {
@@ -413,7 +414,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
     {
         var player = Player(client);
         if (player == null || player.isPlayerDead || !Interaction.RoundActive || !voices.TryGetValue(client, out var voice) ||
-            player.voicePlayerState?.IsLocallyMuted == true) return;
+            (!player.IsOwner && player.voicePlayerState?.IsLocallyMuted == true)) return;
         if (voice.Source == null)
         {
             var obj = new GameObject("CiriolatorProximityEcho"); obj.transform.SetParent(player.transform, false);
