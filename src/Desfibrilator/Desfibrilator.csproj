@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework><AssemblyName>Desfibrilator</AssemblyName><Version>0.2.0</Version>
+    <TargetFramework>netstandard2.1</TargetFramework><AssemblyName>Desfibrilator</AssemblyName><Version>0.2.1</Version>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <LocalReferenceDirectory Condition="'$(LocalReferenceDirectory)' == ''">$(MSBuildThisFileDirectory)../../.local/reference-v81</LocalReferenceDirectory>
     <EnableDynamicLoading>true</EnableDynamicLoading>

@@ -19,9 +19,9 @@ internal sealed class LastWordsCapture : IMicrophoneSubscriber, IDisposable
     private bool previouslyTransmitting;
     internal short[] Frozen { get; private set; } = Array.Empty<short>();
 
-    internal void Update(bool consent, bool aliveInMission, bool replaying)
+    internal void Update(bool enabled, bool aliveInMission, bool replaying)
     {
-        if (!consent) { Dispose(); return; }
+        if (!enabled) { Dispose(); return; }
         if (comms == null)
         {
             comms = UnityEngine.Object.FindObjectOfType<DissonanceComms>();
@@ -78,7 +78,8 @@ internal sealed class LastWordsCapture : IMicrophoneSubscriber, IDisposable
         }
     }
 
-    public void Reset() { lock (gate) { buffer.Clear(); phase = 0; previousRate = 0; } }
+    // A microphone/processing reset must not erase words already spoken earlier in this expedition.
+    public void Reset() { lock (gate) { buffer.EndPhrase(); phase = 0; previousRate = 0; } }
     internal void ClearRound()
     {
         allowed = transmitting = false;

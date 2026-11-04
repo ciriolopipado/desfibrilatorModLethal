@@ -1,5 +1,12 @@
 # Historial
 
+## 0.2.1 — captura automática
+
+- Captura automáticamente la voz propia transmitida durante la expedición; ya no requiere F8.
+- Usa `LastWords.AutomaticVoiceCapture=true` por defecto, también al actualizar desde 0.2.0; ignora las antiguas claves de F8/RecordOwnVoice. Puede desactivarse en la configuración local.
+- Conserva la última intervención anterior aunque no se hable justo antes de morir, y la mantiene ante reinicios del procesamiento del micrófono hasta que termine la expedición.
+- Mantiene los avisos visibles, el límite de cinco segundos, el silencio/PTT y la limpieza al llegar a órbita.
+
 ## 0.2.0 — efectos secundarios experimentales
 
 - Últimas palabras: hasta 5 s de voz propia transmitida antes de morir, con consentimiento local (F8), reproducción cercana cada 60–120 s y ruido para enemigos sensibles al sonido.

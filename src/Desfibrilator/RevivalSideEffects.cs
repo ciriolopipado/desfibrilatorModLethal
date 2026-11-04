@@ -8,11 +8,10 @@ using HarmonyLib;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Desfibrilator;
 
-/// <summary>Server-scheduled side effects. Audio is opt-in, bounded, owner-only on upload and memory-only.</summary>
+/// <summary>Server-scheduled side effects. Automatic local voice capture is bounded and memory-only.</summary>
 public sealed class RevivalSideEffects : MonoBehaviour
 {
     internal static RevivalSideEffects? Instance;
@@ -49,10 +48,9 @@ public sealed class RevivalSideEffects : MonoBehaviour
     private readonly Dictionary<ulong, uint> incomingTickets = new Dictionary<ulong, uint>();
     private readonly System.Random random = new System.Random();
     private NetworkManager? manager;
-    private ConfigEntry<bool> consent = null!;
+    private ConfigEntry<bool> automaticCapture = null!;
     private ConfigEntry<float> cameraStrength = null!;
-    private InputAction toggle = null!;
-    private bool registered, listening, ready, missionSeen, lastConsent, localWasDead, welcomed;
+    private bool registered, listening, ready, missionSeen, lastCaptureEnabled, localWasDead, welcomed;
     private uint epoch = 1, nextTicket, localTicket;
     private double nextHello, localTicketExpires, noticeUntil;
     private string notice = "";
@@ -66,13 +64,12 @@ public sealed class RevivalSideEffects : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        consent = Plugin.Instance.Config.Bind("LastWords", "RecordOwnVoice", false,
-            "Opt in to memory-only capture of up to 5 seconds of YOUR transmitted voice. Shared with current teammates for replay after revival. Cleared at orbit/disconnect. F8 toggles by default.");
+        // A new key makes existing 0.2.0 installations automatic as well; their old default-false opt-in key is ignored.
+        automaticCapture = Plugin.Instance.Config.Bind("LastWords", "AutomaticVoiceCapture", true,
+            "Automatically keep up to 5 seconds of YOUR transmitted game voice in memory during an expedition. Shared with current teammates for replay after revival, then cleared at orbit/disconnect. Set false to disable locally. The legacy RecordOwnVoice/F8 settings are no longer used.");
         cameraStrength = Plugin.Instance.Config.Bind("SideEffects", "CameraStrength", 1f,
             new ConfigDescription("Camera impulse multiplier. 0 disables camera movement locally; no damage. Defaults: random yaw 4–10°, pitch 2–6°.", new AcceptableValueRange<float>(0, 1)));
-        var binding = Plugin.Instance.Config.Bind("Controls", "ToggleLastWordsRecording", "<Keyboard>/f8", "Toggle your own voice recording consent. Restart after rebinding.");
-        toggle = new InputAction("Ciriolator last words consent", InputActionType.Button, binding.Value);
-        toggle.Enable(); lastConsent = consent.Value;
+        lastCaptureEnabled = automaticCapture.Value;
     }
 
     private void Update()
@@ -83,16 +80,15 @@ public sealed class RevivalSideEffects : MonoBehaviour
         var local = Local;
         if (local != null && !welcomed)
         {
-            Show(consent.Value ? "Ciriolator: últimas palabras activadas (solo memoria). F8 para desactivar."
-                : "Ciriolator: F8 activa tus últimas palabras (solo memoria, voz de partida). Grabación desactivada.");
+            Show(automaticCapture.Value ? "Ciriolator: captura automática de tu voz de partida (solo memoria hasta órbita)."
+                : "Ciriolator: captura automática desactivada en la configuración local.");
             welcomed = true;
         }
-        if (local != null && !local.isTypingChat && !local.inTerminalMenu && toggle.WasPressedThisFrame()) consent.Value = !consent.Value;
-        if (consent.Value != lastConsent)
+        if (automaticCapture.Value != lastCaptureEnabled)
         {
-            lastConsent = consent.Value;
-            Show(lastConsent ? "Ciriolator: grabación de tu voz activada (memoria hasta órbita)." : "Ciriolator: grabación desactivada; se elimina tu frase.");
-            if (!lastConsent)
+            lastCaptureEnabled = automaticCapture.Value;
+            Show(lastCaptureEnabled ? "Ciriolator: captura automática de tu voz activada (memoria hasta órbita)." : "Ciriolator: captura desactivada; se elimina tu frase.");
+            if (!lastCaptureEnabled)
             {
                 capture.Dispose();
                 if (local != null) { CancelTransfers(local.actualClientId); ClearVoice(local.actualClientId); }
@@ -109,7 +105,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
 
         var alive = local != null && local.isPlayerControlled && !local.isPlayerDead;
         var playingOwnEcho = local != null && voices.TryGetValue(local.actualClientId, out var own) && own.Source != null && own.Source.isPlaying;
-        capture.Update(consent.Value, alive && Interaction.RoundActive, playingOwnEcho);
+        capture.Update(automaticCapture.Value, alive && Interaction.RoundActive, playingOwnEcho);
         if (local != null && local.isPlayerDead && !localWasDead) capture.FreezeAtDeath();
         localWasDead = local != null && local.isPlayerDead;
         if (manager.IsServer) { ready = true; peers.Add(manager.LocalClientId); ServerTick(); }
@@ -117,7 +113,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
         if (localTicket != 0 && local != null && local.isPlayerDead && Now <= localTicketExpires)
         {
             var ticket = localTicket; localTicket = 0;
-            Upload(ticket, consent.Value ? capture.Frozen : Array.Empty<short>());
+            Upload(ticket, automaticCapture.Value ? capture.Frozen : Array.Empty<short>());
         }
         if (Now > localTicketExpires) localTicket = 0;
         PumpTransfers();
@@ -503,5 +499,5 @@ public sealed class RevivalSideEffects : MonoBehaviour
         if (Local == null || Now > noticeUntil) return;
         GUI.Box(new Rect(Screen.width / 2f - 340, Screen.height * .85f, 680, 45), notice);
     }
-    private void OnDestroy() { Detach(); toggle?.Dispose(); if (Instance == this) Instance = null; }
+    private void OnDestroy() { Detach(); if (Instance == this) Instance = null; }
 }

@@ -28,7 +28,9 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 | HotbarPlus, MoreCompany y HUD/cámara | Ranura activa, cambios de objeto, recuento de vivos y vistas correctos. |
 | ReviveDesyncPatch y final de jornada | Sin bloqueo de fin de ronda ni cambios incorrectos a playersRevived. |
 | Nueva muerte del jugador reanimado | Crea un único cadáver nuevo y mantiene el flujo de espectador y de fin de ronda. |
-| Consentimiento de voz | Sin activar F8 no se captura ni reproduce voz propia. Al activarlo aparece aviso; al desactivar se eliminan las copias y se corta la reproducción en los compañeros tras propagarse la orden. |
+| Captura automática | Al entrar aparece aviso y se captura voz propia transmitida sin pulsar F8. Probar con configuración nueva y con un archivo de 0.2.0 que tuviera RecordOwnVoice=false: ambos deben activarse automáticamente. |
+| Desactivación local | AutomaticVoiceCapture=false desactiva la captura; si se recarga en partida se eliminan las copias propias y se corta la reproducción tras propagarse la orden. F8 ya no modifica la captura. |
+| Frase anterior a la muerte | Hablar, dejar de hablar y morir después: se utiliza la última intervención válida de la expedición, también si se reinició el procesamiento del micrófono. Sin habla no debe inventar audio. |
 | Silencio y pulsar para hablar | Hablar con micrófono silenciado o sin transmitir por PTT no aparece en las últimas palabras. No se captura a otros jugadores. |
 | Última intervención | Hablar varias frases, morir y revivir: se escucha solo el fragmento de la última, máximo 5 s; no incluye silencio final ni intervenciones viejas. |
 | Voz cada 60–120 s | Medir varias reproducciones después de revivir; no se reproducen voces vacías si no hubo frase válida. |

@@ -1,20 +1,20 @@
-# Últimas palabras y descargas — 0.2.0 experimental
+# Últimas palabras y descargas — 0.2.1 experimental
 
 Solo se marcan como afectados los jugadores reanimados con Ciriolator. El anfitrión mantiene dos temporizadores independientes: voz cada 60–120 segundos y descarga cada 45–90 segundos. Volver a morir suspende los efectos; otra reanimación renueva los temporizadores sin acumularlos. Se borra el estado al volver a órbita o desconectar.
 
-## Voz y consentimiento
+## Captura automática de voz
 
-La captura está **desactivada por defecto en cada equipo**. El jugador pulsa **F8** para activarla antes de morir; aparece una notificación. También puede cambiar `LastWords.RecordOwnVoice` en `BepInEx/config/ciriolopipado.desfibrilator.cfg`. El consentimiento se recuerda en ese archivo; las grabaciones no. La tecla es configurable mediante `Controls.ToggleLastWordsRecording`.
+Desde 0.2.1 la captura empieza **automáticamente durante la expedición**, sin F8 ni otra activación. Aparece una notificación visible al entrar. `LastWords.AutomaticVoiceCapture` está a true por defecto en `BepInEx/config/ciriolopipado.desfibrilator.cfg`; se puede poner a false y reiniciar para desactivarla localmente. Se ignoran las opciones antiguas `RecordOwnVoice` y `ToggleLastWordsRecording`, de modo que un archivo de 0.2.0 con el antiguo valor false no impide la activación automática. No se fuerza la captura si se ha desactivado explícitamente la nueva opción.
 
-La integración usa `DissonanceComms.SubscribeToRecordedAudio` y `IMicrophoneSubscriber`, sin abrir un segundo micrófono. Captura únicamente la entrada local cuando el jugador está vivo, en una expedición, sin silenciarse y transmitiendo por un canal de voz del juego. No captura otros jugadores ni recupera audio anterior a activar la función. Suspende la captura mientras reproduce el eco propio para reducir realimentación.
+La integración usa `DissonanceComms.SubscribeToRecordedAudio` y `IMicrophoneSubscriber`, sin abrir un segundo micrófono. Captura únicamente la entrada local cuando el jugador está vivo, en una expedición, sin silenciarse y transmitiendo por un canal de voz del juego. No captura otros jugadores ni audio ajeno a la expedición actual. Suspende la captura mientras reproduce el eco propio para reducir realimentación.
 
-Se conserva la última intervención delimitada por silencio y un fragmento de **hasta 5 segundos**, con un mínimo de 0,25 segundos de habla para descartar ruidos breves. No hay reconocimiento de palabras, transcripción ni clonación de voz: una frase larga puede quedar recortada a sus cinco segundos finales. Se convierte a PCM mono de 8 kHz/16 bits (máximo 80.000 bytes por fragmento). La voz queda deliberadamente estrecha, con un filtro suave y una pequeña variación de tono.
+Se conserva la última intervención delimitada por silencio y un fragmento de **hasta 5 segundos**, con un mínimo de 0,25 segundos de habla para descartar ruidos breves. No hay reconocimiento de palabras, transcripción ni clonación de voz: una frase larga puede quedar recortada a sus cinco segundos finales. Si el jugador deja de hablar bastante antes de morir, se conserva su última intervención de esa expedición; no se pierde por un reinicio del procesamiento del micrófono. No se elige una frase de otro jugador ni se genera una voz artificial si nunca ha hablado. Se convierte a PCM mono de 8 kHz/16 bits (máximo 80.000 bytes por fragmento). La voz queda deliberadamente estrecha, con un filtro suave y una pequeña variación de tono.
 
 Al detectar una muerte, el anfitrión concede al propietario un permiso de subida único, de diez segundos y ligado a la expedición y a esa muerte. Valida emisor, identificador, plazo, tamaño y longitud antes de reservar el búfer. El audio viaja en fragmentos de hasta 384 muestras (768 bytes), con un máximo de cuatro mensajes de audio por fotograma y reensamblado ordenado; no se envía como un único mensaje grande. Rechaza duplicados y muestras superiores al límite. No se confía en un identificador de jugador enviado por el cliente para escoger al propietario.
 
 El fragmento se comparte por el transporte de la partida con el anfitrión; tras reanimar, se distribuye a los compañeros conectados para reproducirlo en proximidad. Un jugador que se incorpora después recibe los estados y fragmentos afectados vigentes. Son datos de voz compartidos con esos participantes, no una grabación exclusivamente privada en el equipo del hablante. No se crean archivos de audio ni se envían a servicios externos. Las políticas de otros mods de voz no se modifican.
 
-F8 desactiva el consentimiento, borra el búfer propio y solicita la retirada de la copia del anfitrión y de las cachés de los compañeros. La propagación a otros equipos depende de la conexión de red. Al llegar a órbita se destruyen los clips y las fuentes de audio y se vacían los búferes. No se reproducen voces desde cadáveres ni se mezclan grabaciones de expediciones anteriores.
+Desactivar la nueva opción en una configuración recargada durante la partida borra el búfer propio y solicita la retirada de la copia del anfitrión y de las cachés de los compañeros. Si se edita el archivo manualmente, reiniciar aplica la opción; la desconexión también elimina esas copias. La propagación a otros equipos depende de la conexión de red. Al llegar a órbita se destruyen los clips y las fuentes de audio y se vacían los búferes. No se reproducen voces desde cadáveres ni se mezclan grabaciones de expediciones anteriores.
 
 ## Proximidad y enemigos
 
@@ -30,9 +30,9 @@ La descarga suena cerca del afectado. Solo el propietario modifica su mirada: gi
 
 ## Diagnóstico y validación
 
-- Sin voz: activar F8 **antes** de hablar/morir, comprobar que la voz se transmite realmente y buscar `local last-words capture enabled` en el registro. Si no hay frase válida, las descargas funcionan pero no se emite una voz vacía ni su ruido.
+- Sin voz: comprobar que aparece el aviso de captura automática, que `AutomaticVoiceCapture` no está a false y que la voz se transmite realmente y buscar `local last-words capture enabled` en el registro. Si no hay frase válida, las descargas funcionan pero no se emite una voz vacía ni su ruido.
 - Sin descargas: comprobar versión en todos los participantes, estado afectado, temporizadores e intensidad mayor que cero. Esperar al menos 45 segundos después de reanimar.
 - Se compila contra las API públicas de `LethalCompany.GameLibs.Steam 81.0.5-ngd.0`, que incluyen Dissonance. Para las referencias de módulos Unity se usan API 2021.3.33 compartidas. No se distribuyen esas DLL de referencia.
 - Hay 35 pruebas de lógica para reanimación, frases acotadas, intervalos, limpieza y permisos de subida. La captura real, la transferencia fragmentada, la cámara, la reacción de enemigos y la convivencia con Mirage/otros mods **no se han ejecutado dentro del juego en este entorno**. Consultar la lista de `pruebas.md`.
 
-Todos deben instalar 0.2.0. El protocolo de reanimación cambió para impedir mezclar versiones anteriores. Se mantienen el precio temporal de 0 créditos, cinco segundos de carga, 30 puntos de vida y espera global de 90 segundos.
+Todos deben instalar 0.2.1 para usar la captura automática. Las versiones anteriores a 0.2.0 usan un protocolo de reanimación incompatible. Se mantienen el precio temporal de 0 créditos, cinco segundos de carga, 30 puntos de vida y espera global de 90 segundos.

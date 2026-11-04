@@ -1,4 +1,4 @@
-CIRIOLATOR 0.2.0 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
+CIRIOLATOR 0.2.1 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
 
 No necesitas compilar ni descomprimir el ZIP para importarlo.
 
@@ -6,11 +6,11 @@ No necesitas compilar ni descomprimir el ZIP para importarlo.
 2. Selecciona una copia del perfil Lloreria LETHAL 2 para las pruebas.
 3. Entra en Settings / Configuracion > Profile / Perfil > Import local mod.
    Si no aparece, utiliza el buscador de ajustes para localizar Import local mod.
-4. Selecciona ciriolopipado-Desfibrilator-0.2.0.zip sin descomprimirlo.
+4. Selecciona ciriolopipado-Desfibrilator-0.2.1.zip sin descomprimirlo.
 5. Comprueba los datos del formulario y confirma la importacion:
    Nombre: Desfibrilator
    Autor: ciriolopipado
-   Version: 0.2.0 (campos 0, 2, 0)
+   Version: 0.2.1 (campos 0, 2, 1)
 6. Comprueba que el mod este activado y que tambien lo esten:
    BepInEx-BepInExPack 5.4.2305
    Evaisa-LethalLib 1.2.0 y sus dependencias
@@ -40,21 +40,25 @@ Para problemas multijugador, adjunta los registros del anfitrion y del cliente.
 
 SEGURIDAD
 Se ha comunicado un bloqueo de 0.1.0 como caballo de Troya. No se ha confirmado
-un falso positivo. 0.2.0 sigue sin firma Authenticode y no dispone de un resultado
+un falso positivo. 0.2.1 sigue sin firma Authenticode y no dispone de un resultado
 antivirus actualizado en este entorno. La nueva caratula no resuelve por si sola
 una deteccion. Consulta SECURITY.md del repositorio y conserva la proteccion.
 
 El paquete conserva el nombre Desfibrilator para actualizar la instalacion
 existente. El nombre del objeto en el juego es Ciriolator. Reinicia el juego
-tras actualizar y utiliza la misma version 0.2.0 en todos los participantes.
+tras actualizar y utiliza la misma version 0.2.1 en todos los participantes.
 
-EFECTOS SECUNDARIOS (0.2.0)
-F8 activa o desactiva tus ultimas palabras. La grabacion empieza desactivada.
-Activala antes de morir y habla a traves de la voz de partida. Se mantiene un
+EFECTOS SECUNDARIOS (0.2.1)
+La captura empieza automaticamente en la expedicion. No hace falta pulsar F8.
+Basta con hablar a traves de la voz de partida, respetando silencio y PTT. Se mantiene un
 fragmento propio de hasta 5 segundos en memoria, compartido solo con el anfitrion
 y companeros conectados para reproducirlo tras revivir. No se guarda en disco.
 La voz se repite cada 60-120 s cerca del reanimado, sin walkie-talkie, y atrae
 a enemigos sensibles al ruido. Las descargas ocurren cada 45-90 s y dejan
 la camara desviada aleatoriamente. Se elimina todo al llegar a orbita.
-Ajustes: LastWords.RecordOwnVoice y SideEffects.CameraStrength (0-1).
+Ajustes: LastWords.AutomaticVoiceCapture (true por defecto) y
+SideEffects.CameraStrength (0-1). La antigua opcion RecordOwnVoice se ignora.
+Se conserva la ultima intervencion aunque no se hable justo antes de morir.
+Si nunca se habla, no se inventa una frase. Se puede desactivar la captura
+poniendo AutomaticVoiceCapture=false y reiniciando el juego.
 Todos los jugadores deben usar esta misma version.

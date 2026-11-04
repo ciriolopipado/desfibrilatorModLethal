@@ -1,7 +1,7 @@
 {
   "name": "Desfibrilator",
-  "version_number": "0.2.0",
+  "version_number": "0.2.1",
   "website_url": "https://github.com/ciriolopipado/desfibrilatorModLethal",
-  "description": "Ciriolator: free test item, last-words proximity echoes and random camera shocks after revival until orbit. Voice capture is local opt-in. Experimental v81 build.",
+  "description": "Ciriolator: free test item, automatic last-words capture from your transmitted game voice, proximity echoes and random camera shocks after revival until orbit. Experimental v81 build.",
   "dependencies": ["BepInEx-BepInExPack-5.4.2305", "Evaisa-LethalLib-1.2.0"]
 }

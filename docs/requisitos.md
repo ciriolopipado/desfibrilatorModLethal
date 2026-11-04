@@ -42,3 +42,7 @@ Este documento recoge requisitos; no acredita una implementación ni compatibili
 ## Efectos secundarios acordados (0.2.0)
 
 Últimas palabras de voz propia, reproducidas solo en proximidad cada 60–120 s y capaces de atraer enemigos sensibles al sonido. Descargas cada 45–90 s que dejan la cámara desviada aleatoriamente. Se suspenden al morir y se eliminan al volver a órbita. Captura en memoria de hasta 5 s con consentimiento local (F8). Detalles en efectos-secundarios.md.
+
+## Ajuste de captura (0.2.1)
+
+La captura propia pasa a ser automática, sin F8 ni activación previa, con aviso visible. Respeta voz transmitida/silencio/PTT y se puede desactivar mediante AutomaticVoiceCapture=false. Se utiliza la última intervención de la expedición aunque sea anterior a la muerte; no es necesario sustituirla por una frase aleatoria.
