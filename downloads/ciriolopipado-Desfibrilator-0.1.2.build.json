@@ -1,0 +1,58 @@
+{
+  "version": "0.1.2",
+  "source_commit": "70cae1733dfd525612ad1b7710128fe24cca2fa6",
+  "archive_sha256": "363ef08e9beb4e093f9b6507382fcc95adf28f190dafdae03be3ac962d923e0b",
+  "visible_item_name": "Ciriolator",
+  "shop_price_credits": 0,
+  "price_note": "Temporary test price requested by user",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "verification": "Release compilation passed with zero warnings and errors; archive integrity and packaged DLLs verified. Game purchase/reanimation not run.",
+  "members": [
+    {
+      "name": "manifest.json",
+      "size": 371,
+      "sha256": "6de7eb1bcddb3aab597a1b6cd8b33d5e3d19828b09de021436c6234e48ea4a71"
+    },
+    {
+      "name": "README.md",
+      "size": 9498,
+      "sha256": "e6b603050aa6272fda53d76db16e4c112ff63181d76d8622f6b6489cee3b7bd5"
+    },
+    {
+      "name": "LICENSE",
+      "size": 1083,
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f"
+    },
+    {
+      "name": "SECURITY.md",
+      "size": 4549,
+      "sha256": "a1236028afea35f9192e92a36dc9dfa3a7c93b278dcbabebf69fa10218d2e92a"
+    },
+    {
+      "name": "icon.png",
+      "size": 87909,
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "size": 31744,
+      "sha256": "e7fe59b508defaa1d7db8426beb7da4236fca7736f665852424bef966981041a"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "size": 6656,
+      "sha256": "8814d552cc9049614db759fcfbd18c2e29da07d8f0bf8f7a236889e3721788a1"
+    },
+    {
+      "name": "PRUEBAS.md",
+      "size": 3737,
+      "sha256": "f902ebfdfde71822180c141f89acac7dd84430ec06634be48953f4c703aa4c0d"
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "size": 2568,
+      "sha256": "3ddaae19e90ae4fdd7e29477da82c8b532b40576334342e23e19b6b625082329"
+    }
+  ]
+}
