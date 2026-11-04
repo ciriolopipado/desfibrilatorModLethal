@@ -1,0 +1,80 @@
+{
+  "version": "0.2.1",
+  "source_commit": "c6c01044149a9182edbc036fed5b4bf1e7d09ffb",
+  "archive_sha256": "1e3a8f317acd226419494a89a8724b5385a70efaf241ce0d91383bcf2c09f34b",
+  "game_reference_package": "LethalCompany.GameLibs.Steam 81.0.5-ngd.0",
+  "unity_reference_modules": "2021.3.33",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "verification": "Build passed with zero warnings/errors; 35 existing core tests passed; current DLL identity, archive integrity and prior download checksums verified. Game integration not run.",
+  "voice": {
+    "capture_default": true,
+    "activation_key_required": false,
+    "config_key": "LastWords.AutomaticVoiceCapture",
+    "legacy_f8_settings": "ignored",
+    "source": "own transmitted game voice only",
+    "max_seconds": 5,
+    "storage": "session memory until orbit/disconnect",
+    "external_services": false,
+    "selection": "latest valid utterance earlier in the same expedition"
+  },
+  "visible_item_name": "Ciriolator",
+  "shop_price_credits": 0,
+  "members": [
+    {
+      "name": "manifest.json",
+      "size": 417,
+      "sha256": "6d7dc76f0f1ba7d9554ad8ac609555fa1e7e8d3eea55190124021ae6e34b7254"
+    },
+    {
+      "name": "README.md",
+      "size": 12342,
+      "sha256": "35bab290caaf719bfa2fe8ae772a499466fac223218fcfe5970e560b0f66debe"
+    },
+    {
+      "name": "LICENSE",
+      "size": 1083,
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f"
+    },
+    {
+      "name": "SECURITY.md",
+      "size": 5476,
+      "sha256": "0c00b05a7671c1ac76317ae2cafc5913e87719f305f68a8d4a49dcca172f169e"
+    },
+    {
+      "name": "icon.png",
+      "size": 87909,
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "size": 51712,
+      "sha256": "914f4b02b87fc2130f379415e06942ee1d2f7f7cd482af8967f898b25b2a08aa"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "size": 10752,
+      "sha256": "95d3b81ac1cdf9911d08e26ead22c1275e1bdfe966a55b3ea0476e1b7be0df01"
+    },
+    {
+      "name": "PRUEBAS.md",
+      "size": 6355,
+      "sha256": "ac469e07861c9261441bcc725f58fb60dcf3ae93ea2e2719b141af00d5c8289f"
+    },
+    {
+      "name": "docs/pruebas.md",
+      "size": 6355,
+      "sha256": "ac469e07861c9261441bcc725f58fb60dcf3ae93ea2e2719b141af00d5c8289f"
+    },
+    {
+      "name": "docs/efectos-secundarios.md",
+      "size": 6481,
+      "sha256": "0f4ebab3b0e08fd52a7d9fdfd787a2c5b4800ec890025e69ddb74db4c73e6a33"
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "size": 3549,
+      "sha256": "2ca5b0cd789306d9be73db3661104e21d0fc06825eaa181d8942e96275f21269"
+    }
+  ]
+}
