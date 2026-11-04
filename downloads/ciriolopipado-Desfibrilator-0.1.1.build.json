@@ -1,0 +1,81 @@
+{
+  "version": "0.1.1",
+  "source_commit": "b4293ae6bf7bc0dfa159eb169f3983e4f8e13b56",
+  "archive_sha256": "311e87e26ede9b127d10c03dcf76c41430c6fa0d405d5c7260df6276a82c43d6",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "tests": "13 coordinator tests passed; game v81 not run",
+  "members": [
+    {
+      "name": "manifest.json",
+      "sha256": "58689026431ba54510050ca42e72dfb5dbbc82b5dee07a5b5009996e315cfd95",
+      "size": 359
+    },
+    {
+      "name": "README.md",
+      "sha256": "0bfa69081a4df905b69ef216a1adb635158a51f9e709e093d3516783c7dfd0d4",
+      "size": 9185
+    },
+    {
+      "name": "LICENSE",
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f",
+      "size": 1083
+    },
+    {
+      "name": "SECURITY.md",
+      "sha256": "a1236028afea35f9192e92a36dc9dfa3a7c93b278dcbabebf69fa10218d2e92a",
+      "size": 4549
+    },
+    {
+      "name": "icon.png",
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1",
+      "size": 87909
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "sha256": "c8c5d0585c7c17a4ae91c0a1ac6c657b1284394b5f53afae03f52387ee1774ad",
+      "size": 31744
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "sha256": "3b6d15c0d49e992136b28caae6dcc34404037959a4753ff46a322f32ed988988",
+      "size": 6656
+    },
+    {
+      "name": "PRUEBAS.md",
+      "sha256": "cdeb3c66648d25aa91a612d68bce7efae58c1d7fc8e87f9b89ddf643db75c8de",
+      "size": 3688
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "sha256": "cc0404251f079a65962ed607112787799185a72cc4db997f7d0fa47961874356",
+      "size": 2317
+    }
+  ],
+  "static_assembly_review": [
+    {
+      "name": "Desfibrilator, Version=0.1.1.0, Culture=neutral, PublicKeyToken=null",
+      "ilOnly": true,
+      "moduleAttributes": [
+        "System.Runtime.CompilerServices.RefSafetyRulesAttribute"
+      ],
+      "nativeModules": [],
+      "pinvokes": [],
+      "resources": [],
+      "flaggedCalls": [],
+      "semanticSha256": "94f199cf94f51a01073c5af5ea9aaf6cd2939c9a50f084200dbfd713578253ec"
+    },
+    {
+      "name": "Desfibrilator.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "ilOnly": true,
+      "moduleAttributes": [
+        "System.Runtime.CompilerServices.RefSafetyRulesAttribute"
+      ],
+      "nativeModules": [],
+      "pinvokes": [],
+      "resources": [],
+      "flaggedCalls": [],
+      "semanticSha256": "2f0adcda2d7de47b057b212a0a619f3985ff9346e641aebe6fbe77dbca66d03e"
+    }
+  ]
+}
