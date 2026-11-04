@@ -28,11 +28,24 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 | HotbarPlus, MoreCompany y HUD/cámara | Ranura activa, cambios de objeto, recuento de vivos y vistas correctos. |
 | ReviveDesyncPatch y final de jornada | Sin bloqueo de fin de ronda ni cambios incorrectos a playersRevived. |
 | Nueva muerte del jugador reanimado | Crea un único cadáver nuevo y mantiene el flujo de espectador y de fin de ronda. |
+| Consentimiento de voz | Sin activar F8 no se captura ni reproduce voz propia. Al activarlo aparece aviso; al desactivar se eliminan las copias y se corta la reproducción en los compañeros tras propagarse la orden. |
+| Silencio y pulsar para hablar | Hablar con micrófono silenciado o sin transmitir por PTT no aparece en las últimas palabras. No se captura a otros jugadores. |
+| Última intervención | Hablar varias frases, morir y revivir: se escucha solo el fragmento de la última, máximo 5 s; no incluye silencio final ni intervenciones viejas. |
+| Voz cada 60–120 s | Medir varias reproducciones después de revivir; no se reproducen voces vacías si no hubo frase válida. |
+| Fuente de proximidad | Solo se oye cerca del revivido, siguiendo su posición, no por los walkie-talkies. Respetar jugadores silenciados localmente. |
+| Atracción de enemigos | Un enemigo sensible al ruido detecta una reproducción cercana según sus reglas. Comprobar también con puertas de nave cerradas y enemigos del perfil. |
+| Descarga cada 45–90 s | El afectado oye el chispazo y su cámara queda desviada aleatoriamente, sin recentrado ni daño. No mueve la cámara de otros jugadores. |
+| Accesibilidad y menús | CameraStrength=0 no mueve la vista; el terminal/animaciones que bloquean mirada no quedan alterados. |
+| Segunda muerte y reanimación | Suspende los efectos al morir, toma nuevas últimas palabras y renueva los intervalos al reanimar sin acumular efectos. |
+| Llegada a órbita | Corta reproducciones, borra clips y estado; no quedan voces o descargas en la siguiente expedición sin otra reanimación. |
+| Incorporación/desconexión | Un cliente que llega recibe los afectados y sus voces vigentes; al salir un jugador se retiran sus datos. |
+| Audio y red | Probar frases de 5 s con latencia/pérdida de paquetes y varios jugadores; una transferencia de voz no debe romper la reanimación ni bloquearla. |
+| Convivencia con Mirage | No importa sus archivos ni cambia su grabación; las dos suscripciones de Dissonance siguen funcionando. Revisar logs de ambos mods. |
 
 ## Validado en este entorno
 
-- Compilación con snapshot público de referencias (no verificación exacta de v81).
-- Pruebas automatizadas de la lógica independiente de Unity, descritas en README.
+- Compilación con referencias públicas de juego v81 (81.0.5-ngd.0), Dissonance y módulos Unity de referencia 2021.3.33. No es ejecución del juego.
+- 35 pruebas automatizadas de lógica independiente de Unity, descritas en README.
 - Preparación repetible de referencias con verificación SHA-256 y empaquetado sin DLL del juego.
 
 Ninguna fila de la tabla anterior se considera superada hasta probarla dentro del juego. La animación propia de manos sobre el pecho está pendiente de implementación; actualmente hay pose básica y movimiento procedural de palas.

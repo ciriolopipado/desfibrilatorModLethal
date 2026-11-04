@@ -1,4 +1,4 @@
-CIRIOLATOR 0.1.2 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
+CIRIOLATOR 0.2.0 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
 
 No necesitas compilar ni descomprimir el ZIP para importarlo.
 
@@ -6,11 +6,11 @@ No necesitas compilar ni descomprimir el ZIP para importarlo.
 2. Selecciona una copia del perfil Lloreria LETHAL 2 para las pruebas.
 3. Entra en Settings / Configuracion > Profile / Perfil > Import local mod.
    Si no aparece, utiliza el buscador de ajustes para localizar Import local mod.
-4. Selecciona ciriolopipado-Desfibrilator-0.1.2.zip sin descomprimirlo.
+4. Selecciona ciriolopipado-Desfibrilator-0.2.0.zip sin descomprimirlo.
 5. Comprueba los datos del formulario y confirma la importacion:
    Nombre: Desfibrilator
    Autor: ciriolopipado
-   Version: 0.1.2 (campos 0, 1, 2)
+   Version: 0.2.0 (campos 0, 2, 0)
 6. Comprueba que el mod este activado y que tambien lo esten:
    BepInEx-BepInExPack 5.4.2305
    Evaisa-LethalLib 1.2.0 y sus dependencias
@@ -29,8 +29,8 @@ global de 90 segundos, compartida entre todas las unidades y jugadores.
 
 ESTADO
 El paquete contiene DLL compiladas y no requiere publicar el mod en Thunderstore.
-La compilacion utiliza referencias publicas de la epoca de v80. El objetivo es
-v81, pero no se ha ejecutado el juego aqui ni confirmado compatibilidad con v81
+La compilacion usa referencias publicas de juego v81 (81.0.5-ngd.0), pero
+no se ha ejecutado el juego aqui ni confirmado su comportamiento dentro de Unity
 o con el perfil completo. La animacion propia de manos sigue pendiente;
 actualmente hay una pose basica y movimiento de palas.
 
@@ -40,10 +40,21 @@ Para problemas multijugador, adjunta los registros del anfitrion y del cliente.
 
 SEGURIDAD
 Se ha comunicado un bloqueo de 0.1.0 como caballo de Troya. No se ha confirmado
-un falso positivo. 0.1.2 sigue sin firma Authenticode y no dispone de un resultado
+un falso positivo. 0.2.0 sigue sin firma Authenticode y no dispone de un resultado
 antivirus actualizado en este entorno. La nueva caratula no resuelve por si sola
 una deteccion. Consulta SECURITY.md del repositorio y conserva la proteccion.
 
 El paquete conserva el nombre Desfibrilator para actualizar la instalacion
 existente. El nombre del objeto en el juego es Ciriolator. Reinicia el juego
-tras actualizar y utiliza la misma version 0.1.2 en todos los participantes.
+tras actualizar y utiliza la misma version 0.2.0 en todos los participantes.
+
+EFECTOS SECUNDARIOS (0.2.0)
+F8 activa o desactiva tus ultimas palabras. La grabacion empieza desactivada.
+Activala antes de morir y habla a traves de la voz de partida. Se mantiene un
+fragmento propio de hasta 5 segundos en memoria, compartido solo con el anfitrion
+y companeros conectados para reproducirlo tras revivir. No se guarda en disco.
+La voz se repite cada 60-120 s cerca del reanimado, sin walkie-talkie, y atrae
+a enemigos sensibles al ruido. Las descargas ocurren cada 45-90 s y dejan
+la camara desviada aleatoriamente. Se elimina todo al llegar a orbita.
+Ajustes: LastWords.RecordOwnVoice y SideEffects.CameraStrength (0-1).
+Todos los jugadores deben usar esta misma version.

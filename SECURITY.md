@@ -29,3 +29,7 @@ Si se dispone de ese servicio, se firman las DLL con SHA-256 y sellado de tiempo
 4. Publicar resultados verificables del análisis y, si se confirma un falso positivo, la respuesta del proveedor. No declarar el archivo «seguro» por una compilación exitosa, por una firma o por haber cambiado su icono, nombre, versión o compresión.
 
 Los archivos no se han enviado automáticamente a servicios de análisis de terceros. Las dependencias de BepInEx/LethalLib se instalan por separado y quedan fuera del alcance de esta inspección de las dos DLL propias.
+
+## Voz en 0.2.0
+
+La nueva función de últimas palabras procesa voz propia mediante Dissonance, con consentimiento local desactivado por defecto y un máximo de cinco segundos. Comparte ese fragmento con los participantes conectados para reproducirlo tras reanimar. Se conserva en memoria hasta órbita/desconexión o revocación; nuestro mod no crea archivos de audio ni los envía a servicios de terceros. Consulta `docs/efectos-secundarios.md` para detalles, límites y pruebas pendientes. Las comprobaciones estáticas históricas de 0.1.0 no certifican esta nueva versión, que sigue sin firma Authenticode ni análisis antivirus actualizado.

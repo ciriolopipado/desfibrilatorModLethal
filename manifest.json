@@ -1,7 +1,7 @@
 {
   "name": "Desfibrilator",
-  "version_number": "0.1.2",
+  "version_number": "0.2.0",
   "website_url": "https://github.com/ciriolopipado/desfibrilatorModLethal",
-  "description": "Ciriolator test build: temporarily free in the shop, 5-second charge, 30 HP and a shared 90-second cooldown. v81 runtime testing pending.",
+  "description": "Ciriolator: free test item, last-words proximity echoes and random camera shocks after revival until orbit. Voice capture is local opt-in. Experimental v81 build.",
   "dependencies": ["BepInEx-BepInExPack-5.4.2305", "Evaisa-LethalLib-1.2.0"]
 }

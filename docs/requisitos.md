@@ -38,3 +38,7 @@ No se ha demostrado ningún conflicto: son candidatos para inspección y pruebas
 - Pruebas multijugador de anfitrión y cliente, más de cuatro jugadores, dos unidades y objetivos simultáneos, cancelaciones y nueva muerte tras reanimar.
 
 Este documento recoge requisitos; no acredita una implementación ni compatibilidad probada.
+
+## Efectos secundarios acordados (0.2.0)
+
+Últimas palabras de voz propia, reproducidas solo en proximidad cada 60–120 s y capaces de atraer enemigos sensibles al sonido. Descargas cada 45–90 s que dejan la cámara desviada aleatoriamente. Se suspenden al morir y se eliminan al volver a órbita. Captura en memoria de hasta 5 s con consentimiento local (F8). Detalles en efectos-secundarios.md.

@@ -12,7 +12,7 @@ namespace Desfibrilator;
 public sealed class ReviveNetwork : MonoBehaviour
 {
     internal static ReviveNetwork? Instance;
-    private const string RequestName = Plugin.Id + ".request.v1", StateName = Plugin.Id + ".state.v1";
+    private const string RequestName = Plugin.Id + ".request.v2", StateName = Plugin.Id + ".state.v2";
     private readonly ReviveCoordinator coordinator = new ReviveCoordinator();
     private readonly HashSet<ulong> peers = new HashSet<ulong>();
     private NetworkManager? manager;
@@ -142,6 +142,8 @@ public sealed class ReviveNetwork : MonoBehaviour
                 manager!.CustomMessagingManager.SendNamedMessage(StateName, peer, writer, NetworkDelivery.ReliableSequenced);
             if (grab != null && grab.IsSpawned) grab.Despawn(true);
             Broadcast();
+            try { RevivalSideEffects.Instance?.ActivateOnServer(target.actualClientId); }
+            catch (Exception effectError) { Plugin.Error($"Player revived, but side effects could not start: {effectError}"); }
             Plugin.Log($"Reanimated client {target.actualClientId}; global cooldown started (90 s).");
         }
         catch (Exception e)

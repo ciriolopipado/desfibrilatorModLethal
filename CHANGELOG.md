@@ -1,5 +1,14 @@
 # Historial
 
+## 0.2.0 — efectos secundarios experimentales
+
+- Últimas palabras: hasta 5 s de voz propia transmitida antes de morir, con consentimiento local (F8), reproducción cercana cada 60–120 s y ruido para enemigos sensibles al sonido.
+- Descargas aleatorias cada 45–90 s que desvían la cámara sin recentrarla; intensidad configurable por accesibilidad.
+- Audio en memoria, sin usar grabaciones de Mirage ni servicios externos; revocación y limpieza en órbita/desconexión.
+- Validación de emisor, expedición, muerte, plazo y tamaño de cada subida de audio; caché acotada y sin duplicados.
+- Referencias públicas de juego v81 y Dissonance; 35 pruebas de lógica independientes de Unity.
+- Mantiene Ciriolator a 0 créditos para pruebas. Protocolo incompatible con versiones anteriores: actualizar todos los equipos.
+
 ## 0.1.2 — pruebas
 
 - Precio temporal de 0 créditos para validar dentro del juego.

@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework><AssemblyName>Desfibrilator</AssemblyName><Version>0.1.2</Version>
+    <TargetFramework>netstandard2.1</TargetFramework><AssemblyName>Desfibrilator</AssemblyName><Version>0.2.0</Version>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <LocalReferenceDirectory Condition="'$(LocalReferenceDirectory)' == ''">$(MSBuildThisFileDirectory)../../.local/refs</LocalReferenceDirectory>
+    <LocalReferenceDirectory Condition="'$(LocalReferenceDirectory)' == ''">$(MSBuildThisFileDirectory)../../.local/reference-v81</LocalReferenceDirectory>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Desfibrilator.Core/Desfibrilator.Core.csproj"/>
-    <Reference Include="$(LocalReferenceDirectory)/Unity*.dll;$(LocalReferenceDirectory)/Assembly-CSharp.dll;$(LocalReferenceDirectory)/Assembly-CSharp-firstpass.dll;$(LocalReferenceDirectory)/BepInEx.dll;$(LocalReferenceDirectory)/0Harmony.dll;$(LocalReferenceDirectory)/LethalLib.dll"><Private>false</Private></Reference>
+    <Reference Include="$(LocalReferenceDirectory)/Unity*.dll;$(LocalReferenceDirectory)/DissonanceVoip.dll;$(LocalReferenceDirectory)/Assembly-CSharp.dll;$(LocalReferenceDirectory)/Assembly-CSharp-firstpass.dll;$(LocalReferenceDirectory)/BepInEx.dll;$(LocalReferenceDirectory)/0Harmony.dll;$(LocalReferenceDirectory)/LethalLib.dll"><Private>false</Private></Reference>
   </ItemGroup>
   <Target Name="RequireGameReferences" BeforeTargets="ResolveReferences" Condition="!Exists('$(LocalReferenceDirectory)/Assembly-CSharp.dll')">
     <Error Text="Missing game references. Run scripts/prepare-local-refs.py with your v81 Managed directory and Thunderstore profile directory; see README.md."/>
