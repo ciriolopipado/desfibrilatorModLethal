@@ -21,9 +21,9 @@ internal static class ItemFactory
         collider.size = new Vector3(0.34f, 0.22f, 0.25f);
         var item = ScriptableObject.CreateInstance<Item>();
         item.name = "DesfibrilatorItem";
-        item.itemName = "Desfibrilator";
+        item.itemName = "Ciriolator";
         item.itemId = 198481;
-        item.creditsWorth = 100;
+        item.creditsWorth = 0;
         item.weight = 1.15f;
         item.isScrap = false;
         item.requiresBattery = false;
@@ -43,7 +43,7 @@ internal static class ItemFactory
         item.positionOffset = new Vector3(0.08f, 0.02f, -0.12f);
         item.restingRotation = Vector3.zero;
         item.verticalOffset = 0.12f;
-        item.highestSalePercentage = 0; // Fixed 100-credit price, including store refreshes.
+        item.highestSalePercentage = 0; // Temporary free price for in-game validation.
         item.itemIcon = MakeIcon();
         item.spawnPrefab = prefab;
 
@@ -76,7 +76,7 @@ internal static class ItemFactory
         audio.playOnAwake = false;
         tool.Sound = audio;
         Utilities.FixMixerGroups(prefab);
-        Items.RegisterShopItem(item, 100);
+        Items.RegisterShopItem(item, 0);
     }
 
     private static Transform Paddle(Transform parent, string name, Vector3 position, Color pale, Color dark)

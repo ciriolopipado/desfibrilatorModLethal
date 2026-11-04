@@ -69,15 +69,15 @@ public sealed class DefibrillatorItem : GrabbableObject
         var net = ReviveNetwork.Instance;
         if (net == null) return;
         string text;
-        if (!net.Connected) text = "Desfibrilator: conectando con el anfitrión…";
+        if (!net.Connected) text = "Ciriolator: conectando con el anfitrión…";
         else if (net.Cooldown > 0)
         {
             var seconds = Mathf.CeilToInt((float)net.Cooldown);
-            text = $"Desfibrilator no disponible: {seconds / 60:00}:{seconds % 60:00}";
+            text = $"Ciriolator no disponible: {seconds / 60:00}:{seconds % 60:00}";
         }
         else if (net.ActiveTool == NetworkObjectId) text = $"Desfibrilando… {Mathf.Clamp01((float)(5 - net.ChargeRemaining) / 5) * 100:0}%";
-        else if (net.ActiveTool.HasValue) text = "Desfibrilator ocupado: reanimación en curso";
-        else text = "Desfibrilator listo · Mantén E sobre un cadáver recuperable (5 s)";
+        else if (net.ActiveTool.HasValue) text = "Ciriolator ocupado: reanimación en curso";
+        else text = "Ciriolator listo · Mantén E sobre un cadáver recuperable (5 s)";
         GUI.Box(new Rect(Screen.width / 2f - 260, Screen.height * .78f, 520, 40), text);
     }
 }

@@ -1,5 +1,11 @@
 # Historial
 
+## 0.1.2 — pruebas
+
+- Precio temporal de 0 créditos para validar dentro del juego.
+- Nombre visible en la tienda, el objeto y los mensajes: Ciriolator.
+- Conserva la identidad interna del mod y del objeto para actualizar la instalación existente.
+
 ## 0.1.1 — experimental
 
 - Carátula original de un desfibrilador, con icono de paquete de 256 × 256 píxeles.

@@ -1,20 +1,20 @@
-# Desfibrilator — versión experimental 0.1.1
+# Ciriolator — versión de pruebas 0.1.2
 
-![Carátula de Desfibrilator](icon.png)
+![Carátula de Ciriolator](icon.png)
 
-Mod de BepInEx para Lethal Company, con **v81 como versión objetivo**. Desfibrilador comprable por **100 créditos**, reutilizable y con espera global entre reanimaciones.
+Mod de BepInEx para Lethal Company, con **v81 como versión objetivo**. Objeto **Ciriolator**, comprable temporalmente por **0 créditos** para validar en el juego, reutilizable y con espera global entre reanimaciones.
 
 **Estado:** código compilado y pruebas de la lógica de servidor superadas. No se ha ejecutado Lethal Company en este entorno. La compra, las referencias exactas de v81, la reanimación y la compatibilidad multijugador siguen pendientes de validación en el juego. No es una versión estable certificada para el perfil completo.
 
 ## Descargar para Thunderstore Mod Manager
 
-[Descargar Desfibrilator 0.1.1 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-0.1.1.zip)
+[Descargar Ciriolator 0.1.2 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-0.1.2.zip)
 
-Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-0.1.1.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
+Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-0.1.2.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
 
 ## Aviso de seguridad de la descarga
 
-Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La revisión estática no confirma que sea un falso positivo; no hay un análisis antivirus actualizado en este entorno. La versión 0.1.1 sigue sin firma Authenticode y su nueva carátula no garantiza que desaparezca el aviso. Consulta [SECURITY.md](SECURITY.md) antes de instalar si tu protección bloquea el archivo. La descarga original 0.1.0 se conserva sin cambios.
+Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La revisión estática no confirma que sea un falso positivo; no hay un análisis antivirus actualizado en este entorno. La versión 0.1.2 sigue sin firma Authenticode y su nueva carátula no garantiza que desaparezca el aviso. Consulta [SECURITY.md](SECURITY.md) antes de instalar si tu protección bloquea el archivo. La descarga original 0.1.0 se conserva sin cambios.
 
 ## Funcionamiento
 
@@ -40,9 +40,11 @@ Ambos paquetes ya están en el perfil **Lloreria LETHAL 2**. El mod utiliza Unit
 
 1. Duplica el perfil en Thunderstore Mod Manager para las pruebas.
 2. Entra en **Settings / Configuración → Profile / Perfil → Import local mod**. También puedes buscar «Import local mod» en los ajustes.
-3. Selecciona **`ciriolopipado-Desfibrilator-0.1.1.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `0.1.1` (campos `0`, `1`, `1`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
-4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Desfibrilator 0.1.1 loaded`.
-5. Busca `Desfibrilator` en la tienda del terminal y realiza las pruebas de [docs/pruebas.md](docs/pruebas.md).
+3. Selecciona **`ciriolopipado-Desfibrilator-0.1.2.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `0.1.2` (campos `0`, `1`, `2`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
+4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Ciriolator 0.1.2 loaded`.
+5. Busca `Ciriolator` en la tienda del terminal y realiza las pruebas de [docs/pruebas.md](docs/pruebas.md).
+
+El paquete sigue llamándose `Desfibrilator` en el gestor para actualizar la instalación existente. El objeto dentro del juego se llama **Ciriolator** y cuesta **0 créditos** en esta versión de pruebas. Reinicia el juego tras actualizar; todos los participantes deben usar 0.1.2.
 
 No hace falta publicar el mod ni compilarlo en tu ordenador. Cada participante debe importar el mismo ZIP. El paquete incluye `LEEME_INSTALACION.txt` con estos pasos. Como alternativa manual, copia únicamente su contenido de `BepInEx/plugins/Desfibrilator/` a la ruta equivalente del perfil, sin mantener otra instalación del mismo mod.
 
@@ -94,4 +96,4 @@ El inventario del perfil recibido está en [docs/profile-inventory.json](docs/pr
 
 Se usa mensajería de Unity Netcode con identificadores de cliente y de objeto; no se fija un máximo de cuatro jugadores. No se llama a `ReviveDeadPlayers()`, que reanimaría a todos los muertos y alteraría el flujo de fin de ronda. No se modifica el contador `playersRevived`, reservado por el juego para ese flujo.
 
-El ZIP se genera en `dist/ciriolopipado-Desfibrilator-0.1.1.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Sigue siendo una compilación experimental y no se ha publicado en el catálogo de Thunderstore.
+El ZIP se genera en `dist/ciriolopipado-Desfibrilator-0.1.2.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Sigue siendo una compilación experimental y no se ha publicado en el catálogo de Thunderstore.

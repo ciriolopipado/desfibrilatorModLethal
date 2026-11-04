@@ -1,5 +1,9 @@
 # Desfibrilator — requisitos de primera versión
 
+## Ajuste temporal para pruebas (0.1.2)
+
+Por petición posterior del usuario, el nombre visible pasa a **Ciriolator** y el precio de tienda a **0 créditos**. El coste de 100 créditos descrito abajo corresponde al diseño inicial y queda suspendido durante estas pruebas.
+
 ## Requisitos acordados
 - Mod de Lethal Company con BepInExPack 5.4.2305; se permiten dependencias adicionales.
 - Objeto comprable en la tienda por 100 créditos; nombre: Desfibrilator.

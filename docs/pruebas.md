@@ -4,7 +4,7 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 
 | Caso | Resultado esperado |
 | --- | --- |
-| Carga del plugin, compra y entrega | Aparece Desfibrilator a 100 créditos, resta 100 y llega el objeto correcto. |
+| Carga del plugin, compra y entrega | Aparece Ciriolator a 0 créditos, permite comprarlo sin saldo y llega el objeto correcto. El precio es temporal para pruebas. |
 | Aspecto, suelo y equipamiento | Modelo visible sin materiales rosas, orientación y escala adecuadas; se puede coger, soltar y cambiar de ranura. |
 | Muere un cliente, lo revive el anfitrión | Tras 5 s vuelve con 30 HP, cámara propia, movimiento, colisiones y voz normales. Los demás lo ven vivo. |
 | Muere el anfitrión, lo revive un cliente | Mismo resultado; no depende de que el usuario del objeto sea el anfitrión. |

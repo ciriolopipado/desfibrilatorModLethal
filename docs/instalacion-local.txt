@@ -1,4 +1,4 @@
-DESFIBRILATOR 0.1.1 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
+CIRIOLATOR 0.1.2 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
 
 No necesitas compilar ni descomprimir el ZIP para importarlo.
 
@@ -6,11 +6,11 @@ No necesitas compilar ni descomprimir el ZIP para importarlo.
 2. Selecciona una copia del perfil Lloreria LETHAL 2 para las pruebas.
 3. Entra en Settings / Configuracion > Profile / Perfil > Import local mod.
    Si no aparece, utiliza el buscador de ajustes para localizar Import local mod.
-4. Selecciona ciriolopipado-Desfibrilator-0.1.1.zip sin descomprimirlo.
+4. Selecciona ciriolopipado-Desfibrilator-0.1.2.zip sin descomprimirlo.
 5. Comprueba los datos del formulario y confirma la importacion:
    Nombre: Desfibrilator
    Autor: ciriolopipado
-   Version: 0.1.1 (campos 0, 1, 1)
+   Version: 0.1.2 (campos 0, 1, 2)
 6. Comprueba que el mod este activado y que tambien lo esten:
    BepInEx-BepInExPack 5.4.2305
    Evaisa-LethalLib 1.2.0 y sus dependencias
@@ -22,7 +22,7 @@ antes de importarlo para evitar cargarlo dos veces. Conserva los demas mods.
 Todos los participantes deben instalar este mismo paquete y sus dependencias.
 
 PRUEBA RAPIDA
-Compra Desfibrilator por 100 creditos en el terminal. Con el objeto equipado,
+Compra Ciriolator por 0 creditos (precio temporal de pruebas) en el terminal. Con el objeto equipado,
 apunta a un cadaver recuperable cercano y manten E durante 5 segundos.
 El jugador debe volver con 30 de vida y sin inventario. Comienza una espera
 global de 90 segundos, compartida entre todas las unidades y jugadores.
@@ -40,6 +40,10 @@ Para problemas multijugador, adjunta los registros del anfitrion y del cliente.
 
 SEGURIDAD
 Se ha comunicado un bloqueo de 0.1.0 como caballo de Troya. No se ha confirmado
-un falso positivo. 0.1.1 sigue sin firma Authenticode y no dispone de un resultado
+un falso positivo. 0.1.2 sigue sin firma Authenticode y no dispone de un resultado
 antivirus actualizado en este entorno. La nueva caratula no resuelve por si sola
 una deteccion. Consulta SECURITY.md del repositorio y conserva la proteccion.
+
+El paquete conserva el nombre Desfibrilator para actualizar la instalacion
+existente. El nombre del objeto en el juego es Ciriolator. Reinicia el juego
+tras actualizar y utiliza la misma version 0.1.2 en todos los participantes.

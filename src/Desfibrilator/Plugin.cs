@@ -7,7 +7,7 @@ using GameNetcodeStuff;
 
 namespace Desfibrilator;
 
-[BepInPlugin(Id, "Desfibrilator", "0.1.1")]
+[BepInPlugin(Id, "Ciriolator", "0.1.2")]
 [BepInDependency("evaisa.lethallib", "1.2.0")]
 public sealed class Plugin : BaseUnityPlugin
 {
@@ -20,13 +20,13 @@ public sealed class Plugin : BaseUnityPlugin
     {
         Instance = this;
         ConfigEntry<string> binding = Config.Bind("Controls", "Defibrillate", "<Keyboard>/e", "Input System binding path. Restart the game after changing it.");
-        Use = new InputAction("Desfibrilator", InputActionType.Button, binding.Value);
+        Use = new InputAction("Ciriolator", InputActionType.Button, binding.Value);
         Use.Enable();
         ItemFactory.Register();
         gameObject.AddComponent<ReviveNetwork>();
         harmony = new Harmony(Id);
         harmony.PatchAll();
-        Logger.LogInfo("Desfibrilator 0.1.1 loaded. Target: Lethal Company v81. All peers need the mod.");
+        Logger.LogInfo("Ciriolator 0.1.2 loaded. Target: Lethal Company v81. All peers need the mod.");
     }
 
     private void OnDestroy() { harmony?.UnpatchSelf(); Use?.Dispose(); }
