@@ -1,5 +1,14 @@
 # Historial
 
+## 0.2.2 — corrección candidata de reanimación
+
+- Restaura controlador de animación, parámetros, sincronización y oyente de audio; mantiene el cuerpo local en sombras en vez de desactivar sus renderizadores y saltarse la inicialización nativa.
+- Repara filtros/vinculaciones de voz tras la reanimación sin reiniciar Dissonance ni cambiar el silencio elegido por el usuario.
+- El estado vivo recibido no depende de que el cadáver siga presente. Añade identidad de jugador, secuencia, confirmaciones y reintentos acotados; evita aplicar dos veces la misma reanimación.
+- Captura ligada a los emisores reales de voz, aislada de excepciones del suscriptor. Los fallos de captura/reproducción no detienen el planificador de descargas.
+- Ecos y descargas usan fuentes SFX propias y registros de diagnóstico. No se reutiliza el mezclador de voz en directo.
+- 41 pruebas de lógica; requiere nueva prueba en juego de anfitrión y cliente. Todos deben actualizar por el cambio de protocolo.
+
 ## 0.2.1 — captura automática
 
 - Captura automáticamente la voz propia transmitida durante la expedición; ya no requiere F8.

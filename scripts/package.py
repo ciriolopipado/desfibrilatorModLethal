@@ -27,6 +27,7 @@ with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as archive:
     archive.write(root / 'docs' / 'pruebas.md', 'PRUEBAS.md')
     archive.write(root / 'docs' / 'pruebas.md', 'docs/pruebas.md')
     archive.write(root / 'docs' / 'efectos-secundarios.md', 'docs/efectos-secundarios.md')
+    archive.write(root / 'docs' / 'regresion-0.2.2.md', 'docs/regresion-0.2.2.md')
     archive.write(root / 'docs' / 'instalacion-local.txt', 'LEEME_INSTALACION.txt')
 with zipfile.ZipFile(output) as archive:
     assert archive.testzip() is None

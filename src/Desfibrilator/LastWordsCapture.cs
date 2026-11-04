@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading;
 using Dissonance;
 using Dissonance.Audio.Capture;
 using Desfibrilator.Core;
@@ -17,21 +19,37 @@ internal sealed class LastWordsCapture : IMicrophoneSubscriber, IDisposable
     private double phase;
     private int previousRate;
     private bool previouslyTransmitting;
+    private VoiceBroadcastTrigger[] triggers = Array.Empty<VoiceBroadcastTrigger>();
+    private double refreshTriggersAt;
+    private volatile bool failed;
+    private string? captureError;
     internal short[] Frozen { get; private set; } = Array.Empty<short>();
 
     internal void Update(bool enabled, bool aliveInMission, bool replaying)
     {
         if (!enabled) { Dispose(); return; }
+        var error = Interlocked.Exchange(ref captureError, null);
+        if (error != null)
+        {
+            Plugin.Error($"Ciriolator voice capture disabled for this expedition; live voice was left untouched: {error}");
+            Unsubscribe();
+        }
+        if (failed) return;
         if (comms == null)
         {
             comms = UnityEngine.Object.FindObjectOfType<DissonanceComms>();
             if (comms != null) { comms.SubscribeToRecordedAudio(this); Plugin.Log("Ciriolator: local last-words capture enabled (memory only)."); }
         }
         allowed = aliveInMission && !replaying;
-        // IsSpeaking alone may include transmission tails. Open channels and IsMuted also gate push-to-talk.
+        if (Time.realtimeSinceStartupAsDouble >= refreshTriggersAt)
+        {
+            triggers = UnityEngine.Object.FindObjectsOfType<VoiceBroadcastTrigger>();
+            refreshTriggersAt = Time.realtimeSinceStartupAsDouble + 2;
+        }
+        // Observe the actual broadcast triggers, not the playback/spectator VoicePlayerState cache.
         var open = comms != null && (comms.RoomChannels.Count > 0 || comms.PlayerChannels.Count > 0);
-        transmitting = allowed && comms != null && !string.IsNullOrEmpty(comms.LocalPlayerName) && !comms.IsMuted && open &&
-            comms.FindPlayer(comms.LocalPlayerName)?.IsSpeaking == true;
+        var broadcasting = triggers.Length == 0 ? open : triggers.Any(t => t != null && t.isActiveAndEnabled && !t.IsMuted && t.IsTransmitting);
+        transmitting = allowed && comms != null && !comms.IsMuted && open && broadcasting;
         if (previouslyTransmitting && !transmitting) lock (gate) buffer.EndPhrase();
         previouslyTransmitting = transmitting;
     }
@@ -40,9 +58,21 @@ internal sealed class LastWordsCapture : IMicrophoneSubscriber, IDisposable
     {
         allowed = transmitting = false;
         lock (gate) { Array.Clear(Frozen, 0, Frozen.Length); Frozen = buffer.Snapshot(); buffer.Clear(); }
+        Plugin.Log($"Ciriolator last words frozen: {Frozen.Length} samples ({(double)Frozen.Length / LastWordsBuffer.SampleRate:0.00}s).");
     }
 
     public void ReceiveMicrophoneData(ArraySegment<float> input, WaveFormat format)
+    {
+        // A subscriber exception must never propagate into Dissonance's live microphone pipeline.
+        try { Receive(input, format); }
+        catch (Exception error)
+        {
+            failed = true; allowed = transmitting = false;
+            Interlocked.CompareExchange(ref captureError, error.ToString(), null);
+        }
+    }
+
+    private void Receive(ArraySegment<float> input, WaveFormat format)
     {
         if (!allowed || input.Array == null || format.Channels <= 0 || format.Channels > 8 ||
             format.SampleRate < LastWordsBuffer.SampleRate || format.SampleRate > 192000) return;
@@ -79,17 +109,27 @@ internal sealed class LastWordsCapture : IMicrophoneSubscriber, IDisposable
     }
 
     // A microphone/processing reset must not erase words already spoken earlier in this expedition.
-    public void Reset() { lock (gate) { buffer.EndPhrase(); phase = 0; previousRate = 0; } }
+    public void Reset()
+    {
+        try { lock (gate) { buffer.EndPhrase(); phase = 0; previousRate = 0; } }
+        catch (Exception error) { failed = true; allowed = transmitting = false; Interlocked.CompareExchange(ref captureError, error.ToString(), null); }
+    }
     internal void ClearRound()
     {
         allowed = transmitting = false;
         lock (gate) { buffer.Clear(); Array.Clear(Frozen, 0, Frozen.Length); Frozen = Array.Empty<short>(); phase = 0; }
         previouslyTransmitting = false;
+        failed = false;
     }
-    public void Dispose()
+    private void Unsubscribe()
     {
         allowed = transmitting = false;
         if (comms != null) { comms.UnsubscribeFromRecordedAudio(this); comms = null; }
+        triggers = Array.Empty<VoiceBroadcastTrigger>(); refreshTriggersAt = 0;
+    }
+    public void Dispose()
+    {
+        Unsubscribe();
         ClearRound();
     }
 }

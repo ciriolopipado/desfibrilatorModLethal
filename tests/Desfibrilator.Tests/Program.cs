@@ -198,4 +198,34 @@ Run("Revocation clears partially received samples", () => {
     Check(b.Position == 0 && !b.Complete, "Transfer state survived cleanup");
     b.Append(0, new short[200]); Check(Array.TrueForAll(b.Snapshot(), s => s == 0), "Old samples survived cleanup");
 });
+Run("Revive applies even if the corpse was already despawned", () => {
+    var r = new RevivalReceipts();
+    Check(r.Decide(1, 10, 10, true, 99, null) == RevivalDecision.Apply, "Corpse lifetime still blocks revival");
+});
+Run("Revive accepts a matching existing corpse", () => {
+    var r = new RevivalReceipts();
+    Check(r.Decide(1, 10, 10, true, 99, 99) == RevivalDecision.Apply, "Matching death rejected");
+});
+Run("Delayed revive cannot apply to a different player or death", () => {
+    var r = new RevivalReceipts();
+    Check(r.Decide(1, 10, 11, true, 99, null) == RevivalDecision.WrongPlayer, "Wrong player accepted");
+    Check(r.Decide(1, 10, 10, true, 99, 100) == RevivalDecision.DifferentDeath, "New corpse overwritten by old revive");
+});
+Run("Repeated or out-of-order revive receipts never restore health twice", () => {
+    var r = new RevivalReceipts(); r.Commit(3, 10);
+    Check(r.Decide(3, 10, 10, true, 99, null) == RevivalDecision.Duplicate, "Duplicate revive accepted");
+    Check(r.Decide(2, 10, 10, true, 99, null) == RevivalDecision.Duplicate, "Older revive accepted");
+    Check(r.Decide(4, 10, 10, true, 100, 100) == RevivalDecision.Apply, "New death cannot be revived");
+});
+Run("Unapplied revive can be retried and an already alive target only acknowledges", () => {
+    var r = new RevivalReceipts();
+    Check(r.Decide(1, 10, 10, true, 99, null) == RevivalDecision.Apply, "Initial attempt lost");
+    Check(r.Decide(1, 10, 10, true, 99, null) == RevivalDecision.Apply, "Uncommitted attempt cannot retry");
+    Check(r.Decide(1, 10, 10, false, 99, null) == RevivalDecision.AlreadyAlive, "Live target must not be revived again");
+});
+Run("Revive receipts are independent by player and reset on a new session", () => {
+    var r = new RevivalReceipts(); r.Commit(5, 10);
+    Check(r.Decide(1, 11, 11, true, 99, null) == RevivalDecision.Apply, "Another player blocked");
+    r.Clear(); Check(r.Decide(1, 10, 10, true, 99, null) == RevivalDecision.Apply, "Previous session leaked");
+});
 Console.WriteLine($"{passed} tests passed; game integration tests are separate and were not run here.");

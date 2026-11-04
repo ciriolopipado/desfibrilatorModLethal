@@ -12,8 +12,20 @@ namespace Desfibrilator;
 public sealed class ReviveNetwork : MonoBehaviour
 {
     internal static ReviveNetwork? Instance;
-    private const string RequestName = Plugin.Id + ".request.v2", StateName = Plugin.Id + ".state.v2";
+    private const string RequestName = Plugin.Id + ".request.v3", StateName = Plugin.Id + ".state.v3";
+    private sealed class SentRevival
+    {
+        internal ulong Sequence, Client, PlayerObject, Corpse, Tool;
+        internal Vector3 Position;
+        internal bool Inside, Ship;
+        internal double RetryAt, Expires;
+        internal readonly HashSet<ulong> Waiting = new HashSet<ulong>();
+    }
     private readonly ReviveCoordinator coordinator = new ReviveCoordinator();
+    private readonly RevivalReceipts receipts = new RevivalReceipts();
+    private readonly Dictionary<ulong, SentRevival> sentRevives = new Dictionary<ulong, SentRevival>();
+    private ulong nextRevival;
+    private string missingPeersReported = "";
     private readonly HashSet<ulong> peers = new HashSet<ulong>();
     private NetworkManager? manager;
     private bool wasListening, registered;
@@ -52,6 +64,7 @@ public sealed class ReviveNetwork : MonoBehaviour
             Connected = true; peers.Add(manager.LocalClientId);
             var ready = coordinator.Tick(Now, Validate);
             if (ready.HasValue) Finish(ready.Value);
+            RetryUnacknowledgedRevives();
             if (Now >= nextBroadcast) { Broadcast(); nextBroadcast = Now + .15; }
         }
         else if (Now >= nextHello)
@@ -80,6 +93,12 @@ public sealed class ReviveNetwork : MonoBehaviour
     {
         if (action == 0) { peers.Add(sender); SendSnapshot(sender); return; }
         if (!peers.Contains(sender)) return;
+        if (action == 3)
+        {
+            if (sentRevives.TryGetValue(tool, out var sent) && sent.PlayerObject == corpse && sent.Waiting.Remove(sender))
+                Plugin.Log($"Ciriolator revive receipt: event={tool}, observer={sender}, target={sent.Client}.");
+            return;
+        }
         if (action == 2) { coordinator.Cancel(sender); return; }
         if (action != 1) return;
         var attempt = new Attempt(sender, tool, corpse);
@@ -99,6 +118,14 @@ public sealed class ReviveNetwork : MonoBehaviour
     private bool Validate(Attempt attempt)
     {
         if (manager == null || !Interaction.RoundActive || !manager.ConnectedClients.ContainsKey(attempt.Actor)) return false;
+        var missing = string.Join(",", manager.ConnectedClientsIds.Where(id => !peers.Contains(id)).OrderBy(id => id));
+        if (missing.Length > 0)
+        {
+            if (missing != missingPeersReported)
+            { missingPeersReported = missing; Plugin.Error($"Ciriolator: revive blocked until every participant loads the same mod version; missing protocol handshake from clients {missing}."); }
+            return false;
+        }
+        missingPeersReported = "";
         var actor = Player(attempt.Actor);
         if (!Interaction.HasActiveTool(actor) || actor!.currentlyHeldObjectServer.NetworkObjectId != attempt.Tool ||
             actor.inSpecialInteractAnimation || actor.inTerminalMenu) return false;
@@ -131,15 +158,12 @@ public sealed class ReviveNetwork : MonoBehaviour
             Revival.Apply(target, position, inside, ship);
             coordinator.Complete(Now);
             PlayDischarge(attempt.Tool);
-            using var writer = new FastBufferWriter(64, Allocator.Temp);
-            writer.WriteValueSafe((byte)2);
-            writer.WriteValueSafe(target.actualClientId);
-            writer.WriteValueSafe(attempt.Corpse);
-            writer.WriteValueSafe(position);
-            writer.WriteValueSafe(inside); writer.WriteValueSafe(ship);
-            writer.WriteValueSafe(attempt.Tool);
+            var sent = new SentRevival { Sequence = ++nextRevival, Client = target.actualClientId,
+                PlayerObject = target.NetworkObjectId, Corpse = attempt.Corpse, Position = position,
+                Inside = inside, Ship = ship, Tool = attempt.Tool, RetryAt = Now + 1, Expires = Now + 5 };
+            sentRevives[sent.Sequence] = sent;
             foreach (var peer in peers.Where(p => p != manager!.LocalClientId && manager.ConnectedClients.ContainsKey(p)).ToArray())
-                manager!.CustomMessagingManager.SendNamedMessage(StateName, peer, writer, NetworkDelivery.ReliableSequenced);
+            { sent.Waiting.Add(peer); SendRevival(peer, sent); }
             if (grab != null && grab.IsSpawned) grab.Despawn(true);
             Broadcast();
             try { RevivalSideEffects.Instance?.ActivateOnServer(target.actualClientId); }
@@ -150,6 +174,37 @@ public sealed class ReviveNetwork : MonoBehaviour
         {
             coordinator.Cancel(attempt.Actor);
             Plugin.Error($"Reanimation failed; inspect host and client logs. {e}");
+        }
+    }
+
+    private void SendRevival(ulong peer, SentRevival sent)
+    {
+        using var writer = new FastBufferWriter(96, Allocator.Temp);
+        writer.WriteValueSafe((byte)2); writer.WriteValueSafe(sent.Sequence); writer.WriteValueSafe(sent.Client);
+        writer.WriteValueSafe(sent.PlayerObject); writer.WriteValueSafe(sent.Corpse); writer.WriteValueSafe(sent.Position);
+        writer.WriteValueSafe(sent.Inside); writer.WriteValueSafe(sent.Ship); writer.WriteValueSafe(sent.Tool);
+        manager!.CustomMessagingManager.SendNamedMessage(StateName, peer, writer, NetworkDelivery.ReliableSequenced);
+    }
+
+    private void RetryUnacknowledgedRevives()
+    {
+        foreach (var pair in sentRevives.ToArray())
+        {
+            var sent = pair.Value; var player = Player(sent.Client);
+            if (sent.Waiting.Count == 0 || player == null || player.isPlayerDead || player.NetworkObjectId != sent.PlayerObject)
+            { sentRevives.Remove(pair.Key); continue; }
+            if (Now >= sent.Expires)
+            {
+                Plugin.Error($"Ciriolator revive event {sent.Sequence}: no confirmation from clients {string.Join(",", sent.Waiting)}. Check their logs and mod versions.");
+                sentRevives.Remove(pair.Key); continue;
+            }
+            if (Now < sent.RetryAt) continue;
+            foreach (var peer in sent.Waiting.ToArray())
+            {
+                if (manager!.ConnectedClients.ContainsKey(peer)) SendRevival(peer, sent);
+                else sent.Waiting.Remove(peer);
+            }
+            sent.RetryAt = Now + 1;
         }
     }
 
@@ -185,20 +240,27 @@ public sealed class ReviveNetwork : MonoBehaviour
             chargeUntil = Now + Math.Max(0, charge);
             ActiveTool = active ? tool : (ulong?)null; Connected = true;
         }
-        else if (kind == 2 && reader.TryBeginRead(38))
+        else if (kind == 2 && reader.TryBeginRead(54))
         {
-            reader.ReadValueSafe(out ulong target); reader.ReadValueSafe(out ulong corpse);
+            reader.ReadValueSafe(out ulong sequence); reader.ReadValueSafe(out ulong target);
+            reader.ReadValueSafe(out ulong playerObject); reader.ReadValueSafe(out ulong corpse);
             reader.ReadValueSafe(out Vector3 position);
             reader.ReadValueSafe(out bool inside); reader.ReadValueSafe(out bool ship); reader.ReadValueSafe(out ulong tool);
             var player = Player(target);
-            if (player != null && player.isPlayerDead && player.deadBody != null &&
-                player.deadBody.grabBodyObject != null && player.deadBody.grabBodyObject.NetworkObjectId == corpse)
+            if (player == null) { Plugin.Error($"Ciriolator: missing target {target} for revive event {sequence}; awaiting retry."); return; }
+            var currentBody = player.deadBody != null ? player.deadBody.grabBodyObject : null;
+            ulong? observedCorpse = currentBody != null && currentBody.IsSpawned ? currentBody.NetworkObjectId : (ulong?)null;
+            var decision = receipts.Decide(sequence, playerObject, player.NetworkObjectId, player.isPlayerDead, corpse, observedCorpse);
+            if (decision == RevivalDecision.WrongPlayer || decision == RevivalDecision.DifferentDeath)
+            { Plugin.Error($"Ciriolator: rejected stale revive event {sequence} for {target}: {decision}."); return; }
+            if (decision == RevivalDecision.Apply)
             {
                 try { Revival.Apply(player, position, inside, ship); }
-                catch (Exception e) { Plugin.Error($"Could not apply host reanimation: {e}"); }
+                catch (Exception e) { Plugin.Error($"Could not apply host reanimation: {e}"); return; }
             }
-            ActiveTool = null; cooldownUntil = Now + ReviveCoordinator.CooldownSeconds;
-            PlayDischarge(tool);
+            if (decision != RevivalDecision.Duplicate)
+            { receipts.Commit(sequence, playerObject); ActiveTool = null; PlayDischarge(tool); }
+            Request(3, sequence, playerObject);
         }
     }
 
@@ -211,6 +273,8 @@ public sealed class ReviveNetwork : MonoBehaviour
     private void ResetSession()
     {
         coordinator.ResetSession(); peers.Clear(); ActiveTool = null; Connected = false;
+        receipts.Clear(); sentRevives.Clear(); nextRevival = 0;
+        missingPeersReported = "";
         cooldownUntil = chargeUntil = nextBroadcast = nextHello = 0;
     }
     private void Detach()

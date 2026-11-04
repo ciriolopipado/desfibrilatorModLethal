@@ -1,4 +1,4 @@
-# Ciriolator — versión de pruebas 0.2.1
+# Ciriolator — versión de pruebas 0.2.2
 
 ![Carátula de Ciriolator](icon.png)
 
@@ -8,13 +8,21 @@ Mod de BepInEx para Lethal Company, con **v81 como versión objetivo**. Objeto *
 
 ## Descargar para Thunderstore Mod Manager
 
-[Descargar Ciriolator 0.2.1 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-0.2.1.zip)
+[Descargar Ciriolator 0.2.2 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-0.2.2.zip)
 
-Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-0.2.1.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
+Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-0.2.2.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
 
 ## Aviso de seguridad de la descarga
 
-Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La revisión estática no confirma que sea un falso positivo; no hay un análisis antivirus actualizado en este entorno. La versión 0.2.1 sigue sin firma Authenticode; estos cambios no garantizan que desaparezca el aviso. Consulta [SECURITY.md](SECURITY.md) antes de instalar si tu protección bloquea el archivo. La descarga original 0.1.0 se conserva sin cambios.
+Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La revisión estática no confirma que sea un falso positivo; no hay un análisis antivirus actualizado en este entorno. La versión 0.2.2 sigue sin firma Authenticode; estos cambios no garantizan que desaparezca el aviso. Consulta [SECURITY.md](SECURITY.md) antes de instalar si tu protección bloquea el archivo. La descarga original 0.1.0 se conserva sin cambios.
+
+## Correcciones de reanimación en 0.2.2
+
+Versión de prueba para los fallos reportados de piernas/pasos congelados, voz en directo perdida y efectos ausentes. Restaura el controlador de animación local, el oyente de audio, los filtros y las vinculaciones de voz, y deja que el juego ejecute su inicialización de control después de morir. Las confirmaciones de red permiten comprobar que todos los clientes aplicaron el estado vivo, aunque el cadáver ya haya desaparecido.
+
+Los ecos y chispazos tienen fuentes SFX propias: no reutilizan el canal de voz en directo ni su mezclador de jugador. Un fallo de captura se aísla del micrófono de Dissonance y de los demás efectos. La captura observa los emisores de voz reales, sin depender del estado de reproducción/espectador.
+
+**Estos cambios no se han verificado dentro del juego.** Sigue [la prueba de regresión de 0.2.2](docs/regresion-0.2.2.md) primero con anfitrión y después con cliente. Instalar la misma versión en todos; no mezclar versiones anteriores. Se bloquea la reanimación si falta la confirmación de protocolo de algún participante.
 
 ## Funcionamiento
 
@@ -40,11 +48,11 @@ Ambos paquetes ya están en el perfil **Lloreria LETHAL 2**. El mod utiliza Unit
 
 1. Duplica el perfil en Thunderstore Mod Manager para las pruebas.
 2. Entra en **Settings / Configuración → Profile / Perfil → Import local mod**. También puedes buscar «Import local mod» en los ajustes.
-3. Selecciona **`ciriolopipado-Desfibrilator-0.2.1.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `0.2.1` (campos `0`, `2`, `1`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
-4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Ciriolator 0.2.1 loaded`.
+3. Selecciona **`ciriolopipado-Desfibrilator-0.2.2.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `0.2.2` (campos `0`, `2`, `2`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
+4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Ciriolator 0.2.2 loaded`.
 5. Busca `Ciriolator` en la tienda del terminal y realiza las pruebas de [docs/pruebas.md](docs/pruebas.md).
 
-El paquete sigue llamándose `Desfibrilator` en el gestor para actualizar la instalación existente. El objeto dentro del juego se llama **Ciriolator** y cuesta **0 créditos** en esta versión de pruebas. Reinicia el juego tras actualizar; todos los participantes deben usar 0.2.1.
+El paquete sigue llamándose `Desfibrilator` en el gestor para actualizar la instalación existente. El objeto dentro del juego se llama **Ciriolator** y cuesta **0 créditos** en esta versión de pruebas. Reinicia el juego tras actualizar; todos los participantes deben usar 0.2.2.
 
 No hace falta publicar el mod ni compilarlo en tu ordenador. Cada participante debe importar el mismo ZIP. El paquete incluye `LEEME_INSTALACION.txt` con estos pasos. Como alternativa manual, copia únicamente su contenido de `BepInEx/plugins/Desfibrilator/` a la ruta equivalente del perfil, sin mantener otra instalación del mismo mod.
 
@@ -52,7 +60,7 @@ Tras iniciar una vez, la tecla se configura en `BepInEx/config/ciriolopipado.des
 
 ## Efectos secundarios tras revivir
 
-Desde 0.2.1, los efectos se aplican solo a los jugadores reanimados con Ciriolator:
+Desde 0.2.2, los efectos se aplican solo a los jugadores reanimados con Ciriolator:
 
 - **Últimas palabras:** captura automáticamente un fragmento de hasta 5 segundos de tu última intervención transmitida por el chat de voz antes de morir. Se repite con una ligera coloración de audio cada **60–120 segundos**, desde la posición del reanimado, con alcance aproximado de **12 metros**. No se envía por los walkie-talkies.
 - El anfitrión emite ruido del juego durante esas reproducciones: puede atraer a los enemigos que reaccionan al sonido. No obliga a todos los enemigos a perseguir al jugador.
@@ -103,7 +111,7 @@ export PATH=/workspace/.tools/dotnet:$PATH
 
 ## Validación y compatibilidad
 
-Las 35 pruebas automáticas ejercitan la reanimación, captura acotada y recorte de voz, intervalos, suspensión, limpieza y permisos de subida ligados al emisor, expedición y muerte. Se comprueban también tamaños máximos, mensajes truncados, duplicados y revocación. No sustituyen pruebas de físicas, inventario, cámara, voz o transporte de red dentro de Unity.
+Las 41 pruebas automáticas ejercitan la reanimación, captura acotada y recorte de voz, intervalos, suspensión, limpieza y permisos de subida ligados al emisor, expedición y muerte. Se comprueban también tamaños máximos, mensajes truncados, duplicados y revocación. No sustituyen pruebas de físicas, inventario, cámara, voz o transporte de red dentro de Unity.
 
 El anfitrión valida distancia, obstáculos, equipo activo, estado del cuerpo y conexión del objetivo. El cliente envía señales periódicas de que mantiene la acción y el objetivo; el servidor exige cinco segundos de esas señales. Esto evita que un cliente complete la carga anticipadamente, pero no constituye una protección frente a clientes modificados que falsifiquen la pulsación o el apuntado.
 
@@ -111,6 +119,6 @@ El inventario del perfil recibido está en [docs/profile-inventory.json](docs/pr
 
 Se usa mensajería de Unity Netcode con identificadores de cliente y de objeto; no se fija un máximo de cuatro jugadores. No se llama a `ReviveDeadPlayers()`, que reanimaría a todos los muertos y alteraría el flujo de fin de ronda. No se modifica el contador `playersRevived`, reservado por el juego para ese flujo.
 
-Todos los participantes deben actualizar a 0.2.1 para tener la captura automática. Las versiones anteriores a 0.2.0 usan un protocolo de reanimación incompatible.
+Todos los participantes deben actualizar a 0.2.2: esta corrección cambia el protocolo de confirmación de reanimación. Las versiones anteriores no son compatibles para usar el objeto.
 
-El ZIP se genera en `dist/ciriolopipado-Desfibrilator-0.2.1.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Sigue siendo una compilación experimental y no se ha publicado en el catálogo de Thunderstore.
+El ZIP se genera en `dist/ciriolopipado-Desfibrilator-0.2.2.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Sigue siendo una compilación experimental y no se ha publicado en el catálogo de Thunderstore.

@@ -47,6 +47,8 @@ public sealed class RevivalSideEffects : MonoBehaviour
     private readonly Dictionary<ulong, VoiceTransferBuffer> incoming = new Dictionary<ulong, VoiceTransferBuffer>();
     private readonly Dictionary<ulong, uint> incomingTickets = new Dictionary<ulong, uint>();
     private readonly System.Random random = new System.Random();
+    private readonly Dictionary<string, double> nextFaultLog = new Dictionary<string, double>();
+    private readonly Dictionary<ulong, AudioSource> shockSources = new Dictionary<ulong, AudioSource>();
     private NetworkManager? manager;
     private ConfigEntry<bool> automaticCapture = null!;
     private ConfigEntry<float> cameraStrength = null!;
@@ -103,12 +105,15 @@ public sealed class RevivalSideEffects : MonoBehaviour
             else ClearLocal();
         }
 
-        var alive = local != null && local.isPlayerControlled && !local.isPlayerDead;
-        var playingOwnEcho = local != null && voices.TryGetValue(local.actualClientId, out var own) && own.Source != null && own.Source.isPlaying;
-        capture.Update(automaticCapture.Value, alive && Interaction.RoundActive, playingOwnEcho);
-        if (local != null && local.isPlayerDead && !localWasDead) capture.FreezeAtDeath();
-        localWasDead = local != null && local.isPlayerDead;
-        if (manager.IsServer) { ready = true; peers.Add(manager.LocalClientId); ServerTick(); }
+        Guard("voice capture", () =>
+        {
+            var alive = local != null && local.isPlayerControlled && !local.isPlayerDead;
+            var playingOwnEcho = local != null && voices.TryGetValue(local.actualClientId, out var own) && own.Source != null && own.Source.isPlaying;
+            capture.Update(automaticCapture.Value, alive && Interaction.RoundActive, playingOwnEcho);
+            if (local != null && local.isPlayerDead && !localWasDead) capture.FreezeAtDeath();
+            localWasDead = local != null && local.isPlayerDead;
+        });
+        if (manager.IsServer) { ready = true; peers.Add(manager.LocalClientId); Guard("effect scheduler", ServerTick); }
         else if (!ready && local != null && Now >= nextHello) { SendHello(); nextHello = Now + 1; }
         if (localTicket != 0 && local != null && local.isPlayerDead && Now <= localTicketExpires)
         {
@@ -116,7 +121,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
             Upload(ticket, automaticCapture.Value ? capture.Frozen : Array.Empty<short>());
         }
         if (Now > localTicketExpires) localTicket = 0;
-        PumpTransfers();
+        Guard("voice transfer", PumpTransfers);
         foreach (var pair in voices)
         {
             var player = Player(pair.Key);
@@ -143,6 +148,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
         if (!states.TryGetValue(client, out var state)) states[client] = state = new PlayerState();
         state.Dead = false;
         state.Schedule.Activate(Now, random.NextDouble);
+        Plugin.Log($"Ciriolator effects activated: client={client}, voiceIn={state.Schedule.NextVoice - Now:0.0}s, shockIn={state.Schedule.NextShock - Now:0.0}s, samples={state.Samples.Length}.");
         affected.Add(client);
         SendAll(3, client);
         if (state.Samples.Length > 0) RelayClip(client, state.Samples);
@@ -152,54 +158,61 @@ public sealed class RevivalSideEffects : MonoBehaviour
     {
         if (manager == null || StartOfRound.Instance == null) return;
         foreach (var client in manager.ConnectedClientsIds.ToArray())
+            Guard($"effects for client {client}", () => TickPlayer(client));
+    }
+
+    private void TickPlayer(ulong client)
+    {
+        if (manager == null) return;
+        var player = Player(client);
+        if (player == null) return;
+        if (!states.TryGetValue(client, out var state)) states[client] = state = new PlayerState { Dead = false };
+        if (Interaction.RoundActive && player.isPlayerDead && !state.Dead)
         {
-            var player = Player(client);
-            if (player == null) continue;
-            if (!states.TryGetValue(client, out var state)) states[client] = state = new PlayerState { Dead = false };
-            if (Interaction.RoundActive && player.isPlayerDead && !state.Dead)
+            state.Dead = true; state.NoiseUntil = 0;
+            CancelTransfers(client); ClearSamples(state); ClearVoice(client); SendAll(6, client);
+            state.Permit = new VoiceUploadPermit(client, epoch, ++nextTicket, Now + 10); state.RetryAt = 0;
+        }
+        if (!player.isPlayerDead) state.Dead = false;
+        if (state.Permit?.Pending(Now) == true && Now >= state.RetryAt)
+        {
+            if (client == manager.LocalClientId) QueueTicket(state.Permit.Ticket);
+            else if (peers.Contains(client)) SendTicket(client, state.Permit.Ticket);
+            state.RetryAt = Now + 1;
+        }
+        if (state.Permit?.Pending(Now) == false && state.Incoming != null)
+        {
+            state.Incoming.Clear(); state.Incoming = null;
+            Plugin.Log($"Ciriolator: incomplete voice transfer discarded for client {client}.");
+        }
+        if (!Interaction.RoundActive) return;
+        var events = state.Schedule.Tick(Now, !player.isPlayerDead, state.Samples.Length > 0, random.NextDouble);
+        if ((events & SideEffectEvent.Voice) != 0)
+        {
+            SendAll(4, client);
+            state.NoiseUntil = Now + (double)state.Samples.Length / LastWordsBuffer.SampleRate;
+            state.NextNoise = Now;
+            Guard("echo playback", () => PlayEcho(client));
+        }
+        if ((events & SideEffectEvent.Shock) != 0)
+        {
+            var yaw = Signed(4, 10); var pitch = Signed(2, 6);
+            SendAll(5, client, yaw, pitch);
+            Guard("shock playback", () => Shock(client, yaw, pitch));
+        }
+        if (!player.isPlayerDead && Now < state.NoiseUntil && Now >= state.NextNoise)
+        {
+            // Use the game's noise system; only enemies that react to sound are attracted.
+            try
             {
-                state.Dead = true; state.NoiseUntil = 0;
-                CancelTransfers(client); ClearSamples(state); ClearVoice(client); SendAll(6, client);
-                state.Permit = new VoiceUploadPermit(client, epoch, ++nextTicket, Now + 10); state.RetryAt = 0;
+                RoundManager.Instance?.PlayAudibleNoise(player.transform.position, 12, .7f, 0,
+                    player.isInHangarShipRoom && StartOfRound.Instance.hangarDoorsClosed, 0);
             }
-            if (!player.isPlayerDead) state.Dead = false;
-            if (state.Permit?.Pending(Now) == true && Now >= state.RetryAt)
-            {
-                if (client == manager.LocalClientId) QueueTicket(state.Permit.Ticket);
-                else if (peers.Contains(client)) SendTicket(client, state.Permit.Ticket);
-                state.RetryAt = Now + 1;
-            }
-            if (state.Permit?.Pending(Now) == false && state.Incoming != null)
-            {
-                state.Incoming.Clear(); state.Incoming = null;
-                Plugin.Log($"Ciriolator: incomplete voice transfer discarded for client {client}.");
-            }
-            if (!Interaction.RoundActive) continue;
-            var events = state.Schedule.Tick(Now, !player.isPlayerDead, state.Samples.Length > 0, random.NextDouble);
-            if ((events & SideEffectEvent.Voice) != 0)
-            {
-                PlayEcho(client); SendAll(4, client);
-                state.NoiseUntil = Now + (double)state.Samples.Length / LastWordsBuffer.SampleRate;
-                state.NextNoise = Now;
-            }
-            if ((events & SideEffectEvent.Shock) != 0)
-            {
-                var yaw = Signed(4, 10); var pitch = Signed(2, 6);
-                Shock(client, yaw, pitch); SendAll(5, client, yaw, pitch);
-            }
-            if (!player.isPlayerDead && Now < state.NoiseUntil && Now >= state.NextNoise)
-            {
-                // Use the game's noise system; only enemies that react to sound are attracted.
-                try
-                {
-                    RoundManager.Instance?.PlayAudibleNoise(player.transform.position, 12, .7f, 0,
-                        player.isInHangarShipRoom && StartOfRound.Instance.hangarDoorsClosed, 0);
-                }
-                catch (Exception error) { Plugin.Error($"An enemy-noise integration failed: {error}"); }
-                state.NextNoise = Now + 1;
-            }
+            catch (Exception error) { Plugin.Error($"An enemy-noise integration failed: {error}"); }
+            state.NextNoise = Now + 1;
         }
     }
+
 
     private float Signed(float min, float max) => (float)(min + (max - min) * random.NextDouble()) * (random.Next(2) == 0 ? -1 : 1);
 
@@ -266,6 +279,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
         if (!states.TryGetValue(sender, out var state) || state.Permit?.TryConsume(sender, epoch, ticket, samples.Length, samples.Length * 2, Now) != true) return;
         state.Incoming?.Clear(); state.Incoming = null;
         ClearSamples(state); state.Samples = (short[])samples.Clone();
+        Plugin.Log($"Ciriolator last words received: client={sender}, samples={samples.Length}, ticket={ticket}.");
         if (state.Schedule.Active && samples.Length > 0 && !state.Dead) RelayClip(sender, samples);
     }
 
@@ -385,15 +399,15 @@ public sealed class RevivalSideEffects : MonoBehaviour
             Array.Clear(bytes, 0, bytes.Length); Array.Clear(samples, 0, samples.Length);
         }
         else if (kind == 3) affected.Add(client);
-        else if (kind == 4 && affected.Contains(client)) PlayEcho(client);
+        else if (kind == 4 && affected.Contains(client)) Guard("received echo", () => PlayEcho(client));
         else if (kind == 5 && affected.Contains(client) && reader.TryBeginRead(8))
         {
             reader.ReadValueSafe(out float yaw); reader.ReadValueSafe(out float pitch);
             if (!float.IsNaN(yaw) && !float.IsInfinity(yaw) && !float.IsNaN(pitch) && !float.IsInfinity(pitch))
-                Shock(client, Mathf.Clamp(yaw, -10, 10), Mathf.Clamp(pitch, -6, 6));
+                Guard("received shock", () => Shock(client, Mathf.Clamp(yaw, -10, 10), Mathf.Clamp(pitch, -6, 6)));
         }
         else if (kind == 6) ClearVoice(client);
-        else if (kind == 7) { affected.Remove(client); ClearVoice(client); }
+        else if (kind == 7) { affected.Remove(client); ClearVoice(client); ClearShock(client); }
     }
 
     private void InstallClip(ulong client, short[] samples)
@@ -413,27 +427,28 @@ public sealed class RevivalSideEffects : MonoBehaviour
             (!player.IsOwner && player.voicePlayerState?.IsLocallyMuted == true)) return;
         if (voice.Source == null)
         {
-            var obj = new GameObject("CiriolatorProximityEcho"); obj.transform.SetParent(player.transform, false);
-            obj.transform.localPosition = Vector3.up * 1.5f;
-            voice.Source = obj.AddComponent<AudioSource>();
-            voice.Source.playOnAwake = false; voice.Source.loop = false;
-            voice.Source.spatialBlend = 1; voice.Source.minDistance = 1; voice.Source.maxDistance = 12;
-            voice.Source.rolloffMode = AudioRolloffMode.Linear; voice.Source.volume = .7f;
+            voice.Source = CreateEffectSource(player, "CiriolatorProximityEcho");
+            voice.Source.volume = .7f;
             voice.Source.pitch = .98f;
-            if (player.currentVoiceChatAudioSource != null) voice.Source.outputAudioMixerGroup = player.currentVoiceChatAudioSource.outputAudioMixerGroup;
-            obj.AddComponent<AudioLowPassFilter>().cutoffFrequency = 2800;
+            voice.Source.gameObject.AddComponent<AudioLowPassFilter>().cutoffFrequency = 2800;
         }
         // Independent proximity source: never transmit through the game's walkie-talkie system.
         voice.Source.clip = voice.Clip; voice.Source.Play();
+        Plugin.Log($"Ciriolator echo playing: client={client}, seconds={voice.Clip.length:0.00}.");
     }
     private void Shock(ulong client, float yaw, float pitch)
     {
         var player = Player(client);
         if (player == null || player.isPlayerDead || !Interaction.RoundActive) return;
-        if (player.itemAudio != null) player.itemAudio.PlayOneShot(ItemFactory.Discharge, .35f);
-        if (!player.IsOwner || player.disableLookInput || player.inTerminalMenu || player.inSpecialInteractAnimation) return;
+        if (!shockSources.TryGetValue(client, out var source) || source == null)
+            shockSources[client] = source = CreateEffectSource(player, "CiriolatorShock");
+        source.PlayOneShot(ItemFactory.Discharge, .5f);
+        Plugin.Log($"Ciriolator shock received: client={client}, owner={player.IsOwner}, yaw={yaw:0.0}, pitch={pitch:0.0}.");
+        if (!player.IsOwner) return;
+        if (player.disableLookInput || player.inTerminalMenu || player.inSpecialInteractAnimation)
+        { Plugin.Log($"Ciriolator camera impulse skipped during a locked interaction for client {client}."); return; }
         var amount = cameraStrength.Value;
-        if (amount <= 0) return;
+        if (amount <= 0) { Plugin.Log("Ciriolator camera impulse disabled by CameraStrength=0."); return; }
         player.transform.Rotate(0, yaw * amount, 0, Space.World);
         var cameraUp = AccessTools.Field(typeof(PlayerControllerB), "cameraUp");
         if (cameraUp != null && player.gameplayCamera != null)
@@ -443,7 +458,40 @@ public sealed class RevivalSideEffects : MonoBehaviour
             var euler = player.gameplayCamera.transform.localEulerAngles;
             player.gameplayCamera.transform.localEulerAngles = new Vector3(value, euler.y, euler.z);
         }
+        Plugin.Log($"Ciriolator camera impulse applied to local client {client}.");
         // No recenter coroutine: the resulting direction remains until the player moves the view.
+    }
+
+    private static AudioSource CreateEffectSource(PlayerControllerB player, string name)
+    {
+        var obj = new GameObject(name); obj.transform.SetParent(player.transform, false);
+        obj.transform.localPosition = Vector3.up * 1.5f;
+        var source = obj.AddComponent<AudioSource>();
+        source.playOnAwake = false; source.loop = false; source.spatialBlend = 1;
+        source.minDistance = 1; source.maxDistance = 12; source.rolloffMode = AudioRolloffMode.Linear;
+        // Never reuse a live voice channel or its per-player mixer (which the game can mute on death).
+        if (SoundManager.Instance != null && SoundManager.Instance.diageticMixer != null)
+        {
+            var groups = SoundManager.Instance.diageticMixer.FindMatchingGroups("SFX");
+            if (groups.Length > 0) source.outputAudioMixerGroup = groups[0];
+        }
+        return source;
+    }
+
+    private void ClearShock(ulong client)
+    {
+        if (shockSources.TryGetValue(client, out var source))
+        { if (source != null) { source.Stop(); Destroy(source.gameObject); } shockSources.Remove(client); }
+    }
+
+    private void Guard(string stage, Action action)
+    {
+        try { action(); }
+        catch (Exception error)
+        {
+            if (!nextFaultLog.TryGetValue(stage, out var next) || Now >= next)
+            { nextFaultLog[stage] = Now + 5; Plugin.Error($"Ciriolator {stage} failed; other effects remain active: {error}"); }
+        }
     }
 
     private void ClearVoice(ulong client)
@@ -463,6 +511,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
     private void ClearLocal()
     {
         foreach (var client in voices.Keys.ToArray()) ClearVoice(client);
+        foreach (var client in shockSources.Keys.ToArray()) ClearShock(client);
         foreach (var assembly in incoming.Values) assembly.Clear(); incoming.Clear(); incomingTickets.Clear();
         foreach (var task in outgoing.Where(t => t.Upload)) Array.Clear(task.Samples, 0, task.Samples.Length);
         outgoing.Clear();
@@ -479,6 +528,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
             CancelTransfers(client); outgoing.RemoveAll(t => t.Peer == client);
             if (states.TryGetValue(client, out var state)) ClearSamples(state);
             states.Remove(client); affected.Remove(client); ClearVoice(client); SendAll(7, client); peers.Remove(client);
+            ClearShock(client);
         }
         if (manager != null && client == manager.LocalClientId) { ClearRound(); capture.Dispose(); }
     }
@@ -491,7 +541,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
             manager.OnClientDisconnectCallback -= OnDisconnect;
         }
         ClearRound(); capture.Dispose(); peers.Clear(); registered = listening = ready = missionSeen = welcomed = false;
-        nextHello = 0; epoch = 1;
+        nextHello = 0; epoch = 1; nextFaultLog.Clear();
     }
     private void Show(string text) { notice = text; noticeUntil = Now + 8; Plugin.Log(text); }
     private void OnGUI()

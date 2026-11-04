@@ -7,7 +7,7 @@ using GameNetcodeStuff;
 
 namespace Desfibrilator;
 
-[BepInPlugin(Id, "Ciriolator", "0.2.1")]
+[BepInPlugin(Id, "Ciriolator", "0.2.2")]
 [BepInDependency("evaisa.lethallib", "1.2.0")]
 public sealed class Plugin : BaseUnityPlugin
 {
@@ -27,7 +27,7 @@ public sealed class Plugin : BaseUnityPlugin
         gameObject.AddComponent<RevivalSideEffects>();
         harmony = new Harmony(Id);
         harmony.PatchAll();
-        Logger.LogInfo("Ciriolator 0.2.1 loaded. Target: Lethal Company v81. All peers need the mod.");
+        Logger.LogInfo("Ciriolator 0.2.2 loaded. Target: Lethal Company v81. All peers need the mod.");
     }
 
     private void OnDestroy() { harmony?.UnpatchSelf(); Use?.Dispose(); }

@@ -47,7 +47,9 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 ## Validado en este entorno
 
 - Compilación con referencias públicas de juego v81 (81.0.5-ngd.0), Dissonance y módulos Unity de referencia 2021.3.33. No es ejecución del juego.
-- 35 pruebas automatizadas de lógica independiente de Unity, descritas en README.
+- 41 pruebas automatizadas de lógica independiente de Unity, descritas en README.
 - Preparación repetible de referencias con verificación SHA-256 y empaquetado sin DLL del juego.
 
 Ninguna fila de la tabla anterior se considera superada hasta probarla dentro del juego. La animación propia de manos sobre el pecho está pendiente de implementación; actualmente hay pose básica y movimiento procedural de palas.
+
+La secuencia de regresión específica para los fallos reportados está en [regresion-0.2.2.md](regresion-0.2.2.md). Se distingue recepción del estado vivo, restauración de animador/oyente y los efectos posteriores.

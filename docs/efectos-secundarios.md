@@ -1,4 +1,4 @@
-# Últimas palabras y descargas — 0.2.1 experimental
+# Últimas palabras y descargas — 0.2.2 experimental
 
 Solo se marcan como afectados los jugadores reanimados con Ciriolator. El anfitrión mantiene dos temporizadores independientes: voz cada 60–120 segundos y descarga cada 45–90 segundos. Volver a morir suspende los efectos; otra reanimación renueva los temporizadores sin acumularlos. Se borra el estado al volver a órbita o desconectar.
 
@@ -18,7 +18,7 @@ Desactivar la nueva opción en una configuración recargada durante la partida b
 
 ## Proximidad y enemigos
 
-La reproducción usa una fuente 3D independiente, unida al jugador revivido, con unos 12 metros de alcance. No llama al sistema de walkie-talkies ni transmite la frase como si el jugador hablara por radio. Respeta el silencio local del jugador cuando Dissonance lo proporciona.
+Desde 0.2.2 los efectos usan fuentes SFX propias y no el mezclador de voz del jugador, que puede silenciarse durante la muerte. La reproducción usa una fuente 3D independiente, unida al jugador revivido, con unos 12 metros de alcance. No llama al sistema de walkie-talkies ni transmite la frase como si el jugador hablara por radio. Respeta el silencio local del jugador cuando Dissonance lo proporciona.
 
 Mientras dura la reproducción, el anfitrión llama a `RoundManager.PlayAudibleNoise` aproximadamente una vez por segundo, desde la posición del jugador. Puede alertar a enemigos con respuesta al sonido, según sus propias reglas y obstáculos. No convierte a todos los enemigos en perseguidores ni sustituye su inteligencia artificial. Escuchar o reaccionar a estos ruidos requiere validación en juego, especialmente con enemigos añadidos por mods.
 
@@ -33,6 +33,8 @@ La descarga suena cerca del afectado. Solo el propietario modifica su mirada: gi
 - Sin voz: comprobar que aparece el aviso de captura automática, que `AutomaticVoiceCapture` no está a false y que la voz se transmite realmente y buscar `local last-words capture enabled` en el registro. Si no hay frase válida, las descargas funcionan pero no se emite una voz vacía ni su ruido.
 - Sin descargas: comprobar versión en todos los participantes, estado afectado, temporizadores e intensidad mayor que cero. Esperar al menos 45 segundos después de reanimar.
 - Se compila contra las API públicas de `LethalCompany.GameLibs.Steam 81.0.5-ngd.0`, que incluyen Dissonance. Para las referencias de módulos Unity se usan API 2021.3.33 compartidas. No se distribuyen esas DLL de referencia.
-- Hay 35 pruebas de lógica para reanimación, frases acotadas, intervalos, limpieza y permisos de subida. La captura real, la transferencia fragmentada, la cámara, la reacción de enemigos y la convivencia con Mirage/otros mods **no se han ejecutado dentro del juego en este entorno**. Consultar la lista de `pruebas.md`.
+- Hay 41 pruebas de lógica para reanimación, frases acotadas, intervalos, limpieza y permisos de subida. La captura real, la transferencia fragmentada, la cámara, la reacción de enemigos y la convivencia con Mirage/otros mods **no se han ejecutado dentro del juego en este entorno**. Consultar la lista de `pruebas.md`.
 
-Todos deben instalar 0.2.1 para usar la captura automática. Las versiones anteriores a 0.2.0 usan un protocolo de reanimación incompatible. Se mantienen el precio temporal de 0 créditos, cinco segundos de carga, 30 puntos de vida y espera global de 90 segundos.
+Todos deben instalar 0.2.2. Cambia el protocolo de reanimación: el anfitrión espera confirmaciones y reintenta los mensajes no aplicados durante un máximo de cinco segundos; los duplicados no recuperan vida otra vez. El cadáver no es un requisito local para recibir un estado vivo autorizado por el anfitrión. Las versiones anteriores no son compatibles para usar el objeto. Se mantienen el precio temporal de 0 créditos, cinco segundos de carga, 30 puntos de vida y espera global de 90 segundos.
+
+Los logs de 0.2.2 muestran el estado de aplicación de la reanimación, confirmaciones por cliente, duración del fragmento congelado/recibido, próximos intervalos y recepción/aplicación de descargas. No incluyen el contenido de las palabras. Consultar regresion-0.2.2.md para la secuencia exacta de comprobación.
