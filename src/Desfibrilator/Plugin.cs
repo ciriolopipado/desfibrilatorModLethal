@@ -7,7 +7,7 @@ using GameNetcodeStuff;
 
 namespace Desfibrilator;
 
-[BepInPlugin(Id, "Desfibrilator", "0.1.0")]
+[BepInPlugin(Id, "Desfibrilator", "0.1.1")]
 [BepInDependency("evaisa.lethallib", "1.2.0")]
 public sealed class Plugin : BaseUnityPlugin
 {
@@ -26,7 +26,7 @@ public sealed class Plugin : BaseUnityPlugin
         gameObject.AddComponent<ReviveNetwork>();
         harmony = new Harmony(Id);
         harmony.PatchAll();
-        Logger.LogInfo("Desfibrilator 0.1.0 loaded. Target: Lethal Company v81. All peers need the mod.");
+        Logger.LogInfo("Desfibrilator 0.1.1 loaded. Target: Lethal Company v81. All peers need the mod.");
     }
 
     private void OnDestroy() { harmony?.UnpatchSelf(); Use?.Dispose(); }

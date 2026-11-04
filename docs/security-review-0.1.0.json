@@ -1,0 +1,116 @@
+{
+  "scope": "Static review only; no antivirus scan or game execution. No verdict of safety or false positive.",
+  "original_archive": {
+    "archive_sha256": "e1bcd77e4e6f1299f7bfa4bd374e8ad5f5b5dcf55c140f230dbb8856ac646121",
+    "archive_size": 27352,
+    "members": [
+      {
+        "name": "manifest.json",
+        "size": 359,
+        "sha256": "162feddf689cba95440af09e1f5d146c50595b8b4abd2892c169cb8cde3631c4",
+        "encrypted": false
+      },
+      {
+        "name": "README.md",
+        "size": 8659,
+        "sha256": "4006f2b234bbbb1fbc7f361cadb9b3fd47ae32094e91ba2664f028164c421e41",
+        "encrypted": false
+      },
+      {
+        "name": "LICENSE",
+        "size": 1083,
+        "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f",
+        "encrypted": false
+      },
+      {
+        "name": "icon.png",
+        "size": 1239,
+        "sha256": "3d94fb557d8f314316b29708994b2d0bc87a07061b430bea694397e9fe8e7222",
+        "encrypted": false
+      },
+      {
+        "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+        "size": 31744,
+        "sha256": "f4db68645997a623e6b2695b0d5994d95576cdad40c720351800a02f07716ed7",
+        "encrypted": false,
+        "authenticode_security_directory_size": 0,
+        "matches_current_build": true
+      },
+      {
+        "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+        "size": 6656,
+        "sha256": "f325572715f9c2c11efa70e43c9767be339d338c3843235b0a89cf61d7bd4321",
+        "encrypted": false,
+        "authenticode_security_directory_size": 0,
+        "matches_current_build": true
+      },
+      {
+        "name": "PRUEBAS.md",
+        "size": 3688,
+        "sha256": "cdeb3c66648d25aa91a612d68bce7efae58c1d7fc8e87f9b89ddf643db75c8de",
+        "encrypted": false
+      },
+      {
+        "name": "LEEME_INSTALACION.txt",
+        "size": 1984,
+        "sha256": "e1c4b41ab9fcf3fe9e86c22c4a66c774723f528ba416469d6eae30605c2d05f3",
+        "encrypted": false
+      }
+    ]
+  },
+  "assemblies": [
+    {
+      "name": "Desfibrilator, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null",
+      "ilOnly": true,
+      "strongNameSigned": false,
+      "moduleAttributes": [
+        "System.Security.UnverifiableCodeAttribute",
+        "System.Runtime.CompilerServices.RefSafetyRulesAttribute"
+      ],
+      "nativeModules": [],
+      "pinvokes": [],
+      "resources": [],
+      "flaggedCalls": [],
+      "assemblyReferences": [
+        "netstandard, Version=2.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51",
+        "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "BepInEx, Version=5.4.21.0, Culture=neutral, PublicKeyToken=null",
+        "Unity.InputSystem, Version=1.14.0.0, Culture=neutral, PublicKeyToken=null",
+        "0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null",
+        "Desfibrilator.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "Unity.Netcode.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "LethalLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+      ],
+      "semanticSha256": "b31c2555d11bf3857db63931ad8b42243086fe4a0838b95845e79e6d169dc2e2"
+    },
+    {
+      "name": "Desfibrilator.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "ilOnly": true,
+      "strongNameSigned": false,
+      "moduleAttributes": [
+        "System.Runtime.CompilerServices.RefSafetyRulesAttribute"
+      ],
+      "nativeModules": [],
+      "pinvokes": [],
+      "resources": [],
+      "flaggedCalls": [],
+      "assemblyReferences": [
+        "netstandard, Version=2.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51"
+      ],
+      "semanticSha256": "2f0adcda2d7de47b057b212a0a619f3985ff9346e641aebe6fbe77dbca66d03e"
+    }
+  ],
+  "rebuild": {
+    "byte_identical": false,
+    "note": "Rebuilds differ byte-for-byte; Git-generated informational version and Source Link metadata differ after first commit. Normalized code comparison is recorded separately and is not a bit-for-bit reproduction claim.",
+    "normalized_code_matches": {
+      "Desfibrilator.dll": true,
+      "Desfibrilator.Core.dll": true
+    }
+  }
+}

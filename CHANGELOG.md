@@ -1,5 +1,12 @@
 # Historial
 
+## 0.1.1 — experimental
+
+- Carátula original de un desfibrilador, con icono de paquete de 256 × 256 píxeles.
+- Compilación sin la opción de código inseguro que no se utiliza.
+- Revisión estática documentada en SECURITY.md; no equivale a un análisis antivirus ni confirma un falso positivo.
+- La descarga 0.1.0 se conserva sin cambios. Ambas versiones siguen sin firma Authenticode.
+
 ## 0.1.0 — experimental
 
 - Proyecto C# de BepInEx, con Lethal Company v81 como objetivo y LethalLib 1.2.0.

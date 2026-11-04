@@ -1,4 +1,4 @@
-DESFIBRILATOR 0.1.0 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
+DESFIBRILATOR 0.1.1 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
 
 No necesitas compilar ni descomprimir el ZIP para importarlo.
 
@@ -6,11 +6,11 @@ No necesitas compilar ni descomprimir el ZIP para importarlo.
 2. Selecciona una copia del perfil Lloreria LETHAL 2 para las pruebas.
 3. Entra en Settings / Configuracion > Profile / Perfil > Import local mod.
    Si no aparece, utiliza el buscador de ajustes para localizar Import local mod.
-4. Selecciona ciriolopipado-Desfibrilator-0.1.0.zip sin descomprimirlo.
+4. Selecciona ciriolopipado-Desfibrilator-0.1.1.zip sin descomprimirlo.
 5. Comprueba los datos del formulario y confirma la importacion:
    Nombre: Desfibrilator
    Autor: ciriolopipado
-   Version: 0.1.0 (campos 0, 1, 0)
+   Version: 0.1.1 (campos 0, 1, 1)
 6. Comprueba que el mod este activado y que tambien lo esten:
    BepInEx-BepInExPack 5.4.2305
    Evaisa-LethalLib 1.2.0 y sus dependencias
@@ -37,3 +37,9 @@ actualmente hay una pose basica y movimiento de palas.
 SI FALLA
 Comparte el mensaje exacto del error y BepInEx/LogOutput.log del perfil.
 Para problemas multijugador, adjunta los registros del anfitrion y del cliente.
+
+SEGURIDAD
+Se ha comunicado un bloqueo de 0.1.0 como caballo de Troya. No se ha confirmado
+un falso positivo. 0.1.1 sigue sin firma Authenticode y no dispone de un resultado
+antivirus actualizado en este entorno. La nueva caratula no resuelve por si sola
+una deteccion. Consulta SECURITY.md del repositorio y conserva la proteccion.

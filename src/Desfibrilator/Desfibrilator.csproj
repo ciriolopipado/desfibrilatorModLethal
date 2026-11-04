@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework><AssemblyName>Desfibrilator</AssemblyName><Version>0.1.0</Version>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>netstandard2.1</TargetFramework><AssemblyName>Desfibrilator</AssemblyName><Version>0.1.1</Version>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <LocalReferenceDirectory Condition="'$(LocalReferenceDirectory)' == ''">$(MSBuildThisFileDirectory)../../.local/refs</LocalReferenceDirectory>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
