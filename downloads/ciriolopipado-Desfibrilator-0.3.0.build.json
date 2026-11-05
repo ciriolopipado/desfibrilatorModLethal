@@ -1,0 +1,106 @@
+{
+  "version": "0.3.0",
+  "source_commit": "533594e878ba21586cdbf93e61a5ee78e85a5ad0",
+  "archive_sha256": "a1bf4162a9ba7ef12b723f1a4f3819db6ac1bc7ad7eefa514a01142d224f12ce",
+  "game_reference_package": "LethalCompany.GameLibs.Steam 81.0.5-ngd.0",
+  "unity_reference_modules": "2021.3.33",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "verification": "Build passed with zero errors/warnings; 48 core tests passed; packaged DLL source identity, archive integrity, icon and previous release hashes verified. Game integration not executed.",
+  "features": {
+    "voice_interval_seconds": [
+      15,
+      30
+    ],
+    "shock_interval_seconds": [
+      15,
+      30
+    ],
+    "yaw_degrees_at_default_strength": [
+      90,
+      180
+    ],
+    "convulsion_probability": 0.5,
+    "forced_walk_seconds": 0.75,
+    "jump": "native owner jump request, subject to game restrictions",
+    "sparks": "3D electric arcs attached only to revived player upperSpine (body-root fallback), 0.75 seconds; no camera/HUD overlay"
+  },
+  "protocol": "revival v4, effects v2; every participant must update to 0.3.0 and restart",
+  "runtime_validation_pending": [
+    "native movement input hook in v81 and full mod profile",
+    "host/client involuntary walking and jump replication",
+    "sparks attached to the revived torso, depth-tested and visible to observers",
+    "90-180 degree turns and 15-30 second timing in game",
+    "no regression in live voice, footsteps or revival"
+  ],
+  "previous_runtime_feedback": "User reported 0.2.2 working well; new 0.3.0 effects have not been tested in the game here.",
+  "visible_item_name": "Ciriolator",
+  "shop_price_credits": 0,
+  "members": [
+    {
+      "name": "manifest.json",
+      "size": 388,
+      "sha256": "5feb5a196c5f62fca45b779ed928e66c49dc1c52331c50d617302daf67d3193f"
+    },
+    {
+      "name": "README.md",
+      "size": 13956,
+      "sha256": "7ba4a2d20d09623727510270da4a4e4530de529696b57967726ea805d3a34f06"
+    },
+    {
+      "name": "LICENSE",
+      "size": 1083,
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f"
+    },
+    {
+      "name": "SECURITY.md",
+      "size": 5476,
+      "sha256": "0c00b05a7671c1ac76317ae2cafc5913e87719f305f68a8d4a49dcca172f169e"
+    },
+    {
+      "name": "icon.png",
+      "size": 87909,
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "size": 71168,
+      "sha256": "ccbe55f629fd39d89795bb554beb1b74349624f14a688446781bbb5f76f8790c"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "size": 12800,
+      "sha256": "321a4a4eb44611cefa2bf3bef5e2f3d485013e06c0d8abfeeb089b0b08a84e6b"
+    },
+    {
+      "name": "PRUEBAS.md",
+      "size": 7335,
+      "sha256": "ab58d483b8471c2efa7b4e22c55ffc1f7f91f53dbbab950658356a4bbfb7c39b"
+    },
+    {
+      "name": "docs/pruebas.md",
+      "size": 7335,
+      "sha256": "ab58d483b8471c2efa7b4e22c55ffc1f7f91f53dbbab950658356a4bbfb7c39b"
+    },
+    {
+      "name": "docs/efectos-secundarios.md",
+      "size": 9764,
+      "sha256": "175f54baaca06619453183044d5f05a03f24055e18fea1b4cb505b33d1bff7e1"
+    },
+    {
+      "name": "docs/regresion-0.2.2.md",
+      "size": 3907,
+      "sha256": "2c142f885e78d06a438601e4cf1128817566083532d64d4ccf91d96e205937d0"
+    },
+    {
+      "name": "docs/pruebas-0.3.0.md",
+      "size": 3291,
+      "sha256": "a1c63834d98bbec743f2002057a427e94fb2a0cf89acfe53b972701e48cb6479"
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "size": 4496,
+      "sha256": "7da6b291903a3ee317ba5db16a05c01d7c4fbfb4c3982a2bc192082988a59842"
+    }
+  ]
+}
