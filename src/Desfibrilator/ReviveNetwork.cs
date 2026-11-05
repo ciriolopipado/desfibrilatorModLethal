@@ -12,7 +12,7 @@ namespace Desfibrilator;
 public sealed class ReviveNetwork : MonoBehaviour
 {
     internal static ReviveNetwork? Instance;
-    private const string RequestName = Plugin.Id + ".request.v3", StateName = Plugin.Id + ".state.v3";
+    private const string RequestName = Plugin.Id + ".request.v4", StateName = Plugin.Id + ".state.v4";
     private sealed class SentRevival
     {
         internal ulong Sequence, Client, PlayerObject, Corpse, Tool;

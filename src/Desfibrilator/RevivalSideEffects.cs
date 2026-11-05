@@ -8,6 +8,7 @@ using HarmonyLib;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Desfibrilator;
 
@@ -15,7 +16,7 @@ namespace Desfibrilator;
 public sealed class RevivalSideEffects : MonoBehaviour
 {
     internal static RevivalSideEffects? Instance;
-    private const string RequestName = Plugin.Id + ".effects.request.v1", EventName = Plugin.Id + ".effects.event.v1";
+    private const string RequestName = Plugin.Id + ".effects.request.v2", EventName = Plugin.Id + ".effects.event.v2";
     private sealed class PlayerState
     {
         internal bool Dead;
@@ -49,6 +50,8 @@ public sealed class RevivalSideEffects : MonoBehaviour
     private readonly System.Random random = new System.Random();
     private readonly Dictionary<string, double> nextFaultLog = new Dictionary<string, double>();
     private readonly Dictionary<ulong, AudioSource> shockSources = new Dictionary<ulong, AudioSource>();
+    private readonly Dictionary<ulong, ShockSparkBurst> sparks = new Dictionary<ulong, ShockSparkBurst>();
+    private readonly ForcedWalkWindow forcedWalk = new ForcedWalkWindow();
     private NetworkManager? manager;
     private ConfigEntry<bool> automaticCapture = null!;
     private ConfigEntry<float> cameraStrength = null!;
@@ -70,7 +73,7 @@ public sealed class RevivalSideEffects : MonoBehaviour
         automaticCapture = Plugin.Instance.Config.Bind("LastWords", "AutomaticVoiceCapture", true,
             "Automatically keep up to 5 seconds of YOUR transmitted game voice in memory during an expedition. Shared with current teammates for replay after revival, then cleared at orbit/disconnect. Set false to disable locally. The legacy RecordOwnVoice/F8 settings are no longer used.");
         cameraStrength = Plugin.Instance.Config.Bind("SideEffects", "CameraStrength", 1f,
-            new ConfigDescription("Camera impulse multiplier. 0 disables camera movement locally; no damage. Defaults: random yaw 4–10°, pitch 2–6°.", new AcceptableValueRange<float>(0, 1)));
+            new ConfigDescription("Camera impulse multiplier. 0 disables camera movement locally; no damage. Defaults: random yaw 90–180°, pitch 2–6°. Only scales camera rotation, not involuntary walking/jumping or sparks.", new AcceptableValueRange<float>(0, 1)));
         lastCaptureEnabled = automaticCapture.Value;
     }
 
@@ -122,6 +125,12 @@ public sealed class RevivalSideEffects : MonoBehaviour
         }
         if (Now > localTicketExpires) localTicket = 0;
         Guard("voice transfer", PumpTransfers);
+        if (local == null || !CanConvulse(local)) forcedWalk.Clear();
+        foreach (var client in sparks.Keys.ToArray())
+        {
+            var player = Player(client);
+            if (player == null || player.isPlayerDead || !Interaction.RoundActive) ClearShock(client);
+        }
         foreach (var pair in voices)
         {
             var player = Player(pair.Key);
@@ -196,9 +205,9 @@ public sealed class RevivalSideEffects : MonoBehaviour
         }
         if ((events & SideEffectEvent.Shock) != 0)
         {
-            var yaw = Signed(4, 10); var pitch = Signed(2, 6);
-            SendAll(5, client, yaw, pitch);
-            Guard("shock playback", () => Shock(client, yaw, pitch));
+            var impulse = ShockImpulse.Create(random.NextDouble);
+            SendAll(5, client, impulse);
+            Guard("shock playback", () => Shock(client, impulse));
         }
         if (!player.isPlayerDead && Now < state.NoiseUntil && Now >= state.NextNoise)
         {
@@ -213,8 +222,6 @@ public sealed class RevivalSideEffects : MonoBehaviour
         }
     }
 
-
-    private float Signed(float min, float max) => (float)(min + (max - min) * random.NextDouble()) * (random.Next(2) == 0 ? -1 : 1);
 
     private void SendHello()
     {
@@ -314,16 +321,20 @@ public sealed class RevivalSideEffects : MonoBehaviour
         if (manager != null && peer != manager.LocalClientId && manager.ConnectedClients.ContainsKey(peer))
             manager.CustomMessagingManager.SendNamedMessage(EventName, peer, writer, NetworkDelivery.ReliableSequenced);
     }
-    private void SendOne(ulong peer, byte kind, ulong client = 0, float yaw = 0, float pitch = 0)
+    private void SendOne(ulong peer, byte kind, ulong client = 0, ShockImpulse impulse = default)
     {
         using var writer = Header(kind);
         if (kind != 0) writer.WriteValueSafe(client);
-        if (kind == 5) { writer.WriteValueSafe(yaw); writer.WriteValueSafe(pitch); }
+        if (kind == 5)
+        {
+            writer.WriteValueSafe(impulse.Yaw); writer.WriteValueSafe(impulse.Pitch);
+            writer.WriteValueSafe(impulse.Convulse); writer.WriteValueSafe(impulse.DirectionDegrees);
+        }
         SendEvent(peer, writer);
     }
-    private void SendAll(byte kind, ulong client = 0, float yaw = 0, float pitch = 0)
+    private void SendAll(byte kind, ulong client = 0, ShockImpulse impulse = default)
     {
-        foreach (var peer in peers.ToArray()) SendOne(peer, kind, client, yaw, pitch);
+        foreach (var peer in peers.ToArray()) SendOne(peer, kind, client, impulse);
     }
     private void SendClip(ulong peer, ulong client, short[] samples, uint ticket)
     {
@@ -400,11 +411,12 @@ public sealed class RevivalSideEffects : MonoBehaviour
         }
         else if (kind == 3) affected.Add(client);
         else if (kind == 4 && affected.Contains(client)) Guard("received echo", () => PlayEcho(client));
-        else if (kind == 5 && affected.Contains(client) && reader.TryBeginRead(8))
+        else if (kind == 5 && affected.Contains(client) && reader.TryBeginRead(13))
         {
             reader.ReadValueSafe(out float yaw); reader.ReadValueSafe(out float pitch);
-            if (!float.IsNaN(yaw) && !float.IsInfinity(yaw) && !float.IsNaN(pitch) && !float.IsInfinity(pitch))
-                Guard("received shock", () => Shock(client, Mathf.Clamp(yaw, -10, 10), Mathf.Clamp(pitch, -6, 6)));
+            reader.ReadValueSafe(out bool convulse); reader.ReadValueSafe(out float direction);
+            var impulse = new ShockImpulse(yaw, pitch, convulse, direction);
+            if (impulse.IsValid) Guard("received shock", () => Shock(client, impulse));
         }
         else if (kind == 6) ClearVoice(client);
         else if (kind == 7) { affected.Remove(client); ClearVoice(client); ClearShock(client); }
@@ -436,30 +448,79 @@ public sealed class RevivalSideEffects : MonoBehaviour
         voice.Source.clip = voice.Clip; voice.Source.Play();
         Plugin.Log($"Ciriolator echo playing: client={client}, seconds={voice.Clip.length:0.00}.");
     }
-    private void Shock(ulong client, float yaw, float pitch)
+    private void Shock(ulong client, ShockImpulse impulse)
     {
         var player = Player(client);
         if (player == null || player.isPlayerDead || !Interaction.RoundActive) return;
-        if (!shockSources.TryGetValue(client, out var source) || source == null)
-            shockSources[client] = source = CreateEffectSource(player, "CiriolatorShock");
-        source.PlayOneShot(ItemFactory.Discharge, .5f);
-        Plugin.Log($"Ciriolator shock received: client={client}, owner={player.IsOwner}, yaw={yaw:0.0}, pitch={pitch:0.0}.");
+        Guard("shock sound", () =>
+        {
+            if (!shockSources.TryGetValue(client, out var source) || source == null)
+                shockSources[client] = source = CreateEffectSource(player, "CiriolatorShock");
+            source.PlayOneShot(ItemFactory.Discharge, .5f);
+        });
+        Guard("shock sparks", () =>
+        {
+            if (sparks.TryGetValue(client, out var old) && old != null) Destroy(old.gameObject);
+            var burst = ShockSparkBurst.Spawn(player);
+            if (burst != null)
+            {
+                sparks[client] = burst;
+                Plugin.Log($"Ciriolator sparks attached to revived body: client={client}, anchor={burst.transform.parent.name}.");
+            }
+        });
+        Plugin.Log($"Ciriolator shock received: client={client}, owner={player.IsOwner}, yaw={impulse.Yaw:0.0}, pitch={impulse.Pitch:0.0}, convulse={impulse.Convulse}.");
         if (!player.IsOwner) return;
-        if (player.disableLookInput || player.inTerminalMenu || player.inSpecialInteractAnimation)
-        { Plugin.Log($"Ciriolator camera impulse skipped during a locked interaction for client {client}."); return; }
+        Guard("shock camera", () => RotateCamera(player, impulse));
+        if (impulse.Convulse) Guard("shock convulsion", () => BeginConvulsion(player, impulse.DirectionDegrees));
+    }
+
+    private void RotateCamera(PlayerControllerB player, ShockImpulse impulse)
+    {
+        if (player.disableLookInput || player.inTerminalMenu || player.inSpecialInteractAnimation ||
+            player.isTypingChat || player.quickMenuManager?.isMenuOpen == true)
+        { Plugin.Log($"Ciriolator camera impulse skipped during a locked interaction for client {player.actualClientId}."); return; }
         var amount = cameraStrength.Value;
         if (amount <= 0) { Plugin.Log("Ciriolator camera impulse disabled by CameraStrength=0."); return; }
-        player.transform.Rotate(0, yaw * amount, 0, Space.World);
+        player.transform.Rotate(0, impulse.Yaw * amount, 0, Space.World);
         var cameraUp = AccessTools.Field(typeof(PlayerControllerB), "cameraUp");
         if (cameraUp != null && player.gameplayCamera != null)
         {
-            var value = Mathf.Clamp((float)cameraUp.GetValue(player) + pitch * amount, -80, 80);
+            var value = Mathf.Clamp((float)cameraUp.GetValue(player) + impulse.Pitch * amount, -80, 80);
             cameraUp.SetValue(player, value);
             var euler = player.gameplayCamera.transform.localEulerAngles;
             player.gameplayCamera.transform.localEulerAngles = new Vector3(value, euler.y, euler.z);
         }
-        Plugin.Log($"Ciriolator camera impulse applied to local client {client}.");
+        Plugin.Log($"Ciriolator camera impulse applied to local client {player.actualClientId}.");
         // No recenter coroutine: the resulting direction remains until the player moves the view.
+    }
+
+    private static bool CanConvulse(PlayerControllerB player) => player != null && player.IsOwner &&
+        player.isPlayerControlled && !player.isPlayerDead && Interaction.RoundActive &&
+        !player.disableMoveInput && !player.inTerminalMenu && !player.inSpecialInteractAnimation &&
+        !player.isTypingChat && player.quickMenuManager?.isMenuOpen != true &&
+        !player.isClimbingLadder && !player.jetpackControls && !player.inVehicleAnimation && !player.isFreeCamera;
+
+    private void BeginConvulsion(PlayerControllerB player, float direction)
+    {
+        if (!CanConvulse(player))
+        { Plugin.Log($"Ciriolator convulsion skipped during locked movement for client {player.actualClientId}."); return; }
+        if (ConvulsionInputPatch.Installed) forcedWalk.Begin(Now, direction);
+        // Invoke the native jump request; it checks grounding, crouching, stamina and other restrictions,
+        // and runs the normal jump animation, physics, sound and owner-to-server RPC.
+        var jump = AccessTools.Method(typeof(PlayerControllerB), "Jump_performed");
+        if (jump != null) jump.Invoke(player, new object[] { default(InputAction.CallbackContext) });
+        else Plugin.Error("Ciriolator native jump request unavailable; walking and other effects remain enabled.");
+        Plugin.Log($"Ciriolator convulsion requested: client={player.actualClientId}, walk={ConvulsionInputPatch.Installed}, seconds={ShockImpulse.WalkSeconds}, direction={direction:0.0}, jumping={player.isJumping}.");
+    }
+
+    internal Vector2 FilterMovement(Vector2 input, PlayerControllerB player)
+    {
+        if (!player.IsOwner) return input;
+        if (!forcedWalk.TryGet(Now, CanConvulse(player), out var angle)) return input;
+        var radians = angle * Mathf.Deg2Rad;
+        var world = new Vector3(Mathf.Sin(radians), 0, Mathf.Cos(radians));
+        var local = player.transform.InverseTransformDirection(world);
+        return new Vector2(local.x, local.z).normalized;
     }
 
     private static AudioSource CreateEffectSource(PlayerControllerB player, string name)
@@ -480,6 +541,9 @@ public sealed class RevivalSideEffects : MonoBehaviour
 
     private void ClearShock(ulong client)
     {
+        if (Local != null && Local.actualClientId == client) forcedWalk.Clear();
+        if (sparks.TryGetValue(client, out var burst))
+        { if (burst != null) Destroy(burst.gameObject); sparks.Remove(client); }
         if (shockSources.TryGetValue(client, out var source))
         { if (source != null) { source.Stop(); Destroy(source.gameObject); } shockSources.Remove(client); }
     }
@@ -511,7 +575,8 @@ public sealed class RevivalSideEffects : MonoBehaviour
     private void ClearLocal()
     {
         foreach (var client in voices.Keys.ToArray()) ClearVoice(client);
-        foreach (var client in shockSources.Keys.ToArray()) ClearShock(client);
+        forcedWalk.Clear();
+        foreach (var client in shockSources.Keys.Concat(sparks.Keys).Distinct().ToArray()) ClearShock(client);
         foreach (var assembly in incoming.Values) assembly.Clear(); incoming.Clear(); incomingTickets.Clear();
         foreach (var task in outgoing.Where(t => t.Upload)) Array.Clear(task.Samples, 0, task.Samples.Length);
         outgoing.Clear();

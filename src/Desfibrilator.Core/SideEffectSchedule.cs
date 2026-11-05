@@ -14,8 +14,8 @@ public sealed class SideEffectSchedule
     public void Activate(double now, Func<double> random)
     {
         Active = true;
-        NextVoice = now + Interval(60, 120, random());
-        NextShock = now + Interval(45, 90, random());
+        NextVoice = now + Interval(15, 30, random());
+        NextShock = now + Interval(15, 30, random());
     }
 
     public SideEffectEvent Tick(double now, bool alive, bool hasVoice, Func<double> random)
@@ -25,12 +25,12 @@ public sealed class SideEffectSchedule
         if (now >= NextVoice)
         {
             if (hasVoice) result |= SideEffectEvent.Voice;
-            NextVoice = now + Interval(60, 120, random());
+            NextVoice = now + Interval(15, 30, random());
         }
         if (now >= NextShock)
         {
             result |= SideEffectEvent.Shock;
-            NextShock = now + Interval(45, 90, random());
+            NextShock = now + Interval(15, 30, random());
         }
         return result;
     }

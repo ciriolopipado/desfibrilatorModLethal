@@ -1,6 +1,6 @@
-# Últimas palabras y descargas — 0.2.2 experimental
+# Últimas palabras y descargas — 0.3.0 experimental
 
-Solo se marcan como afectados los jugadores reanimados con Ciriolator. El anfitrión mantiene dos temporizadores independientes: voz cada 60–120 segundos y descarga cada 45–90 segundos. Volver a morir suspende los efectos; otra reanimación renueva los temporizadores sin acumularlos. Se borra el estado al volver a órbita o desconectar.
+Solo se marcan como afectados los jugadores reanimados con Ciriolator. El anfitrión mantiene dos temporizadores independientes: voz cada 15–30 segundos y descarga cada 15–30 segundos. Volver a morir suspende los efectos; otra reanimación renueva los temporizadores sin acumularlos. Se borra el estado al volver a órbita o desconectar.
 
 ## Captura automática de voz
 
@@ -22,19 +22,27 @@ Desde 0.2.2 los efectos usan fuentes SFX propias y no el mezclador de voz del ju
 
 Mientras dura la reproducción, el anfitrión llama a `RoundManager.PlayAudibleNoise` aproximadamente una vez por segundo, desde la posición del jugador. Puede alertar a enemigos con respuesta al sonido, según sus propias reglas y obstáculos. No convierte a todos los enemigos en perseguidores ni sustituye su inteligencia artificial. Escuchar o reaccionar a estos ruidos requiere validación en juego, especialmente con enemigos añadidos por mods.
 
-## Cámara
+## Cámara, movimiento y chispas
 
-La descarga suena cerca del afectado. Solo el propietario modifica su mirada: giro horizontal aleatorio de 4–10 grados y vertical de 2–6 grados, con signos independientes. El nuevo ángulo queda aplicado hasta que el jugador mueve la vista. Se limita la inclinación vertical para evitar invertir la cámara. No causa daño, no bloquea movimiento y no recentra la vista.
+La descarga suena cerca del afectado. Solo su propietario modifica la mirada: giro horizontal aleatorio de **90–180 grados**, a izquierda o derecha, e inclinación vertical de 2–6 grados. El nuevo ángulo permanece hasta que el jugador mueve la vista; se limita la inclinación vertical para evitar invertirla. No causa daño directo ni recentra la vista.
 
-`SideEffects.CameraStrength` admite de 0 a 1; 0 desactiva el movimiento en ese cliente por accesibilidad. No se mueve la cámara durante menús de terminal o animaciones que bloquean la mirada.
+`SideEffects.CameraStrength` admite de 0 a 1; 0 desactiva únicamente el giro de cámara de ese cliente. Los límites 90–180° corresponden al valor predeterminado 1. No se mueve la cámara durante terminal, chat, menú de pausa o animaciones que bloquean la mirada. Los compañeros conservan sus propias cámaras.
+
+El anfitrión elige **una única probabilidad del 50 % por descarga** para iniciar conjuntamente un movimiento en dirección aleatoria y un salto. El propietario aplica una entrada de caminar de **0,75 segundos** en el controlador normal. Al terminar deja de sustituirla y el juego vuelve a leer los controles actuales; no guarda teclas ni deja banderas de movimiento activadas. El salto usa la solicitud nativa `Jump_performed` para conservar física, audio, animación y sincronización. Respeta sus restricciones de suelo, agotamiento, agachado y obstáculos; no garantiza un salto si el jugador no puede saltar normalmente. El movimiento mantiene las colisiones normales y puede cambiar la posición real del jugador.
+
+Terminal, chat, menús, muerte, escaleras, jetpack, vehículo e interacciones bloqueadas impiden/cancelan el desplazamiento. No se aplaza para ejecutarlo al salir del menú. Llegar a órbita, desconectar o destruir el componente también cancela la entrada. El multiplicador de cámara no modifica esta probabilidad ni las chispas.
+
+En cada descarga, los equipos reciben un evento autorizado por el anfitrión y crean **arcos eléctricos 3D azulados alrededor del torso del jugador resucitado**, durante 0,75 segundos. Son objetos hijos de su cuerpo y lo siguen cuando camina o salta. Usan renderizadores normales, sin dibujarse sobre la interfaz ni sobre la cámara de otros jugadores y sin atravesar paredes con un efecto de pantalla. No se añaden chispas a los cuerpos de los observadores. Se eliminan al terminar, morir, llegar a órbita o desconectar. Se generan por código y no añaden dependencias, modelos ni bibliotecas externas.
+
+La sustitución de entrada se inserta justo después de la lectura nativa de movimiento, antes de animaciones y física. Si otro mod o una versión de juego cambia esa instrucción y no se reconoce un único punto válido, se conserva el método original y se registra `convulsion input hook unavailable`; el resto de efectos continúa. Necesita prueba en v81 y con el perfil completo.
 
 ## Diagnóstico y validación
 
 - Sin voz: comprobar que aparece el aviso de captura automática, que `AutomaticVoiceCapture` no está a false y que la voz se transmite realmente y buscar `local last-words capture enabled` en el registro. Si no hay frase válida, las descargas funcionan pero no se emite una voz vacía ni su ruido.
-- Sin descargas: comprobar versión en todos los participantes, estado afectado, temporizadores e intensidad mayor que cero. Esperar al menos 45 segundos después de reanimar.
+- Sin descargas: comprobar versión en todos los participantes, estado afectado, temporizadores e intensidad mayor que cero. Esperar hasta 30 segundos después de reanimar, manteniendo la expedición activa.
 - Se compila contra las API públicas de `LethalCompany.GameLibs.Steam 81.0.5-ngd.0`, que incluyen Dissonance. Para las referencias de módulos Unity se usan API 2021.3.33 compartidas. No se distribuyen esas DLL de referencia.
-- Hay 41 pruebas de lógica para reanimación, frases acotadas, intervalos, limpieza y permisos de subida. La captura real, la transferencia fragmentada, la cámara, la reacción de enemigos y la convivencia con Mirage/otros mods **no se han ejecutado dentro del juego en este entorno**. Consultar la lista de `pruebas.md`.
+- Hay 48 pruebas de lógica para reanimación, frases acotadas, intervalos, limpieza y permisos de subida. La captura real, la transferencia fragmentada, la cámara, el movimiento involuntario, las chispas, la reacción de enemigos y la convivencia con Mirage/otros mods **no se han ejecutado dentro del juego en este entorno**. Consultar la lista de `pruebas.md`.
 
-Todos deben instalar 0.2.2. Cambia el protocolo de reanimación: el anfitrión espera confirmaciones y reintenta los mensajes no aplicados durante un máximo de cinco segundos; los duplicados no recuperan vida otra vez. El cadáver no es un requisito local para recibir un estado vivo autorizado por el anfitrión. Las versiones anteriores no son compatibles para usar el objeto. Se mantienen el precio temporal de 0 créditos, cinco segundos de carga, 30 puntos de vida y espera global de 90 segundos.
+Todos deben instalar 0.3.0 y reiniciar. Cambian los mensajes de descarga y la compatibilidad; se conservan las confirmaciones de reanimación: el anfitrión espera confirmaciones y reintenta los mensajes no aplicados durante un máximo de cinco segundos; los duplicados no recuperan vida otra vez. El cadáver no es un requisito local para recibir un estado vivo autorizado por el anfitrión. Las versiones anteriores no son compatibles para usar el objeto. Se mantienen el precio temporal de 0 créditos, cinco segundos de carga, 30 puntos de vida y espera global de 90 segundos.
 
-Los logs de 0.2.2 muestran el estado de aplicación de la reanimación, confirmaciones por cliente, duración del fragmento congelado/recibido, próximos intervalos y recepción/aplicación de descargas. No incluyen el contenido de las palabras. Consultar regresion-0.2.2.md para la secuencia exacta de comprobación.
+Los logs muestran el estado de aplicación de la reanimación, confirmaciones por cliente, duración del fragmento congelado/recibido, próximos intervalos y recepción/aplicación de descargas. No incluyen el contenido de las palabras. Las convulsiones indican dirección, duración y si la solicitud nativa inició un salto; el registro de inicio confirma si se pudo insertar la entrada de movimiento. Consultar [pruebas-0.3.0.md](pruebas-0.3.0.md) para la secuencia actual. El usuario comunicó buen funcionamiento de 0.2.2, pero estas mejoras de 0.3.0 necesitan otra prueba real.

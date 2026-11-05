@@ -110,16 +110,19 @@ Run("Orbit or consent revocation removes retained voice", () => {
     var b = new LastWordsBuffer(); b.Append(new short[8000], 8000, true); b.EndPhrase(); b.Clear();
     Check(b.Snapshot().Length == 0, "Phrase survived round/consent clear");
 });
-Run("Voice and shocks have independent randomized intervals", () => {
-    var s = new SideEffectSchedule(); s.Activate(0, () => 0);
-    Check(s.NextVoice == 60 && s.NextShock == 45, "Minimum intervals wrong");
-    Check(s.Tick(44.99, true, true, () => 0) == SideEffectEvent.None, "Early effect");
-    Check(s.Tick(45, true, true, () => 0) == SideEffectEvent.Shock, "Shock not independent");
-    Check(s.Tick(60, true, true, () => 0) == SideEffectEvent.Voice, "Voice not independent");
+Run("Voice and shocks have independent randomized intervals of 15 to 30 seconds", () => {
+    var s = new SideEffectSchedule(); var first = true;
+    s.Activate(0, () => { var value = first ? 0 : 1; first = false; return value; });
+    Check(s.NextVoice == 15 && s.NextShock == 30, "Independent initial deadlines wrong");
+    Check(s.Tick(14.99, true, true, () => 1) == SideEffectEvent.None, "Early effect");
+    Check(s.Tick(15, true, true, () => 1) == SideEffectEvent.Voice, "Voice deadline not independent");
+    Check(s.Tick(30, true, true, () => 1) == SideEffectEvent.Shock, "Shock deadline not independent");
 });
-Run("Maximum intervals are 120 seconds for voice and 90 for shocks", () => {
+Run("Both maximum intervals are 30 seconds at activation and after playback", () => {
     var s = new SideEffectSchedule(); s.Activate(10, () => 1);
-    Check(s.NextVoice == 130 && s.NextShock == 100, "Maximum interval wrong");
+    Check(s.NextVoice == 40 && s.NextShock == 40, "Maximum interval wrong");
+    Check(s.Tick(40, true, true, () => 1) == (SideEffectEvent.Voice | SideEffectEvent.Shock), "Deadline missed");
+    Check(s.NextVoice == 70 && s.NextShock == 70, "Rescheduled interval exceeded 30 seconds");
 });
 Run("A dead player gets no voice or camera effects", () => {
     var s = new SideEffectSchedule(); s.Activate(0, () => 0);
@@ -128,7 +131,7 @@ Run("A dead player gets no voice or camera effects", () => {
 Run("Unavailable voice never emits an empty noise event", () => {
     var s = new SideEffectSchedule(); s.Activate(0, () => 0);
     var events = s.Tick(60, true, false, () => 0);
-    Check((events & SideEffectEvent.Voice) == 0 && s.NextVoice == 120, "Absent recording emitted noise");
+    Check((events & SideEffectEvent.Voice) == 0 && s.NextVoice == 75, "Absent recording emitted noise");
 });
 Run("Delayed updates do not produce bursts of repeated effects", () => {
     var s = new SideEffectSchedule(); s.Activate(0, () => 0);
@@ -137,7 +140,7 @@ Run("Delayed updates do not produce bursts of repeated effects", () => {
 });
 Run("A second revival resets timers without stacking effects", () => {
     var s = new SideEffectSchedule(); s.Activate(0, () => 0); s.Activate(30, () => 0);
-    Check(s.Tick(60, true, true, () => 0) == SideEffectEvent.None && s.NextVoice == 90 && s.NextShock == 75, "Effects stacked");
+    Check(s.Tick(44.99, true, true, () => 0) == SideEffectEvent.None && s.NextVoice == 45 && s.NextShock == 45, "Effects stacked");
 });
 Run("Orbit cleanup cancels all future effects", () => {
     var s = new SideEffectSchedule(); s.Activate(0, () => 0); s.Clear();
@@ -227,5 +230,50 @@ Run("Revive receipts are independent by player and reset on a new session", () =
     var r = new RevivalReceipts(); r.Commit(5, 10);
     Check(r.Decide(1, 11, 11, true, 99, null) == RevivalDecision.Apply, "Another player blocked");
     r.Clear(); Check(r.Decide(1, 10, 10, true, 99, null) == RevivalDecision.Apply, "Previous session leaked");
+});
+Run("Default shock horizontal displacement is bounded to 90 through 180 degrees", () => {
+    var min = ShockImpulse.Create(() => 0); var max = ShockImpulse.Create(() => 1);
+    Check(min.Yaw == -90 && max.Yaw == 180 && min.IsValid && max.IsValid, "Required turn endpoints lost");
+    var random = new Random(81);
+    for (var i = 0; i < 10000; i++) {
+        var impulse = ShockImpulse.Create(random.NextDouble);
+        Check(impulse.IsValid, "Invalid server shock generated");
+    }
+});
+Run("Exactly half the uniform probability range requests walking and jumping together", () => {
+    var chosen = 0;
+    for (var i = 0; i < 100; i++) {
+        var values = new[] { .5, .5, .5, .5, (i + .5) / 100, .25 }; var at = 0;
+        var impulse = ShockImpulse.Create(() => values[at++]);
+        if (impulse.Convulse) chosen++;
+        Check(impulse.DirectionDegrees == 90, "Random walking heading lost");
+    }
+    Check(chosen == 50, "Walking/jumping probability is not 50 percent");
+});
+Run("Invalid shock network parameters cannot become camera or movement commands", () => {
+    foreach (var impulse in new[] {
+        new ShockImpulse(float.NaN, 3, true, 0), new ShockImpulse(float.PositiveInfinity, 3, true, 0),
+        new ShockImpulse(89, 3, true, 0), new ShockImpulse(181, 3, true, 0),
+        new ShockImpulse(90, float.NaN, true, 0), new ShockImpulse(90, 7, true, 0),
+        new ShockImpulse(90, 3, true, float.NaN), new ShockImpulse(90, 3, true, -1),
+        new ShockImpulse(90, 3, true, 361) }) Check(!impulse.IsValid, "Malformed shock accepted");
+});
+Run("Forced walking ends at 0.75 seconds and does not resume", () => {
+    var w = new ForcedWalkWindow(); w.Begin(10, 123);
+    Check(w.TryGet(10.749, true, out var angle) && angle == 123, "Walking stopped early or changed heading");
+    Check(!w.TryGet(10.75, true, out _) && !w.TryGet(11, true, out _), "Walking outlasted the shock");
+});
+Run("Death, menus and locked interactions cancel rather than defer forced walking", () => {
+    var w = new ForcedWalkWindow(); w.Begin(0, 90);
+    Check(!w.TryGet(.1, false, out _) && !w.TryGet(.2, true, out _), "Blocked walking resumed after interaction");
+});
+Run("Orbit or disconnection cleanup cancels forced walking immediately", () => {
+    var w = new ForcedWalkWindow(); w.Begin(0, 90); w.Clear();
+    Check(!w.TryGet(.1, true, out _), "Walking survived expedition cleanup");
+});
+Run("New convulsion replaces its direction and expiry without stacking", () => {
+    var w = new ForcedWalkWindow(); w.Begin(0, 90); w.Begin(.1, 270);
+    Check(w.TryGet(.8, true, out var angle) && angle == 270, "Replacement heading was not applied");
+    Check(!w.TryGet(.86, true, out _), "Convulsions stacked movement duration");
 });
 Console.WriteLine($"{passed} tests passed; game integration tests are separate and were not run here.");

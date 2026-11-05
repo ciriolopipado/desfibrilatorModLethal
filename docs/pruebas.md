@@ -33,10 +33,13 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 | Frase anterior a la muerte | Hablar, dejar de hablar y morir después: se utiliza la última intervención válida de la expedición, también si se reinició el procesamiento del micrófono. Sin habla no debe inventar audio. |
 | Silencio y pulsar para hablar | Hablar con micrófono silenciado o sin transmitir por PTT no aparece en las últimas palabras. No se captura a otros jugadores. |
 | Última intervención | Hablar varias frases, morir y revivir: se escucha solo el fragmento de la última, máximo 5 s; no incluye silencio final ni intervenciones viejas. |
-| Voz cada 60–120 s | Medir varias reproducciones después de revivir; no se reproducen voces vacías si no hubo frase válida. |
+| Voz cada 15–30 s | Medir varias reproducciones después de revivir; no se reproducen voces vacías si no hubo frase válida. |
 | Fuente de proximidad | Solo se oye cerca del revivido, siguiendo su posición, no por los walkie-talkies. Respetar jugadores silenciados localmente. |
 | Atracción de enemigos | Un enemigo sensible al ruido detecta una reproducción cercana según sus reglas. Comprobar también con puertas de nave cerradas y enemigos del perfil. |
-| Descarga cada 45–90 s | El afectado oye el chispazo y su cámara queda desviada aleatoriamente, sin recentrado ni daño. No mueve la cámara de otros jugadores. |
+| Descarga cada 15–30 s | El afectado oye el chispazo y su cámara gira 90–180° con CameraStrength=1 y queda desviada, sin recentrado ni daño. No mueve la cámara de otros jugadores. |
+| Chispas sobre el cuerpo | Observadores ven arcos solo sobre el torso del resucitado, siguiendo su movimiento. No hay chispas en sus propias pantallas ni a través de paredes. |
+| Convulsión del 50 % | En algunas descargas, el dueño camina 0,75 s y solicita un salto; ambos observan animación y posición normal, sin duplicar movimiento. |
+| Fin de movimiento y restricciones | Tras 0,75 s, muerte, menú, terminal, escalera o fin de ronda se recupera el control normal; nunca se ejecuta una convulsión pendiente al cerrar un menú. |
 | Accesibilidad y menús | CameraStrength=0 no mueve la vista; el terminal/animaciones que bloquean mirada no quedan alterados. |
 | Segunda muerte y reanimación | Suspende los efectos al morir, toma nuevas últimas palabras y renueva los intervalos al reanimar sin acumular efectos. |
 | Llegada a órbita | Corta reproducciones, borra clips y estado; no quedan voces o descargas en la siguiente expedición sin otra reanimación. |
@@ -47,9 +50,11 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 ## Validado en este entorno
 
 - Compilación con referencias públicas de juego v81 (81.0.5-ngd.0), Dissonance y módulos Unity de referencia 2021.3.33. No es ejecución del juego.
-- 41 pruebas automatizadas de lógica independiente de Unity, descritas en README.
+- 48 pruebas automatizadas de lógica independiente de Unity, descritas en README.
 - Preparación repetible de referencias con verificación SHA-256 y empaquetado sin DLL del juego.
 
 Ninguna fila de la tabla anterior se considera superada hasta probarla dentro del juego. La animación propia de manos sobre el pecho está pendiente de implementación; actualmente hay pose básica y movimiento procedural de palas.
 
-La secuencia de regresión específica para los fallos reportados está en [regresion-0.2.2.md](regresion-0.2.2.md). Se distingue recepción del estado vivo, restauración de animador/oyente y los efectos posteriores.
+La prueba actual de las mejoras está en [pruebas-0.3.0.md](pruebas-0.3.0.md). El usuario informó de buen funcionamiento de 0.2.2; la tabla no sustituye validar las novedades de 0.3.0.
+
+La secuencia histórica de regresión específica para los fallos reportados está en [regresion-0.2.2.md](regresion-0.2.2.md). Se distingue recepción del estado vivo, restauración de animador/oyente y los efectos posteriores.

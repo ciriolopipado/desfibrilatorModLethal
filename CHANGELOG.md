@@ -1,5 +1,14 @@
 # Historial
 
+## 0.3.0 — descargas intensas y chispas sobre el cuerpo
+
+- Ecos y descargas pasan a intervalos independientes de 15–30 segundos, tanto al activar como al repetirse.
+- Giro horizontal aleatorio de 90–180° con intensidad predeterminada, sin recentrar; conserva una inclinación vertical limitada.
+- Un 50 % por descarga solicita conjuntamente caminar 0,75 s en dirección aleatoria y un salto nativo. Solo el propietario aplica el movimiento con física/animaciones normales; se cancela en estados bloqueados, muerte, órbita y desconexión.
+- Arcos eléctricos 3D originales durante 0,75 s unidos solo al torso del resucitado, visibles en ese cuerpo para los compañeros. Sin efectos superpuestos en sus pantallas ni movimiento de sus cámaras.
+- Protocolo de descargas ampliado con decisión y dirección elegidas por el anfitrión; todos deben actualizar a 0.3.0 y reiniciar.
+- 48 pruebas de lógica y compilación con API v81. El usuario confirmó buen funcionamiento de 0.2.2; estas mejoras requieren nueva prueba en juego.
+
 ## 0.2.2 — corrección candidata de reanimación
 
 - Restaura controlador de animación, parámetros, sincronización y oyente de audio; mantiene el cuerpo local en sombras en vez de desactivar sus renderizadores y saltarse la inicialización nativa.
