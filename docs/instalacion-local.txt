@@ -1,4 +1,4 @@
-CIRIOLATOR 0.3.0 - PAQUETE EXPERIMENTAL PARA IMPORTACION LOCAL
+CIRIOLATOR 1.0.0 - PRIMERA VERSION ESTABLE PARA IMPORTACION LOCAL
 
 No necesitas compilar ni descomprimir el ZIP para importarlo.
 
@@ -6,11 +6,11 @@ No necesitas compilar ni descomprimir el ZIP para importarlo.
 2. Selecciona una copia del perfil Lloreria LETHAL 2 para las pruebas.
 3. Entra en Settings / Configuracion > Profile / Perfil > Import local mod.
    Si no aparece, utiliza el buscador de ajustes para localizar Import local mod.
-4. Selecciona ciriolopipado-Desfibrilator-0.3.0.zip sin descomprimirlo.
+4. Selecciona ciriolopipado-Desfibrilator-1.0.0.zip sin descomprimirlo.
 5. Comprueba los datos del formulario y confirma la importacion:
    Nombre: Desfibrilator
    Autor: ciriolopipado
-   Version: 0.3.0 (campos 0, 3, 0)
+   Version: 1.0.0 (campos 1, 0, 0)
 6. Comprueba que el mod este activado y que tambien lo esten:
    BepInEx-BepInExPack 5.4.2305
    Evaisa-LethalLib 1.2.0 y sus dependencias
@@ -22,12 +22,14 @@ antes de importarlo para evitar cargarlo dos veces. Conserva los demas mods.
 Todos los participantes deben instalar este mismo paquete y sus dependencias.
 
 PRUEBA RAPIDA
-Compra Ciriolator por 0 creditos (precio temporal de pruebas) en el terminal. Con el objeto equipado,
+Compra Ciriolator por 50 creditos (precio oficial fijo, sin descuentos nativos) en el terminal. Con el objeto equipado,
 apunta a un cadaver recuperable cercano y manten E durante 5 segundos.
 El jugador debe volver con 30 de vida y sin inventario. Comienza una espera
 global de 90 segundos, compartida entre todas las unidades y jugadores.
 
 ESTADO
+Primera version estable del proyecto por designacion del usuario.
+El precio esta fijado a 50 en el mod, sin opcion de precio en la configuracion.
 El paquete contiene DLL compiladas y no requiere publicar el mod en Thunderstore.
 La compilacion usa referencias publicas de juego v81 (81.0.5-ngd.0), pero
 no se ha ejecutado el juego aqui ni confirmado su comportamiento dentro de Unity
@@ -40,15 +42,15 @@ Para problemas multijugador, adjunta los registros del anfitrion y del cliente.
 
 SEGURIDAD
 Se ha comunicado un bloqueo de 0.1.0 como caballo de Troya. No se ha confirmado
-un falso positivo. 0.3.0 sigue sin firma Authenticode y no dispone de un resultado
+un falso positivo. 1.0.0 sigue sin firma Authenticode y no dispone de un resultado
 antivirus actualizado en este entorno. La nueva caratula no resuelve por si sola
 una deteccion. Consulta SECURITY.md del repositorio y conserva la proteccion.
 
 El paquete conserva el nombre Desfibrilator para actualizar la instalacion
 existente. El nombre del objeto en el juego es Ciriolator. Reinicia el juego
-tras actualizar y utiliza la misma version 0.3.0 en todos los participantes.
+tras actualizar y utiliza la misma version 1.0.0 en todos los participantes.
 
-EFECTOS SECUNDARIOS (0.3.0)
+EFECTOS SECUNDARIOS (1.0.0)
 La captura empieza automaticamente en la expedicion. No hace falta pulsar F8.
 Basta con hablar a traves de la voz de partida, respetando silencio y PTT. Se mantiene un
 fragmento propio de hasta 5 segundos en memoria, compartido solo con el anfitrion
@@ -68,12 +70,13 @@ Si nunca se habla, no se inventa una frase. Se puede desactivar la captura
 poniendo AutomaticVoiceCapture=false y reiniciando el juego.
 Todos los jugadores deben usar esta misma version.
 
-REGRESION 0.3.0
-Todos deben instalar 0.3.0 y reiniciar el juego. Primero reanimar al anfitrion:
+COMPROBACION 1.0.0
+Todos deben instalar 1.0.0 y reiniciar el juego. Primero reanimar al anfitrion:
 tras unos segundos de inicializacion, comprobar pasos, piernas y voz en vivo
 en ambos equipos. Mantener la expedicion activa al menos 60 s: primera descarga
 a los 15-30 s; primer eco a los 15-30 s si hubo voz transmitida antes de morir.
 Despues repetir muriendo y reanimando al cliente. Si falla, adjuntar los dos
 BepInEx/LogOutput.log de esa partida, indicando quien murio y que no funciono.
 La version 0.2.2 funciono en la prueba del usuario. Las mejoras de 0.3.0
-no se han ejecutado aqui: comprobar tambien docs/pruebas-0.3.0.md del ZIP.
+no se han ejecutado aqui. 1.0.0 conserva esos efectos y fija el precio oficial.
+Consulta docs/version-1.0.0.md del ZIP para comprobar la compra y la actualizacion.

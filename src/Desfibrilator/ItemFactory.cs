@@ -9,6 +9,7 @@ namespace Desfibrilator;
 
 internal static class ItemFactory
 {
+    internal const int ShopPrice = 50;
     internal static AudioClip Charge = null!, Discharge = null!;
     internal static void Register()
     {
@@ -23,7 +24,7 @@ internal static class ItemFactory
         item.name = "DesfibrilatorItem";
         item.itemName = "Ciriolator";
         item.itemId = 198481;
-        item.creditsWorth = 0;
+        item.creditsWorth = ShopPrice;
         item.weight = 1.15f;
         item.isScrap = false;
         item.requiresBattery = false;
@@ -43,7 +44,7 @@ internal static class ItemFactory
         item.positionOffset = new Vector3(0.08f, 0.02f, -0.12f);
         item.restingRotation = Vector3.zero;
         item.verticalOffset = 0.12f;
-        item.highestSalePercentage = 0; // Temporary free price for in-game validation.
+        item.highestSalePercentage = 0; // Fixed official price: no vanilla shop discounts.
         item.itemIcon = MakeIcon();
         item.spawnPrefab = prefab;
 
@@ -76,7 +77,7 @@ internal static class ItemFactory
         audio.playOnAwake = false;
         tool.Sound = audio;
         Utilities.FixMixerGroups(prefab);
-        Items.RegisterShopItem(item, 0);
+        Items.RegisterShopItem(item, ShopPrice);
     }
 
     private static Transform Paddle(Transform parent, string name, Vector3 position, Color pale, Color dark)

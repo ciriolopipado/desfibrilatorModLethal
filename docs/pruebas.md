@@ -4,7 +4,7 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 
 | Caso | Resultado esperado |
 | --- | --- |
-| Carga del plugin, compra y entrega | Aparece Ciriolator a 0 créditos, permite comprarlo sin saldo y llega el objeto correcto. El precio es temporal para pruebas. |
+| Carga del plugin, compra y entrega | Aparece Ciriolator a 50 créditos sin descuentos nativos; con 49 no permite comprarlo y con 50 descuenta 50 y entrega una unidad. El precio es fijo desde 1.0.0. |
 | Aspecto, suelo y equipamiento | Modelo visible sin materiales rosas, orientación y escala adecuadas; se puede coger, soltar y cambiar de ranura. |
 | Muere un cliente, lo revive el anfitrión | Tras 5 s vuelve con 30 HP, cámara propia, movimiento, colisiones y voz normales. Los demás lo ven vivo. |
 | Muere el anfitrión, lo revive un cliente | Mismo resultado; no depende de que el usuario del objeto sea el anfitrión. |
@@ -55,6 +55,6 @@ Registrar versión del juego, versiones del mod y dependencias, anfitrión/clien
 
 Ninguna fila de la tabla anterior se considera superada hasta probarla dentro del juego. La animación propia de manos sobre el pecho está pendiente de implementación; actualmente hay pose básica y movimiento procedural de palas.
 
-La prueba actual de las mejoras está en [pruebas-0.3.0.md](pruebas-0.3.0.md). El usuario informó de buen funcionamiento de 0.2.2; la tabla no sustituye validar las novedades de 0.3.0.
+La comprobación de la versión estable está en [version-1.0.0.md](version-1.0.0.md). Las pruebas históricas de los efectos están en [pruebas-0.3.0.md](pruebas-0.3.0.md). El usuario informó de buen funcionamiento de 0.2.2; la tabla no sustituye validar las novedades de 0.3.0.
 
 La secuencia histórica de regresión específica para los fallos reportados está en [regresion-0.2.2.md](regresion-0.2.2.md). Se distingue recepción del estado vivo, restauración de animador/oyente y los efectos posteriores.

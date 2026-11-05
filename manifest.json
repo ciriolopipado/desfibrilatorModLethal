@@ -1,7 +1,10 @@
 {
   "name": "Desfibrilator",
-  "version_number": "0.3.0",
+  "version_number": "1.0.0",
   "website_url": "https://github.com/ciriolopipado/desfibrilatorModLethal",
-  "description": "Ciriolator for v81: free revival item, automatic last words, 15-30s echoes and shocks, 90-180 degree turns, involuntary jumps and visible electric sparks.",
-  "dependencies": ["BepInEx-BepInExPack-5.4.2305", "Evaisa-LethalLib-1.2.0"]
+  "description": "Ciriolator 1.0.0 for v81: reusable revival item at a fixed 50 credits, automatic last words, camera shocks, involuntary jumps and body sparks until orbit.",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305",
+    "Evaisa-LethalLib-1.2.0"
+  ]
 }

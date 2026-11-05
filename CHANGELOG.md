@@ -1,5 +1,13 @@
 # Historial
 
+## 1.0.0 — primera versión estable
+
+- Designación de primera versión estable del proyecto a petición del usuario.
+- Precio oficial fijo de Ciriolator: 50 créditos. Se aplica al objeto y a su registro en la tienda; sin descuentos nativos ni opción de precio en configuración.
+- Actualiza versión del plugin, ensamblado y manifest a 1.0.0. Conserva la identidad para actualizar instalaciones existentes.
+- Mantiene los efectos, reanimación, dependencias y protocolos de 0.3.0.
+- Compilación y 48 pruebas de lógica automatizadas; la designación estable no sustituye la validación del juego y del perfil completo.
+
 ## 0.3.0 — descargas intensas y chispas sobre el cuerpo
 
 - Ecos y descargas pasan a intervalos independientes de 15–30 segundos, tanto al activar como al repetirse.

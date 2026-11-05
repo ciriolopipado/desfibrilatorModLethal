@@ -1,22 +1,28 @@
-# Ciriolator — versión de pruebas 0.3.0
+# Ciriolator — versión estable 1.0.0
 
 ![Carátula de Ciriolator](icon.png)
 
-Mod de BepInEx para Lethal Company, con **v81 como versión objetivo**. Objeto **Ciriolator**, comprable temporalmente por **0 créditos** para validar en el juego, reutilizable y con espera global entre reanimaciones.
+Mod de BepInEx para Lethal Company, con **v81 como versión objetivo**. Objeto **Ciriolator**, comprable por un precio fijo de **50 créditos**, sin descuentos de la tienda, reutilizable y con espera global entre reanimaciones.
 
-**Estado:** el usuario ha comunicado que la versión 0.2.2 funciona bien en su prueba. La versión 0.3.0 añade efectos más intensos y requiere otra prueba dentro del juego. Aquí se verifican compilación, lógica y paquete; no se ejecuta Lethal Company ni se certifica la compatibilidad con todo el perfil.
+**Estado:** primera versión estable del proyecto, 1.0.0, designada a petición del usuario. Fija el precio definitivo y conserva el comportamiento de 0.3.0. La versión 0.2.2 tuvo una prueba satisfactoria comunicada por el usuario; aquí se comprueban compilación, lógica y paquete, sin ejecutar Lethal Company ni certificar todos los mods del perfil. Consulta [las notas de 1.0.0](docs/version-1.0.0.md) para el alcance de la validación.
 
 ## Descargar para Thunderstore Mod Manager
 
-[Descargar Ciriolator 0.3.0 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-0.3.0.zip)
+[Descargar Ciriolator 1.0.0 (ZIP para importar como mod local)](https://github.com/ciriolopipado/desfibrilatorModLethal/raw/refs/heads/main/downloads/ciriolopipado-Desfibrilator-1.0.0.zip)
 
-Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-0.3.0.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
+Si el navegador no descarga directamente, abre [el archivo en GitHub](downloads/ciriolopipado-Desfibrilator-1.0.0.zip) y pulsa **Download raw file / Descargar archivo sin procesar**. Si el repositorio es privado, inicia sesión con una cuenta que tenga acceso. No necesitas descargar ni compilar el código fuente: importa ese ZIP, sin descomprimir, desde **Settings → Profile → Import local mod**. Los detalles están en la sección de instalación.
 
 ## Aviso de seguridad de la descarga
 
-Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La revisión estática no confirma que sea un falso positivo; no hay un análisis antivirus actualizado en este entorno. La versión 0.3.0 sigue sin firma Authenticode; estos cambios no garantizan que desaparezca el aviso. Consulta [SECURITY.md](SECURITY.md) antes de instalar si tu protección bloquea el archivo. La descarga original 0.1.0 se conserva sin cambios.
+Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La revisión estática no confirma que sea un falso positivo; no hay un análisis antivirus actualizado en este entorno. La versión 1.0.0 sigue sin firma Authenticode; estos cambios no garantizan que desaparezca el aviso. Consulta [SECURITY.md](SECURITY.md) antes de instalar si tu protección bloquea el archivo. La descarga original 0.1.0 se conserva sin cambios.
 
-## Cambios de 0.3.0
+## Primera versión estable: 1.0.0
+
+- Precio oficial fijo de **50 créditos**, aplicado al objeto y al registro en la tienda. Sin descuentos nativos ni ajuste de precio en la configuración.
+- Identidad del paquete y del plugin conservadas para actualizar las instalaciones existentes.
+- Incluye los efectos y reparaciones de 0.3.0 descritos a continuación.
+
+## Efectos incluidos
 
 - Ecos y descargas con temporizadores independientes de **15–30 segundos**, incluido el primer efecto tras reanimar.
 - Giro horizontal de **90–180°** a izquierda o derecha, manteniendo una pequeña inclinación vertical y sin recentrar la vista.
@@ -25,7 +31,7 @@ Se ha comunicado un bloqueo de 0.1.0 como «caballo de Troya» en Chrome. La rev
 
 Conserva las reparaciones de animación, pasos, oyente de audio y voz de 0.2.2. Los ecos/chispazos usan fuentes SFX propias y los fallos de captura se aíslan del micrófono de Dissonance.
 
-Todos deben actualizar y reiniciar: cambian los mensajes de descarga y el protocolo de compatibilidad. Sigue [las pruebas de 0.3.0](docs/pruebas-0.3.0.md), primero reanimando al anfitrión y después al cliente.
+Todos deben instalar 1.0.0 y reiniciar para usar el mismo precio y comportamiento. Esta publicación conserva los protocolos de 0.3.0. Sigue [la comprobación de 1.0.0](docs/version-1.0.0.md), primero reanimando al anfitrión y después al cliente.
 
 ## Funcionamiento
 
@@ -40,7 +46,7 @@ Todos deben actualizar y reiniciar: cambian los mensajes de descarga y el protoc
 
 Incluye modelo original generado por código: carcasa naranja, pantalla, cruz, asa, cables y dos palas; sonidos originales sintetizados de carga y descarga. Utiliza una pose básica de sujeción del juego y mueve las palas al cargar. **Todavía no incluye una animación propia de las manos colocando ambas palas sobre el pecho**; requiere trabajo y pruebas adicionales dentro de Unity/juego. La escala y orientación del modelo también necesitan revisión visual en v81.
 
-## Instalación de prueba
+## Instalación
 
 Todos los participantes necesitan las mismas versiones del mod y de sus dependencias:
 
@@ -51,11 +57,11 @@ Ambos paquetes ya están en el perfil **Lloreria LETHAL 2**. El mod utiliza Unit
 
 1. Duplica el perfil en Thunderstore Mod Manager para las pruebas.
 2. Entra en **Settings / Configuración → Profile / Perfil → Import local mod**. También puedes buscar «Import local mod» en los ajustes.
-3. Selecciona **`ciriolopipado-Desfibrilator-0.3.0.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `0.3.0` (campos `0`, `3`, `0`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
-4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Ciriolator 0.3.0 loaded`.
+3. Selecciona **`ciriolopipado-Desfibrilator-1.0.0.zip` sin descomprimirlo** y confirma la importación. Si solicita datos: nombre `Desfibrilator`, autor `ciriolopipado`, versión `1.0.0` (campos `1`, `0`, `0`). Comprueba que el mod esté activado. Si habías copiado sus DLL manualmente, retira esa copia antes de importar para evitar duplicados.
+4. Inicia con mods y comprueba en `BepInEx/LogOutput.log` el mensaje `Ciriolator 1.0.0 loaded`.
 5. Busca `Ciriolator` en la tienda del terminal y realiza las pruebas de [docs/pruebas.md](docs/pruebas.md).
 
-El paquete sigue llamándose `Desfibrilator` en el gestor para actualizar la instalación existente. El objeto dentro del juego se llama **Ciriolator** y cuesta **0 créditos** en esta versión de pruebas. Reinicia el juego tras actualizar; todos los participantes deben usar 0.3.0.
+El paquete sigue llamándose `Desfibrilator` en el gestor para actualizar la instalación existente. El objeto dentro del juego se llama **Ciriolator** y cuesta **50 créditos** de forma fija. Reinicia el juego tras actualizar; todos los participantes deben usar 1.0.0.
 
 No hace falta publicar el mod ni compilarlo en tu ordenador. Cada participante debe importar el mismo ZIP. El paquete incluye `LEEME_INSTALACION.txt` con estos pasos. Como alternativa manual, copia únicamente su contenido de `BepInEx/plugins/Desfibrilator/` a la ruta equivalente del perfil, sin mantener otra instalación del mismo mod.
 
@@ -124,6 +130,6 @@ El inventario del perfil recibido está en [docs/profile-inventory.json](docs/pr
 
 Se usa mensajería de Unity Netcode con identificadores de cliente y de objeto; no se fija un máximo de cuatro jugadores. No se llama a `ReviveDeadPlayers()`, que reanimaría a todos los muertos y alteraría el flujo de fin de ronda. No se modifica el contador `playersRevived`, reservado por el juego para ese flujo.
 
-Todos los participantes deben actualizar a 0.3.0: esta versión cambia los mensajes de descarga y el protocolo de compatibilidad. Las versiones anteriores no son compatibles para usar el objeto.
+Todos los participantes deben actualizar a 1.0.0 y reiniciar. Mantiene los protocolos de 0.3.0; versiones anteriores a 0.3.0 no son compatibles. Usar la misma versión evita diferencias de precio y presentación entre equipos.
 
-El ZIP se genera en `dist/ciriolopipado-Desfibrilator-0.3.0.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Sigue siendo una compilación experimental y no se ha publicado en el catálogo de Thunderstore.
+El ZIP se genera en `dist/ciriolopipado-Desfibrilator-1.0.0.zip`. El nombre permite al importador deducir autor, nombre y versión. La copia descargable de esta versión está en `downloads/`, junto con su SHA-256. Es la primera versión estable del proyecto, disponible para importación local; no se ha publicado en el catálogo de Thunderstore.
