@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "release_channel": "stable",
+  "release_tag": "v1.0.0",
+  "source_commit": "d34b1e8655b95f46dddd55b5047a7305cee42f6b",
+  "archive_sha256": "13bdad0f4c7782c1cb4d8e5a17165b3e5768523c739d133ad747f3001e17b839",
+  "game_reference_package": "LethalCompany.GameLibs.Steam 81.0.5-ngd.0",
+  "unity_reference_modules": "2021.3.33",
+  "authenticode_signed": false,
+  "antivirus_scan": "not_run",
+  "verification": "Build passed with zero errors/warnings; 48 core tests passed; compiled assembly/BepInEx version 1.0.0, item price 50, LethalLib shop price 50 and native discounts disabled verified by IL inspection; packaged DLL source identity, archive integrity, icon and previous release hashes verified. Game integration not executed.",
+  "stable_designation": "First stable project release designated at user request; not a claim of new game-runtime or full-profile compatibility validation.",
+  "changes_from_0_3_0": [
+    "official fixed price 50 credits; no vanilla shop discounts or local price configuration",
+    "plugin, assembly and manifest version 1.0.0",
+    "stable release documentation"
+  ],
+  "protocol": "unchanged: revival v4, effects v2; all participants should install 1.0.0 and restart for consistent price and presentation",
+  "runtime_validation_pending": [
+    "50-credit purchase with sufficient/insufficient credits and sale days",
+    "0.3.0 effects and full profile integration remain unexecuted in this environment"
+  ],
+  "visible_item_name": "Ciriolator",
+  "shop_price_credits": 50,
+  "native_shop_discounts_enabled": false,
+  "price_configurable": false,
+  "members": [
+    {
+      "name": "manifest.json",
+      "size": 400,
+      "sha256": "ab3bfb02253db841444beadb7acf84d87b2a9982617fc834e78253f21192a93b"
+    },
+    {
+      "name": "README.md",
+      "size": 14538,
+      "sha256": "a9e86a85accaf74990b9a89a238b2e7595eb8efb68b673ef72b99381c72325df"
+    },
+    {
+      "name": "LICENSE",
+      "size": 1083,
+      "sha256": "9bc4b7d75847a57e29bfecce71bf08e6cda54ad63799eb7c268ef3e9557bb60f"
+    },
+    {
+      "name": "SECURITY.md",
+      "size": 5476,
+      "sha256": "0c00b05a7671c1ac76317ae2cafc5913e87719f305f68a8d4a49dcca172f169e"
+    },
+    {
+      "name": "icon.png",
+      "size": 87909,
+      "sha256": "7d280eb60a367c99b65f5564b71185ff6326f045e5dd0649c2f98b43abfbfdb1"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.dll",
+      "size": 71168,
+      "sha256": "0aab4b852d6f46104f536562022cce48451dfed970e4ffc3c595f8a59be44ae8"
+    },
+    {
+      "name": "BepInEx/plugins/Desfibrilator/Desfibrilator.Core.dll",
+      "size": 12800,
+      "sha256": "59b5a8f2ecdc4ae31cf7fa5e2e9d08728b85c30caaab6808fb47d21bd480f6bc"
+    },
+    {
+      "name": "PRUEBAS.md",
+      "size": 7465,
+      "sha256": "ee4772ee00239ca7b3b5b31d12a87d670618d5843985454ec8f068e1e06c7729"
+    },
+    {
+      "name": "docs/pruebas.md",
+      "size": 7465,
+      "sha256": "ee4772ee00239ca7b3b5b31d12a87d670618d5843985454ec8f068e1e06c7729"
+    },
+    {
+      "name": "docs/efectos-secundarios.md",
+      "size": 9924,
+      "sha256": "fa18a1da5a03e67de5221163161e40e97996798f5095ed2eb430a9f272802884"
+    },
+    {
+      "name": "docs/regresion-0.2.2.md",
+      "size": 3907,
+      "sha256": "2c142f885e78d06a438601e4cf1128817566083532d64d4ccf91d96e205937d0"
+    },
+    {
+      "name": "docs/pruebas-0.3.0.md",
+      "size": 3291,
+      "sha256": "a1c63834d98bbec743f2002057a427e94fb2a0cf89acfe53b972701e48cb6479"
+    },
+    {
+      "name": "docs/version-1.0.0.md",
+      "size": 3107,
+      "sha256": "ffa9edc19af75e2133d496a34bc47ebe37e08357f6396699fd4d419837fb11b2"
+    },
+    {
+      "name": "LEEME_INSTALACION.txt",
+      "size": 4755,
+      "sha256": "54ca7f5bc37817e6dd36434ce8637281e3a04d367b5b04aeef78acc2fe42941a"
+    }
+  ]
+}
